@@ -1,0 +1,228 @@
+﻿:root {
+  color-scheme: light;
+
+  /* Font family */
+  --font-family-sans: "Instrument Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* Primitives - Orange */
+  --color-orange-100: #fff1eb;
+  --color-orange-200: #ffd9c9;
+  --color-orange-300: #ffb79c;
+  --color-orange-400: #ff8a5f;
+  --color-orange-500: #f1672c;
+  --color-orange-600: #d95522;
+  --color-orange-700: #b8471c;
+  --color-orange-800: #913716;
+  --color-orange-900: #6b2910;
+
+  /* Primitives - Blue */
+  --color-blue-100: #e6eef2;
+  --color-blue-200: #c0d3dc;
+  --color-blue-300: #8fafbe;
+  --color-blue-400: #5b879f;
+  --color-blue-500: #113a52;
+  --color-blue-600: #0e3247;
+  --color-blue-700: #0b2a3b;
+  --color-blue-800: #081f2c;
+  --color-blue-900: #05151e;
+
+  /* Primitives - Gray */
+  --color-gray-50: #fafafa;
+  --color-gray-100: #f0f1f2;
+  --color-gray-200: #d9dbdd;
+  --color-gray-300: #c2c5c8;
+  --color-gray-400: #a3a7ab;
+  --color-gray-500: #7f8489;
+  --color-gray-600: #61666b;
+  --color-gray-700: #44484d;
+  --color-gray-800: #2c2f33;
+  --color-gray-900: #1b1b1b;
+
+  /* Primitives - Yellow */
+  --color-yellow-100: #fff4e5;
+  --color-yellow-200: #ffe2bf;
+  --color-yellow-300: #ffc980;
+  --color-yellow-400: #ffae40;
+  --color-yellow-500: #f79009;
+  --color-yellow-600: #d97e08;
+  --color-yellow-700: #b36807;
+  --color-yellow-800: #8c5105;
+  --color-yellow-900: #663a04;
+
+  /* Primitives - Green */
+  --color-green-100: #e6f6ec;
+  --color-green-200: #bfe8cf;
+  --color-green-300: #80d1a5;
+  --color-green-400: #40ba7a;
+  --color-green-500: #00a63e;
+  --color-green-600: #009236;
+  --color-green-700: #007a2e;
+  --color-green-800: #005f24;
+  --color-green-900: #00441a;
+
+  /* Primitives - Purple */
+  --color-purple-100: #f4e7ff;
+  --color-purple-200: #e3c7ff;
+  --color-purple-300: #c78fff;
+  --color-purple-400: #a94bff;
+  --color-purple-500: #9810fa;
+  --color-purple-600: #860ee0;
+  --color-purple-700: #700cc0;
+  --color-purple-800: #59099a;
+  --color-purple-900: #420774;
+
+  /* Primitives - iBlue */
+  --color-iblue-100: #e8eeff;
+  --color-iblue-200: #c7d6ff;
+  --color-iblue-300: #8faeff;
+  --color-iblue-400: #4b7fff;
+  --color-iblue-500: #155dfc;
+  --color-iblue-600: #124fe0;
+  --color-iblue-700: #0f42bf;
+  --color-iblue-800: #0b3399;
+  --color-iblue-900: #082473;
+
+  /* Primitives - Pink */
+  --color-pink-100: #ffe6f1;
+  --color-pink-200: #ffc2dc;
+  --color-pink-300: #ff85b8;
+  --color-pink-400: #ff4794;
+  --color-pink-500: #ff0074;
+  --color-pink-600: #e00066;
+  --color-pink-700: #bf0056;
+  --color-pink-800: #990044;
+  --color-pink-900: #730033;
+
+  /* Primitives - Red */
+  --color-red-100: #fdecec;
+  --color-red-200: #f9d2cf;
+  --color-red-300: #f5a8a3;
+  --color-red-400: #ee6f67;
+  --color-red-500: #f04438;
+  --color-red-600: #d93b31;
+  --color-red-700: #b73129;
+  --color-red-800: #8f2721;
+  --color-red-900: #661b17;
+
+  /* Semantic - Brand */
+  --brand-primary-subtle: var(--color-orange-100);
+  --brand-primary-muted: var(--color-orange-200);
+  --brand-primary-soft: var(--color-orange-300);
+  --brand-primary-main: var(--color-orange-500);
+  --brand-primary-strong: var(--color-orange-600);
+  --brand-primary-bold: var(--color-orange-700);
+  --brand-primary-intense: var(--color-orange-900);
+
+  --brand-secondary-subtle: var(--color-blue-100);
+  --brand-secondary-muted: var(--color-blue-200);
+  --brand-secondary-soft: var(--color-blue-300);
+  --brand-secondary-main: var(--color-blue-500);
+  --brand-secondary-strong: var(--color-blue-600);
+  --brand-secondary-bold: var(--color-blue-700);
+  --brand-secondary-intense: var(--color-blue-900);
+
+  /* Semantic - Background */
+  --background-primary: var(--color-gray-50);
+  --background-secondary: var(--color-gray-100);
+  --background-tertiary: var(--color-gray-200);
+  --background-always-dark: var(--color-gray-900);
+  --background-always-light: var(--color-gray-50);
+  --background-always-brand: var(--brand-primary-main);
+
+  /* Semantic - Content */
+  --content-primary: var(--color-gray-900);
+  --content-secondary: var(--color-gray-800);
+  --content-tertiary: var(--color-gray-700);
+  --content-inverse: var(--color-gray-50);
+  --content-always-dark: var(--color-gray-900);
+  --content-always-light: var(--color-gray-50);
+  --content-always-brand: var(--brand-primary-main);
+
+  /* Semantic - Border */
+  --border-primary: var(--color-gray-200);
+  --border-secondary: var(--color-gray-300);
+  --border-tertiary: var(--color-gray-400);
+
+  /* Semantic - Feedback */
+  --feedback-error-content: var(--color-red-600);
+  --feedback-error-background: var(--color-red-100);
+  --feedback-error-border: var(--color-red-300);
+  --feedback-success-content: var(--color-green-600);
+  --feedback-success-background: var(--color-green-100);
+  --feedback-success-border: var(--color-green-300);
+  --feedback-warning-content: var(--color-yellow-800);
+  --feedback-warning-background: var(--color-yellow-100);
+  --feedback-warning-border: var(--color-yellow-300);
+  --feedback-info-content: var(--color-iblue-700);
+  --feedback-info-background: var(--color-iblue-100);
+  --feedback-info-border: var(--color-iblue-300);
+
+  /* Semantic - Accent */
+  --accent-pink-content: var(--color-pink-600);
+  --accent-pink-background: var(--color-pink-100);
+  --accent-purple-content: var(--color-purple-600);
+  --accent-purple-background: var(--color-purple-100);
+  --accent-blue-content: var(--color-iblue-700);
+  --accent-blue-background: var(--color-iblue-100);
+  --accent-green-content: var(--color-green-600);
+  --accent-green-background: var(--color-green-100);
+  --accent-yellow-content: var(--color-yellow-800);
+  --accent-yellow-background: var(--color-yellow-100);
+}
+
+.dark {
+  color-scheme: dark;
+
+  --brand-primary-subtle: var(--color-orange-900);
+  --brand-primary-muted: var(--color-orange-700);
+  --brand-primary-soft: var(--color-orange-600);
+  --brand-primary-main: var(--color-orange-400);
+  --brand-primary-strong: var(--color-orange-300);
+  --brand-primary-bold: var(--color-orange-200);
+  --brand-primary-intense: var(--color-orange-100);
+
+  --brand-secondary-subtle: var(--color-blue-900);
+  --brand-secondary-muted: var(--color-blue-700);
+  --brand-secondary-soft: var(--color-blue-600);
+  --brand-secondary-main: var(--color-blue-400);
+  --brand-secondary-strong: var(--color-blue-300);
+  --brand-secondary-bold: var(--color-blue-200);
+  --brand-secondary-intense: var(--color-blue-100);
+
+  --background-primary: var(--color-gray-900);
+  --background-secondary: var(--color-gray-800);
+  --background-tertiary: var(--color-gray-700);
+
+  --content-primary: var(--color-gray-100);
+  --content-secondary: var(--color-gray-200);
+  --content-tertiary: var(--color-gray-300);
+  --content-inverse: var(--color-gray-900);
+
+  --border-primary: var(--color-gray-800);
+  --border-secondary: var(--color-gray-700);
+  --border-tertiary: var(--color-gray-600);
+
+  --feedback-error-content: var(--color-red-100);
+  --feedback-error-background: var(--color-red-900);
+  --feedback-error-border: var(--color-red-600);
+  --feedback-success-content: var(--color-green-200);
+  --feedback-success-background: var(--color-green-900);
+  --feedback-success-border: var(--color-green-600);
+  --feedback-warning-content: var(--color-yellow-200);
+  --feedback-warning-background: var(--color-yellow-900);
+  --feedback-warning-border: var(--color-yellow-600);
+  --feedback-info-content: var(--color-iblue-200);
+  --feedback-info-background: var(--color-iblue-900);
+  --feedback-info-border: var(--color-iblue-600);
+
+  --accent-pink-content: var(--color-pink-100);
+  --accent-pink-background: var(--color-pink-900);
+  --accent-purple-content: var(--color-purple-100);
+  --accent-purple-background: var(--color-purple-900);
+  --accent-blue-content: var(--color-iblue-200);
+  --accent-blue-background: var(--color-iblue-900);
+  --accent-green-content: var(--color-green-200);
+  --accent-green-background: var(--color-green-900);
+  --accent-yellow-content: var(--color-yellow-200);
+  --accent-yellow-background: var(--color-yellow-900);
+}
