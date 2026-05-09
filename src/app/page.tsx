@@ -1,8 +1,8 @@
-import { CheckCircle2, Plus, Search } from "lucide-react";
+﻿import { CheckCircle2, Plus, Search } from "lucide-react";
 import { Badge } from "../components/ui/badge";
 import { Button, IconButton } from "../components/ui/button";
 import { Checkbox, CheckboxField } from "../components/ui/checkbox";
-import { CpfInput, Input, PhoneInput, RgInput, SearchInput } from "../components/ui/input";
+import { CpfInput, DatePicker, Input, PhoneInput, RgInput, SearchInput } from "../components/ui/input";
 
 export default function HomePage() {
   return (
@@ -11,7 +11,7 @@ export default function HomePage() {
         <section className="flex flex-col gap-4">
           <h1 className="text-2xl font-medium">UI Playground</h1>
           <p className="text-sm text-[var(--content-secondary)]">
-            Página de validação visual dos componentes e variantes.
+            PÃ¡gina de validaÃ§Ã£o visual dos componentes e variantes.
           </p>
         </section>
 
@@ -56,7 +56,7 @@ export default function HomePage() {
               Online
             </Badge>
             <Badge appearance="icon" icon={<CheckCircle2 size={14} />} variant="success">
-              Concluído
+              ConcluÃ­do
             </Badge>
           </div>
         </section>
@@ -74,8 +74,8 @@ export default function HomePage() {
           <div className="flex flex-wrap items-center gap-4">
             <CheckboxField
               defaultChecked
-              description="Receber notificações por e-mail."
-              label="Notificações"
+              description="Receber notificaÃ§Ãµes por e-mail."
+              label="NotificaÃ§Ãµes"
               variant="success"
             />
           </div>
@@ -91,24 +91,26 @@ export default function HomePage() {
               placeholder="nome@empresa.com"
             />
             <Input
-              helperText="Campo obrigatório."
+              helperText="Campo obrigatÃ³rio."
               tone="error"
               label="Documento"
               placeholder="000.000.000-00"
             />
             <Input
               defaultValue="Andressa"
-              helperText="Valor válido."
+              helperText="Valor vÃ¡lido."
               tone="success"
               label="Nome completo"
             />
             <CpfInput label="CPF" placeholder="000.000.000-00" />
             <RgInput label="RG" placeholder="00.000.000-0" />
             <PhoneInput label="Telefone" placeholder="(00) 00000-0000" />
-            <SearchInput placeholder="Buscar aluno, turma, matrícula..." />
+            <DatePicker label="Data de nascimento" />
+            <SearchInput placeholder="Buscar aluno, turma, matrÃ­cula..." />
           </div>
         </section>
       </div>
     </main>
   );
 }
+

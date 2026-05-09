@@ -1,5 +1,7 @@
 export { Input } from "./input.base";
 export type { InputHelperTone, InputProps } from "./input.types";
+export { DatePicker } from "./date-picker";
+export type { DatePickerProps } from "./date-picker";
 export { CpfInput, PhoneInput, RgInput } from "./masked-inputs";
 export type { MaskedInputProps } from "./masked-inputs";
 export { SearchInput } from "./search-input";
