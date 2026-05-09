@@ -2,6 +2,7 @@
 import { Badge } from "../components/ui/badge";
 import { Button, IconButton } from "../components/ui/button";
 import { Checkbox, CheckboxField } from "../components/ui/checkbox";
+import { DocumentUploadField } from "../components/ui/document-upload-field";
 import { CpfInput, DatePicker, Input, PhoneInput, RgInput, SearchInput } from "../components/ui/input";
 import { SelectField } from "../components/ui/select-field";
 
@@ -122,6 +123,16 @@ export default function HomePage() {
                 { label: "Turma B", value: "b" },
                 { label: "Turma C", value: "c" },
               ]}
+            />
+          </div>
+        </section>
+
+        <section className="flex flex-col gap-4">
+          <h2 className="text-lg font-medium">DocumentUploadField</h2>
+          <div className="grid w-full max-w-4xl grid-cols-1 gap-4 md:grid-cols-2">
+            <DocumentUploadField
+              label="Upload de documento"
+              maxSizeMb={5}
             />
           </div>
         </section>
