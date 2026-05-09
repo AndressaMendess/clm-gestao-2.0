@@ -2,7 +2,7 @@ import { CheckCircle2, Plus, Search } from "lucide-react";
 import { Badge } from "../components/ui/badge";
 import { Button, IconButton } from "../components/ui/button";
 import { Checkbox, CheckboxField } from "../components/ui/checkbox";
-import { CpfInput, Input, PhoneInput, RgInput } from "../components/ui/input";
+import { CpfInput, Input, PhoneInput, RgInput, SearchInput } from "../components/ui/input";
 
 export default function HomePage() {
   return (
@@ -105,6 +105,7 @@ export default function HomePage() {
             <CpfInput label="CPF" placeholder="000.000.000-00" />
             <RgInput label="RG" placeholder="00.000.000-0" />
             <PhoneInput label="Telefone" placeholder="(00) 00000-0000" />
+            <SearchInput placeholder="Buscar aluno, turma, matrícula..." />
           </div>
         </section>
       </div>
