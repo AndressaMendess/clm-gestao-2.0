@@ -2,6 +2,7 @@ import { CheckCircle2, Plus, Search } from "lucide-react";
 import { Badge } from "../components/ui/badge";
 import { Button, IconButton } from "../components/ui/button";
 import { Checkbox, CheckboxField } from "../components/ui/checkbox";
+import { CpfInput, Input, PhoneInput, RgInput } from "../components/ui/input";
 
 export default function HomePage() {
   return (
@@ -77,6 +78,33 @@ export default function HomePage() {
               label="Notificações"
               variant="success"
             />
+          </div>
+        </section>
+
+        <section className="flex flex-col gap-4">
+          <h2 className="text-lg font-medium">Input</h2>
+          <div className="grid w-full max-w-4xl grid-cols-1 gap-4 md:grid-cols-2">
+            <Input label="Nome" placeholder="Digite seu nome" />
+            <Input
+              helperText="Use seu e-mail institucional."
+              label="E-mail"
+              placeholder="nome@empresa.com"
+            />
+            <Input
+              helperText="Campo obrigatório."
+              tone="error"
+              label="Documento"
+              placeholder="000.000.000-00"
+            />
+            <Input
+              defaultValue="Andressa"
+              helperText="Valor válido."
+              tone="success"
+              label="Nome completo"
+            />
+            <CpfInput label="CPF" placeholder="000.000.000-00" />
+            <RgInput label="RG" placeholder="00.000.000-0" />
+            <PhoneInput label="Telefone" placeholder="(00) 00000-0000" />
           </div>
         </section>
       </div>

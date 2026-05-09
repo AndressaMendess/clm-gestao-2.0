@@ -45,6 +45,13 @@ lines.push(":root {");
 lines.push("  color-scheme: light;");
 lines.push(`  --font-family-sans: ${tokens.typography.fontFamily.sans};`);
 
+for (const [tokenName, tokenValue] of Object.entries(tokens.typography.scale)) {
+  lines.push(`  --typography-${tokenName}-font-size: ${tokenValue.fontSize.toLowerCase()};`);
+  lines.push(`  --typography-${tokenName}-line-height: ${tokenValue.lineHeight.toLowerCase()};`);
+  lines.push(`  --typography-${tokenName}-font-weight: ${String(tokenValue.fontWeight)};`);
+  lines.push(`  --typography-${tokenName}-letter-spacing: ${tokenValue.letterSpacing.toLowerCase()};`);
+}
+
 for (const [groupName, groupValues] of Object.entries(tokens.colors.primitives)) {
   for (const [scale, hex] of Object.entries(groupValues)) {
     lines.push(`  --color-${groupName}-${scale}: ${hex.toLowerCase()};`);
