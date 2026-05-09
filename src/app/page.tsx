@@ -3,6 +3,7 @@ import { Badge } from "../components/ui/badge";
 import { Button, IconButton } from "../components/ui/button";
 import { Checkbox, CheckboxField } from "../components/ui/checkbox";
 import { CpfInput, DatePicker, Input, PhoneInput, RgInput, SearchInput } from "../components/ui/input";
+import { SelectField } from "../components/ui/select-field";
 
 export default function HomePage() {
   return (
@@ -107,6 +108,21 @@ export default function HomePage() {
             <PhoneInput label="Telefone" placeholder="(00) 00000-0000" />
             <DatePicker label="Data de nascimento" />
             <SearchInput placeholder="Buscar aluno, turma, matrÃ­cula..." />
+          </div>
+        </section>
+
+        <section className="flex flex-col gap-4">
+          <h2 className="text-lg font-medium">SelectField</h2>
+          <div className="grid w-full max-w-4xl grid-cols-1 gap-4 md:grid-cols-2">
+            <SelectField
+              label="Turma"
+              placeholder="Selecione uma turma"
+              options={[
+                { label: "Turma A", value: "a" },
+                { label: "Turma B", value: "b" },
+                { label: "Turma C", value: "c" },
+              ]}
+            />
           </div>
         </section>
       </div>
