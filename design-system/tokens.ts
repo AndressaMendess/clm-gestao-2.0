@@ -54,6 +54,28 @@ export const tokens = {
         warning: { content: { light: primitives.yellow[800], dark: primitives.yellow[200] }, background: { light: primitives.yellow[100], dark: primitives.yellow[900] }, border: { light: primitives.yellow[300], dark: primitives.yellow[600] } },
         info: { content: { light: primitives.iblue[700], dark: primitives.iblue[200] }, background: { light: primitives.iblue[100], dark: primitives.iblue[900] }, border: { light: primitives.iblue[300], dark: primitives.iblue[600] } },
       },
+      accent: {
+        pink: {
+          content: { light: primitives.pink[600], dark: primitives.pink[100] },
+          background: { light: primitives.pink[100], dark: primitives.pink[900] },
+        },
+        purple: {
+          content: { light: primitives.purple[600], dark: primitives.purple[100] },
+          background: { light: primitives.purple[100], dark: primitives.purple[900] },
+        },
+        blue: {
+          content: { light: primitives.iblue[700], dark: primitives.iblue[200] },
+          background: { light: primitives.iblue[100], dark: primitives.iblue[900] },
+        },
+        green: {
+          content: { light: primitives.green[600], dark: primitives.green[200] },
+          background: { light: primitives.green[100], dark: primitives.green[900] },
+        },
+        yellow: {
+          content: { light: primitives.yellow[800], dark: primitives.yellow[200] },
+          background: { light: primitives.yellow[100], dark: primitives.yellow[900] },
+        },
+      },
       button: {
         focusRing: { light: primitives.blue[300], dark: primitives.blue[300] },
         primary: {
