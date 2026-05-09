@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, ChevronDown } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import * as Select from "@radix-ui/react-select";
 import { useId } from "react";
 import { cx } from "@/lib/cx";
@@ -14,6 +14,8 @@ import {
   selectFieldWrapperStyles,
 } from "./select-field.styles";
 import type { SelectFieldProps } from "./select-field.types";
+
+const NONE_VALUE = "__select_none__";
 
 export function SelectField({
   "aria-describedby": ariaDescribedBy,
@@ -36,9 +38,23 @@ export function SelectField({
   const selectId = id ?? generatedId;
   const helperId = helperText ? `${selectId}-helper` : undefined;
   const describedBy = [ariaDescribedBy, helperId].filter(Boolean).join(" ") || undefined;
+  const resolvedValue = value === undefined ? undefined : value === "" ? NONE_VALUE : value;
+  const resolvedDefaultValue =
+    defaultValue === undefined ? NONE_VALUE : defaultValue === "" ? NONE_VALUE : defaultValue;
+
+  const handleValueChange = (nextValue: string) => {
+    onValueChange?.(nextValue === NONE_VALUE ? "" : nextValue);
+  };
 
   const selectRoot = (
-    <Select.Root defaultValue={defaultValue} disabled={disabled} name={name} onValueChange={onValueChange} required={required} value={value}>
+    <Select.Root
+      defaultValue={resolvedDefaultValue}
+      disabled={disabled}
+      name={name}
+      onValueChange={handleValueChange}
+      required={required}
+      value={resolvedValue}
+    >
       <Select.Trigger
         aria-describedby={describedBy}
         className={cx(getSelectFieldStyles(tone), triggerClassName)}
@@ -53,12 +69,12 @@ export function SelectField({
       <Select.Portal>
         <Select.Content className={selectFieldContentStyles} position="popper" sideOffset={6}>
           <Select.Viewport className={selectFieldViewportStyles}>
+            <Select.Item className={selectFieldItemStyles} value={NONE_VALUE}>
+              <Select.ItemText>{placeholder}</Select.ItemText>
+            </Select.Item>
             {options?.map((option) => (
               <Select.Item className={selectFieldItemStyles} disabled={option.disabled} key={option.value} value={option.value}>
                 <Select.ItemText>{option.label}</Select.ItemText>
-                <Select.ItemIndicator className="absolute right-2 inline-flex items-center">
-                  <Check className="h-4 w-4 text-[var(--brand-primary-main)]" />
-                </Select.ItemIndicator>
               </Select.Item>
             ))}
           </Select.Viewport>
