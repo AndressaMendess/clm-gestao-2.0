@@ -1,6 +1,7 @@
 import { CheckCircle2, Plus, Search } from "lucide-react";
 import { Badge } from "../components/ui/badge";
 import { Button, IconButton } from "../components/ui/button";
+import { Checkbox, CheckboxField } from "../components/ui/checkbox";
 
 export default function HomePage() {
   return (
@@ -56,6 +57,26 @@ export default function HomePage() {
             <Badge appearance="icon" icon={<CheckCircle2 size={14} />} variant="success">
               Concluído
             </Badge>
+          </div>
+        </section>
+
+        <section className="flex flex-col gap-4">
+          <h2 className="text-lg font-medium">Checkbox</h2>
+          <div className="flex flex-wrap items-center gap-4">
+            <Checkbox aria-label="Default unchecked" />
+            <Checkbox aria-label="Default checked" defaultChecked />
+            <Checkbox aria-label="Default indeterminate" indeterminate />
+            <Checkbox aria-label="Success checked" defaultChecked variant="success" />
+            <Checkbox aria-label="Large success checked" defaultChecked size="lg" variant="success" />
+            <Checkbox aria-label="Disabled" disabled />
+          </div>
+          <div className="flex flex-wrap items-center gap-4">
+            <CheckboxField
+              defaultChecked
+              description="Receber notificações por e-mail."
+              label="Notificações"
+              variant="success"
+            />
           </div>
         </section>
       </div>

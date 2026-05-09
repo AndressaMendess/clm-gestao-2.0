@@ -1,9 +1,6 @@
 import { badgeDotStyles, badgeIconStyles, getBadgeStyles } from "./badge.styles";
 import type { BadgeProps } from "./badge.types";
-
-function cx(...classes: Array<string | false | null | undefined>): string {
-  return classes.filter(Boolean).join(" ");
-}
+import { cx } from "@/lib/cx";
 
 export function Badge({
   appearance,

@@ -1,9 +1,6 @@
 import { getButtonStyles, iconButtonStyles } from "./button.styles";
 import type { ButtonProps, IconButtonProps } from "./button.types";
-
-function cx(...classes: Array<string | false | null | undefined>): string {
-  return classes.filter(Boolean).join(" ");
-}
+import { cx } from "@/lib/cx";
 
 export function Button({
   children,
