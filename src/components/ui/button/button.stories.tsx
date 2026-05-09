@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+import { Plus } from "lucide-react";
 import { tokens } from "../../../../design-system/tokens";
-import { Button } from "./index";
+import { Button, IconButton } from "./index";
 
 const meta = {
   title: "Components/UI/Button",
@@ -30,8 +31,41 @@ export const Primary: Story = {
 
 export const Secondary: Story = {
   args: { variant: "secondary" },
+  parameters: {
+    backgrounds: {
+      options: {
+        base: {
+          name: "Base",
+          value: tokens.colors.semantic.background.primary.light,
+        },
+      },
+    },
+  },
 };
 
 export const Ghost: Story = {
   args: { variant: "ghost" },
+};
+
+export const Danger: Story = {
+  args: { variant: "danger", children: "Excluir" },
+};
+
+export const Small: Story = {
+  args: { size: "sm", children: "Salvar" },
+};
+
+export const WithIcon: Story = {
+  args: {
+    children: "Buscar",
+    icon: Plus,
+  },
+};
+
+export const IconOnly: StoryObj<typeof IconButton> = {
+  render: (args) => <IconButton {...args} />,
+  args: {
+    label: "Adicionar",
+    icon: Plus,
+  },
 };

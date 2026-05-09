@@ -5,9 +5,12 @@
 ## Regra de Uso no Projeto
 
 - Toda tela nova deve usar a base de cores semânticas e os text styles definidos neste documento.
-- Toda atualização em telas existentes deve priorizar os tokens de `src/styles/tokens.css`, evitando valores hardcoded quando já houver variável equivalente.
+- Toda atualização em telas existentes deve priorizar tokens semânticos, evitando valores hardcoded quando já houver variável equivalente.
 - A base oficial para cores é a coleção semântica `Colors`, com suporte a `light` e `dark`.
 - A base oficial para tipografia é a coleção de `Text Styles` com a família **Instrument Sans**.
+- Fonte única de verdade no projeto: `design-system/tokens.ts`.
+- `src/styles/tokens.css` é artefato gerado para runtime e não deve ser editado manualmente.
+- Sempre que houver mudança em tokens, rodar `npm run tokens` para sincronizar o CSS.
 
 ---
 

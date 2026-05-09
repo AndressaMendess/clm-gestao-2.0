@@ -8,6 +8,38 @@ const root = resolve(process.cwd());
 const cssPath = resolve(root, "src/styles/tokens.css");
 
 const lines: string[] = [];
+const lightSemanticLines: string[] = [];
+const darkSemanticLines: string[] = [];
+
+function toKebabCase(value: string): string {
+  return value.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase();
+}
+
+function walkSemantic(
+  obj: Record<string, unknown>,
+  path: string[] = [],
+): void {
+  for (const [key, value] of Object.entries(obj)) {
+    const tokenPath = [...path, toKebabCase(key)];
+
+    if (
+      value &&
+      typeof value === "object" &&
+      "light" in (value as Record<string, unknown>) &&
+      "dark" in (value as Record<string, unknown>)
+    ) {
+      const tokenValue = value as { light: string; dark: string };
+      const cssVar = `--${tokenPath.join("-")}`;
+      lightSemanticLines.push(`  ${cssVar}: ${tokenValue.light.toLowerCase()};`);
+      darkSemanticLines.push(`  ${cssVar}: ${tokenValue.dark.toLowerCase()};`);
+      continue;
+    }
+
+    if (value && typeof value === "object") {
+      walkSemantic(value as Record<string, unknown>, tokenPath);
+    }
+  }
+}
 
 lines.push(":root {");
 lines.push("  color-scheme: light;");
@@ -19,35 +51,14 @@ for (const [groupName, groupValues] of Object.entries(tokens.colors.primitives))
   }
 }
 
-lines.push(`  --brand-primary-main: ${tokens.colors.semantic.brandPrimary.main.light.toLowerCase()};`);
-lines.push(`  --brand-secondary-main: ${tokens.colors.semantic.brandSecondary.main.light.toLowerCase()};`);
-lines.push(`  --background-primary: ${tokens.colors.semantic.background.primary.light.toLowerCase()};`);
-lines.push(`  --background-secondary: ${tokens.colors.semantic.background.secondary.light.toLowerCase()};`);
-lines.push(`  --background-tertiary: ${tokens.colors.semantic.background.tertiary.light.toLowerCase()};`);
-lines.push(`  --content-primary: ${tokens.colors.semantic.content.primary.light.toLowerCase()};`);
-lines.push(`  --content-secondary: ${tokens.colors.semantic.content.secondary.light.toLowerCase()};`);
-lines.push(`  --content-tertiary: ${tokens.colors.semantic.content.tertiary.light.toLowerCase()};`);
-lines.push(`  --content-inverse: ${tokens.colors.semantic.content.inverse.light.toLowerCase()};`);
-lines.push(`  --border-primary: ${tokens.colors.semantic.border.primary.light.toLowerCase()};`);
-lines.push(`  --border-secondary: ${tokens.colors.semantic.border.secondary.light.toLowerCase()};`);
-lines.push(`  --border-tertiary: ${tokens.colors.semantic.border.tertiary.light.toLowerCase()};`);
+walkSemantic(tokens.colors.semantic);
+lines.push(...lightSemanticLines);
 lines.push("}");
 
 lines.push("");
 lines.push(".dark {");
 lines.push("  color-scheme: dark;");
-lines.push(`  --brand-primary-main: ${tokens.colors.semantic.brandPrimary.main.dark.toLowerCase()};`);
-lines.push(`  --brand-secondary-main: ${tokens.colors.semantic.brandSecondary.main.dark.toLowerCase()};`);
-lines.push(`  --background-primary: ${tokens.colors.semantic.background.primary.dark.toLowerCase()};`);
-lines.push(`  --background-secondary: ${tokens.colors.semantic.background.secondary.dark.toLowerCase()};`);
-lines.push(`  --background-tertiary: ${tokens.colors.semantic.background.tertiary.dark.toLowerCase()};`);
-lines.push(`  --content-primary: ${tokens.colors.semantic.content.primary.dark.toLowerCase()};`);
-lines.push(`  --content-secondary: ${tokens.colors.semantic.content.secondary.dark.toLowerCase()};`);
-lines.push(`  --content-tertiary: ${tokens.colors.semantic.content.tertiary.dark.toLowerCase()};`);
-lines.push(`  --content-inverse: ${tokens.colors.semantic.content.inverse.dark.toLowerCase()};`);
-lines.push(`  --border-primary: ${tokens.colors.semantic.border.primary.dark.toLowerCase()};`);
-lines.push(`  --border-secondary: ${tokens.colors.semantic.border.secondary.dark.toLowerCase()};`);
-lines.push(`  --border-tertiary: ${tokens.colors.semantic.border.tertiary.dark.toLowerCase()};`);
+lines.push(...darkSemanticLines);
 lines.push("}");
 lines.push("");
 
