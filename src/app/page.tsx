@@ -9,9 +9,80 @@ import { DocumentUploadField } from "../components/ui/document-upload-field";
 import { CpfInput, DatePicker, Input, PhoneInput, RgInput, SearchInput, TextArea } from "../components/ui/input";
 import { ModalContainer } from "../components/ui/modal-container";
 import { SelectField } from "../components/ui/select-field";
+import { Stepper } from "../components/ui/stepper";
+import { TableCard } from "../components/ui/table-card";
+
+type StudentTableRow = {
+  classroom: string;
+  classroomVariant: "blue" | "pink";
+  email: string;
+  initials: string;
+  module: string;
+  moduleVariant: "orange" | "violet";
+  name: string;
+  phone: string;
+  status: "Ativo" | "Trancamento";
+};
 
 export default function HomePage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const studentRows: StudentTableRow[] = [
+    {
+      initials: "TL",
+      name: "Thiago Fernandes Luz",
+      status: "Ativo",
+      phone: "(11) 90987-9900",
+      email: "thiago.luz@email.com",
+      module: "Módulo II",
+      moduleVariant: "orange",
+      classroom: "Percussão",
+      classroomVariant: "blue",
+    },
+    {
+      initials: "SO",
+      name: "Sofia Barbosa Oliveira",
+      status: "Ativo",
+      phone: "(11) 91098-8890",
+      email: "sofia.oliveira@email.com",
+      module: "Módulo I",
+      moduleVariant: "violet",
+      classroom: "Classe 2",
+      classroomVariant: "pink",
+    },
+    {
+      initials: "RP",
+      name: "Rafael Teixeira Pinto",
+      status: "Trancamento",
+      phone: "(11) 91109-7788",
+      email: "rafael.pinto@email.com",
+      module: "Módulo II",
+      moduleVariant: "orange",
+      classroom: "Teclado",
+      classroomVariant: "pink",
+    },
+    {
+      initials: "PS",
+      name: "Patrícia Lima Sousa",
+      status: "Ativo",
+      phone: "(11) 91210-6677",
+      email: "patricia.sousa@email.com",
+      module: "Módulo III",
+      moduleVariant: "orange",
+      classroom: "Coral Avançado",
+      classroomVariant: "blue",
+    },
+    {
+      initials: "OS",
+      name: "Otávio Ribeiro Santos",
+      status: "Ativo",
+      phone: "(11) 91321-5566",
+      email: "otavio.ribeiro@email.com",
+      module: "Módulo I",
+      moduleVariant: "violet",
+      classroom: "Classe 4",
+      classroomVariant: "pink",
+    },
+  ];
 
   return (
     <main className="min-h-screen bg-[var(--background-primary)] px-6 py-10 text-[var(--content-primary)]">
@@ -157,6 +228,88 @@ export default function HomePage() {
               </p>
             </div>
           </ModalContainer>
+        </section>
+
+        <section className="flex flex-col gap-4">
+          <h2 className="text-lg font-medium">TableCard</h2>
+          <TableCard
+            ariaLabel="Tabela de alunos"
+            rowKey={(row) => row.email}
+            selectableRows
+            title="Alunos"
+            titleBadge={`${studentRows.length} alunos`}
+            columns={[
+              {
+                id: "name",
+                header: "Nome",
+                key: "name",
+                sortable: true,
+                render: (row) => (
+                  <div className="flex items-center gap-3">
+                    <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[var(--accent-purple-background)] text-[var(--content-primary)] [font-size:var(--typography-body-large-medium-font-size)] [font-weight:var(--typography-body-large-medium-font-weight)]">
+                      {row.initials}
+                    </span>
+                    <span className="[font-size:var(--typography-body-large-semibold-font-size)] [line-height:var(--typography-body-large-semibold-line-height)] [font-weight:var(--typography-body-large-semibold-font-weight)] [letter-spacing:var(--typography-body-large-semibold-letter-spacing)] text-[var(--content-primary)]">
+                      {row.name}
+                    </span>
+                  </div>
+                ),
+              },
+              {
+                id: "status",
+                header: "Status",
+                key: "status",
+                sortable: true,
+                render: (row) => (
+                  <Badge appearance="dot" variant={row.status === "Ativo" ? "success" : "warning"}>
+                    {row.status}
+                  </Badge>
+                ),
+              },
+              {
+                id: "contact",
+                header: "Contato",
+                key: "phone",
+                render: (row) => (
+                  <div className="grid gap-0.5">
+                    <span>{row.phone}</span>
+                    <span className="text-[var(--content-secondary)]">{row.email}</span>
+                  </div>
+                ),
+              },
+              {
+                id: "module",
+                header: "Módulo",
+                key: "module",
+                sortable: true,
+                render: (row) => <Badge variant={row.moduleVariant}>{row.module}</Badge>,
+              },
+              {
+                id: "classroom",
+                header: "Turma",
+                key: "classroom",
+                sortable: true,
+                render: (row) => <Badge variant={row.classroomVariant}>{row.classroom}</Badge>,
+              },
+            ]}
+            rows={studentRows}
+          />
+        </section>
+
+        <section className="flex flex-col gap-4">
+          <h2 className="text-lg font-medium">Stepper</h2>
+          <div className="w-full max-w-4xl rounded-2xl bg-[var(--background-primary)] p-4">
+            <Stepper
+              ariaLabel="Progresso da matricula"
+              currentStep={2}
+              steps={[
+                { id: "student", label: "Aluno" },
+                { id: "document", label: "Documentacao" },
+                { id: "review", label: "Revisao" },
+                { id: "finish", label: "Finalizar" },
+              ]}
+            />
+          </div>
         </section>
       </div>
     </main>
