@@ -13,16 +13,14 @@ import {
   Users,
   X,
 } from "lucide-react";
+import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import { cx } from "@/lib/cx";
 import { NavItem } from "../nav-item";
 import {
-  getSidebarLabelVisibilityStyles,
   getSidebarOverlayStateStyles,
   getSidebarStateStyles,
-  sidebarBrandBadgeStyles,
   sidebarBrandStyles,
-  sidebarBrandTextStyles,
   sidebarContentStyles,
   sidebarDividerStyles,
   sidebarFooterStyles,
@@ -105,8 +103,19 @@ export function Sidebar({
       <aside className={cx(sidebarShellStyles, getSidebarStateStyles(isDesktopCollapsed, isOpen))}>
         <header className={sidebarHeaderStyles}>
           <div className={sidebarBrandStyles}>
-            <span aria-hidden className={sidebarBrandBadgeStyles}>CLM</span>
-            {showLabels ? <span className={sidebarBrandTextStyles}>Gestao</span> : null}
+            <Image
+              alt="CLM Gestao"
+              className={cx("h-8 w-auto object-contain", showLabels ? "inline-flex" : "hidden")}
+              height={33}
+              priority
+              src="/images/clm-logo.svg"
+              width={110}
+            />
+            {!showLabels ? (
+              <span aria-hidden className="inline-flex h-9 w-9 items-center justify-center rounded-[10px] bg-[var(--brand-primary-main)] text-[var(--content-inverse)] [font-size:var(--typography-body-small-font-size)] [font-weight:600]">
+                CLM
+              </span>
+            ) : null}
           </div>
 
           <div className="flex items-center gap-2">
@@ -214,7 +223,7 @@ export function Sidebar({
 
           <button aria-label="Sair" className={sidebarLogoutStyles} onClick={onLogout} type="button">
             <LogOut className="h-4 w-4 shrink-0" />
-            {showLabels ? <span className={getSidebarLabelVisibilityStyles(isDesktopCollapsed)}>Sair</span> : null}
+            {showLabels ? <span>Sair</span> : null}
           </button>
         </footer>
       </aside>
