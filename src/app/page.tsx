@@ -8,7 +8,9 @@ import { Checkbox, CheckboxField } from "../components/ui/checkbox";
 import { DocumentUploadField } from "../components/ui/document-upload-field";
 import { CpfInput, DatePicker, Input, PhoneInput, RgInput, SearchInput, TextArea } from "../components/ui/input";
 import { ModalContainer } from "../components/ui/modal-container";
+import { NavItem } from "../components/ui/nav-item";
 import { SelectField } from "../components/ui/select-field";
+import { Sidebar } from "../components/ui/sidebar";
 import { Stepper } from "../components/ui/stepper";
 import { TableCard } from "../components/ui/table-card";
 
@@ -26,6 +28,11 @@ type StudentTableRow = {
 
 export default function HomePage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isNavItemCompositeOpen, setIsNavItemCompositeOpen] = useState(false);
+  const [activeSidebarItem, setActiveSidebarItem] = useState("overview");
+  const [activeSidebarModule, setActiveSidebarModule] = useState<string | null>("module-i");
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const studentRows: StudentTableRow[] = [
     {
       initials: "TL",
@@ -309,6 +316,111 @@ export default function HomePage() {
                 { id: "finish", label: "Finalizar" },
               ]}
             />
+          </div>
+        </section>
+
+        <section className="flex flex-col gap-4">
+          <h2 className="text-lg font-medium">Sidebar</h2>
+          <div className="relative h-[520px] w-full overflow-hidden rounded-2xl border border-[var(--border-primary)] bg-[var(--background-primary)]">
+            <Sidebar
+              activeItem={activeSidebarItem}
+              activeModuleId={activeSidebarModule}
+              isCollapsed={isSidebarCollapsed}
+              isOpen
+              onClose={() => undefined}
+              onNavigate={(itemId) => {
+                setActiveSidebarItem(itemId);
+              }}
+              onNavigateModule={(moduleId) => setActiveSidebarModule(moduleId)}
+              onToggleCollapse={() => {
+                setIsSidebarCollapsed((current) => !current);
+              }}
+              showOverlay={false}
+              showFloatingTrigger={false}
+            />
+            <div className="h-full pl-[280px] pr-6 pt-6">
+              <div className="rounded-xl border border-[var(--border-primary)] bg-[var(--background-secondary)] p-4 text-[var(--content-secondary)]">
+                Area de conteudo da pagina. Item ativo: {activeSidebarItem}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="flex flex-col gap-4">
+          <h2 className="text-lg font-medium">NavItem</h2>
+          <div className="grid w-full max-w-4xl gap-3 rounded-2xl border border-[var(--border-primary)] bg-[var(--background-secondary)] p-4">
+            <NavItem
+              icon={Search}
+              label="Item simples ativo"
+              onClick={() => undefined}
+              state="active"
+              variant="simple"
+            />
+
+            <NavItem
+              icon={Search}
+              label="Item simples inativo"
+              onClick={() => undefined}
+              state="inactive"
+              variant="simple"
+            />
+
+            <NavItem
+              ariaControls="nav-item-subpages"
+              ariaExpanded={isNavItemCompositeOpen}
+              icon={Search}
+              label="Item composto"
+              onClick={() => setIsNavItemCompositeOpen((current) => !current)}
+              showChevron
+              state={isNavItemCompositeOpen ? "active" : "inactive"}
+              variant="composite"
+            >
+              {isNavItemCompositeOpen ? (
+                <div className="grid gap-1" id="nav-item-subpages">
+                  <NavItem
+                    label="Subpagina 1"
+                    onClick={() => undefined}
+                    showLabel
+                    state="active"
+                    variant="subitem"
+                  />
+                  <NavItem
+                    label="Subpagina 2"
+                    onClick={() => undefined}
+                    showLabel
+                    state="inactive"
+                    variant="subitem"
+                  />
+                </div>
+              ) : null}
+            </NavItem>
+
+            <div className="mt-2 grid max-w-[92px] gap-2">
+              <NavItem
+                icon={Search}
+                label="Item colapsado ativo"
+                onClick={() => undefined}
+                showLabel={false}
+                state="active"
+                variant="simple-collapsed"
+              />
+              <NavItem
+                icon={Search}
+                label="Item colapsado inativo"
+                onClick={() => undefined}
+                showLabel={false}
+                state="inactive"
+                variant="simple-collapsed"
+              />
+              <NavItem
+                icon={Search}
+                label="Item composto colapsado"
+                onClick={() => undefined}
+                showLabel={false}
+                state="inactive"
+                variant="composite-collapsed"
+              />
+            </div>
           </div>
         </section>
       </div>
