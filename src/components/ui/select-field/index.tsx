@@ -25,6 +25,7 @@ export function SelectField({
   id,
   label,
   name,
+  onChange,
   onValueChange,
   options,
   placeholder = "Selecione",
@@ -43,7 +44,9 @@ export function SelectField({
     defaultValue === undefined ? NONE_VALUE : defaultValue === "" ? NONE_VALUE : defaultValue;
 
   const handleValueChange = (nextValue: string) => {
-    onValueChange?.(nextValue === NONE_VALUE ? "" : nextValue);
+    const normalizedValue = nextValue === NONE_VALUE ? "" : nextValue;
+    onValueChange?.(normalizedValue);
+    onChange?.(normalizedValue);
   };
 
   const selectRoot = (

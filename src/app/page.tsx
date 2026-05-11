@@ -3,7 +3,7 @@ import { Badge } from "../components/ui/badge";
 import { Button, IconButton } from "../components/ui/button";
 import { Checkbox, CheckboxField } from "../components/ui/checkbox";
 import { DocumentUploadField } from "../components/ui/document-upload-field";
-import { CpfInput, DatePicker, Input, PhoneInput, RgInput, SearchInput } from "../components/ui/input";
+import { CpfInput, DatePicker, Input, PhoneInput, RgInput, SearchInput, TextArea } from "../components/ui/input";
 import { SelectField } from "../components/ui/select-field";
 
 export default function HomePage() {
@@ -109,6 +109,7 @@ export default function HomePage() {
             <PhoneInput label="Telefone" placeholder="(00) 00000-0000" />
             <DatePicker label="Data de nascimento" />
             <SearchInput placeholder="Buscar aluno, turma, matrÃ­cula..." />
+            <TextArea label="Observações" placeholder="Digite observações adicionais..." />
           </div>
         </section>
 

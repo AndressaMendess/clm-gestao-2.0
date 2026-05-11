@@ -9,7 +9,7 @@ const meta = {
     docs: {
       description: {
         component:
-          "O `tone` e aplicado apenas no estado vazio. Quando existe erro de validacao, o estado `error` tem prioridade. Quando ha arquivo selecionado, o estado `success` e aplicado automaticamente.",
+          "O `tone` e aplicado apenas no estado vazio. Quando existe erro de validacao, o estado `error` tem prioridade. Quando ha arquivo selecionado, o estado `success` e aplicado automaticamente. Para back-end, use `onFileChange` e `onFileStateChange`.",
       },
     },
   },

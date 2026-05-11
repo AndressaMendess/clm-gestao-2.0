@@ -12,6 +12,7 @@ import type { InputProps } from "./input.types";
 export type DatePickerProps = Omit<InputProps, "defaultValue" | "onChange" | "type" | "value"> & {
   defaultValue?: string;
   onChange?: InputProps["onChange"];
+  onDateChange?: (payload: { isoValue: string | null; maskedValue: string }) => void;
   onValueChange?: (isoValue: string | null, maskedValue: string) => void;
   value?: string;
 };
@@ -32,6 +33,7 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(function
     label,
     onBlur,
     onChange,
+    onDateChange,
     onKeyDown,
     onValueChange,
     showLabel = true,
@@ -63,7 +65,9 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(function
   };
 
   const emitMasked = (maskedValue: string) => {
-    onValueChange?.(parseMaskedDateToIso(maskedValue), maskedValue);
+    const isoValue = parseMaskedDateToIso(maskedValue);
+    onValueChange?.(isoValue, maskedValue);
+    onDateChange?.({ isoValue, maskedValue });
   };
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {

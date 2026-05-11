@@ -10,7 +10,15 @@ const options = [
 const meta = {
   title: "Components/UI/SelectField",
   component: SelectField,
-  parameters: { layout: "centered" },
+  parameters: {
+    layout: "centered",
+    docs: {
+      description: {
+        component:
+          "Para integracao com formularios, use `onValueChange` ou `onChange` (ambos retornam `string`). A opcao neutra sempre usa o texto do placeholder e retorna valor vazio (`\"\"`).",
+      },
+    },
+  },
   decorators: [
     (Story) => (
       <div className="w-[360px] rounded-xl bg-[var(--background-primary)] p-6">

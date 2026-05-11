@@ -45,6 +45,7 @@ export function DocumentUploadField({
   maxSizeMb = 5,
   name,
   onFileChange,
+  onFileStateChange,
   onValidationError,
   required,
   tone = "default",
@@ -66,6 +67,21 @@ export function DocumentUploadField({
     onValidationError?.(message);
   };
 
+  const emitFileState = (file: File | null, message: string | null) => {
+    onFileStateChange?.({
+      errorMessage: message,
+      file,
+      isValid: Boolean(file) && !message,
+      metadata: file
+        ? {
+            name: file.name,
+            size: file.size,
+            type: file.type,
+          }
+        : null,
+    });
+  };
+
   const updateFile = (file: File | null) => {
     if (value === undefined) {
       setInternalFile(file);
@@ -77,6 +93,7 @@ export function DocumentUploadField({
     if (!file) {
       updateFile(null);
       setError(null);
+      emitFileState(null, null);
       return;
     }
 
@@ -84,6 +101,7 @@ export function DocumentUploadField({
       const message = "Formato invalido. Envie PDF ou imagem.";
       setError(message);
       updateFile(null);
+      emitFileState(file, message);
       return;
     }
 
@@ -92,11 +110,13 @@ export function DocumentUploadField({
       const message = `Arquivo excede ${maxSizeMb}MB.`;
       setError(message);
       updateFile(null);
+      emitFileState(file, message);
       return;
     }
 
     setError(null);
     updateFile(file);
+    emitFileState(file, null);
   };
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {

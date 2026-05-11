@@ -28,3 +28,7 @@ export function getInputFieldStyles(tone: InputHelperTone): string {
 export function getInputHelperStyles(tone: InputHelperTone): string {
   return `[font-size:var(--typography-body-medium-font-size)] [line-height:var(--typography-body-medium-line-height)] [font-weight:var(--typography-body-medium-font-weight)] [letter-spacing:var(--typography-body-medium-letter-spacing)] ${helperToneStyles[tone]}`;
 }
+
+export function getTextAreaFieldStyles(tone: InputHelperTone): string {
+  return `${baseInputStyles} ${fieldToneStyles[tone]} min-h-[120px] resize-y`;
+}

@@ -4,7 +4,15 @@ import { DatePicker } from "./index";
 const meta = {
   title: "Components/UI/Input/DatePicker",
   component: DatePicker,
-  parameters: { layout: "centered" },
+  parameters: {
+    layout: "centered",
+    docs: {
+      description: {
+        component:
+          "Use `onDateChange` para receber o valor serializado em ISO (`YYYY-MM-DD`) junto com a mascara (`DD/MM/AAAA`).",
+      },
+    },
+  },
   decorators: [
     (Story) => (
       <div className="w-[360px] rounded-xl bg-[var(--background-primary)] p-6">
