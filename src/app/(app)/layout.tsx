@@ -46,6 +46,7 @@ export default function AppLayout({ children }: AppShellProps) {
   const router = useRouter();
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const isPlaygroundPage = pathname.startsWith("/playground");
 
   useEffect(() => {
     setIsSidebarOpen(false);
@@ -56,54 +57,59 @@ export default function AppLayout({ children }: AppShellProps) {
 
   return (
     <main className="min-h-screen bg-[var(--background-secondary)]">
-      <div
-        aria-hidden={!isSidebarOpen}
-        className={isSidebarOpen ? "pointer-events-auto lg:hidden" : "pointer-events-none lg:hidden"}
-      >
-        <Sidebar
-          instanceId="mobile-sidebar"
-          activeItem={activeItem}
-          activeModuleId={activeModule}
-          collapsible={false}
-          isCollapsed={false}
-          isOpen={isSidebarOpen}
-          onClose={() => setIsSidebarOpen(false)}
-          onNavigate={(itemId) => {
-            if (isNavRouteItemId(itemId)) router.push(navRouteMap[itemId]);
-            setIsSidebarOpen(false);
-          }}
-          onNavigateModule={(moduleId) => {
-            router.push(`/modules/${moduleId}`);
-            setIsSidebarOpen(false);
-          }}
-          showFloatingTrigger={false}
-        />
-      </div>
-
-      <div className="flex min-h-screen">
-        <div className="hidden lg:block">
+      {!isPlaygroundPage ? (
+        <div
+          aria-hidden={!isSidebarOpen}
+          className={isSidebarOpen ? "pointer-events-auto lg:hidden" : "pointer-events-none lg:hidden"}
+        >
           <Sidebar
-            instanceId="desktop-sidebar"
+            instanceId="mobile-sidebar"
             activeItem={activeItem}
             activeModuleId={activeModule}
-            isCollapsed={isSidebarCollapsed}
-            isOpen
+            collapsible={false}
+            isCollapsed={false}
+            isOpen={isSidebarOpen}
+            onClose={() => setIsSidebarOpen(false)}
             onNavigate={(itemId) => {
               if (isNavRouteItemId(itemId)) router.push(navRouteMap[itemId]);
+              setIsSidebarOpen(false);
             }}
             onNavigateModule={(moduleId) => {
               router.push(`/modules/${moduleId}`);
+              setIsSidebarOpen(false);
             }}
-            onToggleCollapse={() => setIsSidebarCollapsed((current) => !current)}
             showFloatingTrigger={false}
           />
         </div>
+      ) : null}
+
+      <div className="flex min-h-screen">
+        {!isPlaygroundPage ? (
+          <div className="hidden lg:block">
+            <Sidebar
+              instanceId="desktop-sidebar"
+              activeItem={activeItem}
+              activeModuleId={activeModule}
+              isCollapsed={isSidebarCollapsed}
+              isOpen
+              onNavigate={(itemId) => {
+                if (isNavRouteItemId(itemId)) router.push(navRouteMap[itemId]);
+              }}
+              onNavigateModule={(moduleId) => {
+                router.push(`/modules/${moduleId}`);
+              }}
+              onToggleCollapse={() => setIsSidebarCollapsed((current) => !current)}
+              showFloatingTrigger={false}
+            />
+          </div>
+        ) : null}
 
         <div className="flex-1 min-w-0">
           <ContentShell
             className="p-0"
             contentClassName="min-h-screen"
-            onMenuClick={() => setIsSidebarOpen(true)}
+            onMenuClick={!isPlaygroundPage ? () => setIsSidebarOpen(true) : undefined}
+            showTopbarMenuButton={!isPlaygroundPage}
           >
             {children}
           </ContentShell>

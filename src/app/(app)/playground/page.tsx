@@ -1,12 +1,13 @@
 "use client";
 
-import { CheckCircle2, Plus, Search } from "lucide-react";
+import { CheckCircle2, Plus, Search, Users } from "lucide-react";
 import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button, IconButton } from "@/components/ui/button";
 import { Checkbox, CheckboxField } from "@/components/ui/checkbox";
 import { ContentShell } from "@/components/ui/content-shell";
 import { DocumentUploadField } from "@/components/ui/document-upload-field";
+import { FeatureCard } from "@/components/ui/feature-card";
 import { CpfInput, DatePicker, Input, PhoneInput, RgInput, SearchInput, TextArea } from "@/components/ui/input";
 import { ModalContainer } from "@/components/ui/modal-container";
 import { NavItem } from "@/components/ui/nav-item";
@@ -248,6 +249,18 @@ export default function HomePage() {
         </section>
 
         <section className="flex flex-col gap-4">
+          <h2 className="text-lg font-medium">FeatureCard</h2>
+          <div className="w-full max-w-[520px]">
+            <FeatureCard
+              icon={Users}
+              onClick={() => undefined}
+              subtitle="Gerencie o cadastro completo de alunos."
+              title="Alunos"
+            />
+          </div>
+        </section>
+
+        <section className="flex flex-col gap-4">
           <h2 className="text-lg font-medium">TableCard</h2>
           <TableCard
             ariaLabel="Tabela de alunos"
@@ -331,29 +344,34 @@ export default function HomePage() {
 
         <section className="flex flex-col gap-4">
           <h2 className="text-lg font-medium">Sidebar</h2>
-          <div className="relative h-[520px] w-full overflow-hidden rounded-2xl border border-[var(--border-primary)] bg-[var(--background-primary)]">
-            <Sidebar
-              activeItem={activeSidebarItem}
-              activeModuleId={activeSidebarModule}
-              isCollapsed={isSidebarCollapsed}
-              isOpen
-              onClose={() => undefined}
-              onNavigate={(itemId) => {
-                setActiveSidebarItem(itemId);
-              }}
-              onNavigateModule={(moduleId) => setActiveSidebarModule(moduleId)}
-              onToggleCollapse={() => {
-                setIsSidebarCollapsed((current) => !current);
-              }}
-              showOverlay={false}
-              showFloatingTrigger={false}
-            />
-            <div className="h-full pl-[280px] pr-6 pt-6">
-              <div className="rounded-xl border border-[var(--border-primary)] bg-[var(--background-secondary)] p-4 text-[var(--content-secondary)]">
-                Area de conteudo da pagina. Item ativo: {activeSidebarItem}
+          <div className="hidden lg:block">
+            <div className="relative h-[520px] w-full overflow-hidden rounded-2xl border border-[var(--border-primary)] bg-[var(--background-primary)]">
+              <Sidebar
+                activeItem={activeSidebarItem}
+                activeModuleId={activeSidebarModule}
+                isCollapsed={isSidebarCollapsed}
+                isOpen
+                onClose={() => undefined}
+                onNavigate={(itemId) => {
+                  setActiveSidebarItem(itemId);
+                }}
+                onNavigateModule={(moduleId) => setActiveSidebarModule(moduleId)}
+                onToggleCollapse={() => {
+                  setIsSidebarCollapsed((current) => !current);
+                }}
+                showOverlay={false}
+                showFloatingTrigger={false}
+              />
+              <div className="h-full pl-[280px] pr-6 pt-6">
+                <div className="rounded-xl border border-[var(--border-primary)] bg-[var(--background-secondary)] p-4 text-[var(--content-secondary)]">
+                  Area de conteudo da pagina. Item ativo: {activeSidebarItem}
+                </div>
               </div>
             </div>
           </div>
+          <p className="text-sm text-[var(--content-tertiary)] lg:hidden">
+            Preview da Sidebar disponivel apenas em telas desktop no playground.
+          </p>
         </section>
 
         <section className="flex flex-col gap-4">
