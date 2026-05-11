@@ -60,8 +60,10 @@ const defaultUser = {
 };
 
 export function Sidebar({
+  instanceId = "sidebar",
   activeItem,
   activeModuleId = null,
+  collapsible = true,
   isCollapsed = false,
   isOpen = false,
   moduleItems = defaultModules,
@@ -77,18 +79,33 @@ export function Sidebar({
   user = defaultUser,
 }: SidebarProps) {
   const [isModulesOpen, setIsModulesOpen] = useState(false);
+  const [internalCollapsed, setInternalCollapsed] = useState(isCollapsed);
   const [selectedModuleId, setSelectedModuleId] = useState<string | null>(activeModuleId);
 
   useEffect(() => {
     setSelectedModuleId(activeModuleId);
   }, [activeModuleId]);
 
-  const isDesktopCollapsed = isCollapsed;
+  useEffect(() => {
+    setInternalCollapsed(isCollapsed);
+  }, [isCollapsed]);
+
+  const isDesktopCollapsed = internalCollapsed;
   const showLabels = !isDesktopCollapsed;
   const ToggleIcon = isDesktopCollapsed ? PanelLeftOpen : PanelLeftClose;
 
+  const handleToggleCollapse = () => {
+    if (!collapsible) return;
+    if (onToggleCollapse) {
+      onToggleCollapse();
+      return;
+    }
+    setInternalCollapsed((current) => !current);
+  };
+
   const primaryBlockItems = useMemo(() => primaryItems.slice(0, 3), [primaryItems]);
   const secondaryBlockItems = useMemo(() => secondaryItems.slice(0, 2), [secondaryItems]);
+  const moduleSubitemsId = `${instanceId}-modules-subitems`;
 
   return (
     <>
@@ -100,35 +117,43 @@ export function Sidebar({
         />
       ) : null}
 
-      <aside className={cx(sidebarShellStyles, getSidebarStateStyles(isDesktopCollapsed, isOpen))}>
+      <aside
+        aria-hidden={!isOpen}
+        className={cx(sidebarShellStyles, getSidebarStateStyles(isDesktopCollapsed, isOpen))}
+        inert={!isOpen}
+        style={{ width: isDesktopCollapsed ? "92px" : "280px" }}
+      >
         <header className={sidebarHeaderStyles}>
           <div className={sidebarBrandStyles}>
-            <Image
-              alt="CLM Gestao"
-              className={cx("h-8 w-auto object-contain", showLabels ? "inline-flex" : "hidden")}
-              height={33}
-              priority
-              src="/images/clm-logo.svg"
-              width={110}
-            />
-            {!showLabels ? (
+            {showLabels ? (
+              <Image
+                alt="CLM Gestao"
+                className="h-8 w-auto object-contain"
+                height={33}
+                priority
+                src="/images/clm-logo.svg"
+                width={110}
+              />
+            ) : (
               <span aria-hidden className="inline-flex h-9 w-9 items-center justify-center rounded-[10px] bg-[var(--brand-primary-main)] text-[var(--content-inverse)] [font-size:var(--typography-body-small-font-size)] [font-weight:600]">
                 CLM
               </span>
-            ) : null}
+            )}
           </div>
 
           <div className="flex items-center gap-2">
-            <button
-              aria-label={isDesktopCollapsed ? "Expandir sidebar" : "Colapsar sidebar"}
-              className="hidden lg:inline-flex"
-              onClick={onToggleCollapse}
-              type="button"
-            >
-              <span className={sidebarIconButtonStyles}>
-                <ToggleIcon className="h-5 w-5" />
-              </span>
-            </button>
+            {collapsible ? (
+              <button
+                aria-label={isDesktopCollapsed ? "Expandir sidebar" : "Colapsar sidebar"}
+                className="hidden lg:inline-flex"
+                onClick={handleToggleCollapse}
+                type="button"
+              >
+                <span className={sidebarIconButtonStyles}>
+                  <ToggleIcon className="h-5 w-5" />
+                </span>
+              </button>
+            ) : null}
             <button aria-label="Fechar menu" className="inline-flex lg:hidden" onClick={onClose} type="button">
               <span className={sidebarIconButtonStyles}>
                 <X className="h-5 w-5" />
@@ -162,7 +187,7 @@ export function Sidebar({
               <div className={sidebarDividerStyles} />
               <nav aria-label="Navegacao secundaria" className={sidebarNavStyles}>
                 <NavItem
-                  ariaControls="sidebar-modules-subitems"
+                  ariaControls={moduleSubitemsId}
                   ariaExpanded={isModulesOpen}
                   icon={Music2}
                   label="Modulos"
@@ -173,7 +198,7 @@ export function Sidebar({
                   variant={showLabels ? "composite" : "composite-collapsed"}
                 >
                   {isModulesOpen && showLabels ? (
-                    <div className={sidebarModulesListStyles} id="sidebar-modules-subitems">
+                    <div className={sidebarModulesListStyles} id={moduleSubitemsId}>
                       {moduleItems.map((moduleItem) => {
                         const isActive = moduleItem.id === selectedModuleId;
                         return (

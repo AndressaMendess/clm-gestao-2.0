@@ -8,7 +8,7 @@ export function getSidebarOverlayStateStyles(open: boolean): string {
 }
 
 export const sidebarShellStyles =
-  "relative z-50 flex h-screen w-[280px] shrink-0 flex-col border-r border-[var(--border-primary)] bg-[var(--background-secondary)] transition-[width,transform] duration-200";
+  "z-50 flex h-screen w-[280px] shrink-0 flex-col border-r border-[var(--border-primary)] bg-[var(--background-secondary)] transition-[width,transform] duration-200";
 
 export function getSidebarStateStyles(collapsed: boolean, open: boolean): string {
   return cx(
