@@ -1,19 +1,25 @@
-﻿import { CheckCircle2, Plus, Search } from "lucide-react";
+"use client";
+
+import { CheckCircle2, Plus, Search } from "lucide-react";
+import { useState } from "react";
 import { Badge } from "../components/ui/badge";
 import { Button, IconButton } from "../components/ui/button";
 import { Checkbox, CheckboxField } from "../components/ui/checkbox";
 import { DocumentUploadField } from "../components/ui/document-upload-field";
 import { CpfInput, DatePicker, Input, PhoneInput, RgInput, SearchInput, TextArea } from "../components/ui/input";
+import { ModalContainer } from "../components/ui/modal-container";
 import { SelectField } from "../components/ui/select-field";
 
 export default function HomePage() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <main className="min-h-screen bg-[var(--background-primary)] px-6 py-10 text-[var(--content-primary)]">
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-10">
         <section className="flex flex-col gap-4">
           <h1 className="text-2xl font-medium">UI Playground</h1>
           <p className="text-sm text-[var(--content-secondary)]">
-            PÃ¡gina de validaÃ§Ã£o visual dos componentes e variantes.
+            Pagina de validacao visual dos componentes e variantes.
           </p>
         </section>
 
@@ -58,7 +64,7 @@ export default function HomePage() {
               Online
             </Badge>
             <Badge appearance="icon" icon={<CheckCircle2 size={14} />} variant="success">
-              ConcluÃ­do
+              Concluido
             </Badge>
           </div>
         </section>
@@ -76,8 +82,8 @@ export default function HomePage() {
           <div className="flex flex-wrap items-center gap-4">
             <CheckboxField
               defaultChecked
-              description="Receber notificaÃ§Ãµes por e-mail."
-              label="NotificaÃ§Ãµes"
+              description="Receber notificacoes por e-mail."
+              label="Notificacoes"
               variant="success"
             />
           </div>
@@ -87,29 +93,15 @@ export default function HomePage() {
           <h2 className="text-lg font-medium">Input</h2>
           <div className="grid w-full max-w-4xl grid-cols-1 gap-4 md:grid-cols-2">
             <Input label="Nome" placeholder="Digite seu nome" />
-            <Input
-              helperText="Use seu e-mail institucional."
-              label="E-mail"
-              placeholder="nome@empresa.com"
-            />
-            <Input
-              helperText="Campo obrigatÃ³rio."
-              tone="error"
-              label="Documento"
-              placeholder="000.000.000-00"
-            />
-            <Input
-              defaultValue="Andressa"
-              helperText="Valor vÃ¡lido."
-              tone="success"
-              label="Nome completo"
-            />
+            <Input helperText="Use seu e-mail institucional." label="E-mail" placeholder="nome@empresa.com" />
+            <Input helperText="Campo obrigatorio." tone="error" label="Documento" placeholder="000.000.000-00" />
+            <Input defaultValue="Andressa" helperText="Valor valido." tone="success" label="Nome completo" />
             <CpfInput label="CPF" placeholder="000.000.000-00" />
             <RgInput label="RG" placeholder="00.000.000-0" />
             <PhoneInput label="Telefone" placeholder="(00) 00000-0000" />
             <DatePicker label="Data de nascimento" />
-            <SearchInput placeholder="Buscar aluno, turma, matrÃ­cula..." />
-            <TextArea label="Observações" placeholder="Digite observações adicionais..." />
+            <SearchInput placeholder="Buscar aluno, turma, matricula..." />
+            <TextArea label="Observacoes" placeholder="Digite observacoes adicionais..." />
           </div>
         </section>
 
@@ -131,14 +123,42 @@ export default function HomePage() {
         <section className="flex flex-col gap-4">
           <h2 className="text-lg font-medium">DocumentUploadField</h2>
           <div className="grid w-full max-w-4xl grid-cols-1 gap-4 md:grid-cols-2">
-            <DocumentUploadField
-              label="Upload de documento"
-              maxSizeMb={5}
-            />
+            <DocumentUploadField label="Upload de documento" maxSizeMb={5} />
           </div>
+        </section>
+
+        <section className="flex flex-col gap-4">
+          <h2 className="text-lg font-medium">ModalContainer</h2>
+          <div className="flex flex-wrap items-center gap-4">
+            <Button onClick={() => setIsModalOpen(true)} variant="primary">
+              Abrir modal
+            </Button>
+          </div>
+
+          <ModalContainer
+            closeLabel="Fechar modal de exemplo"
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+            subtitle="Esse modal reutiliza o mesmo header e footer."
+            title="Adicionar aluno"
+            footer={
+              <>
+                <Button onClick={() => setIsModalOpen(false)} variant="ghost">
+                  Cancelar
+                </Button>
+                <Button variant="primary">Continuar</Button>
+              </>
+            }
+          >
+            <div className="grid gap-2">
+              <strong className="text-[var(--content-primary)]">Conteudo dinamico</strong>
+              <p className="text-[var(--content-secondary)]">
+                O miolo muda por fluxo, mantendo estrutura padronizada.
+              </p>
+            </div>
+          </ModalContainer>
         </section>
       </div>
     </main>
   );
 }
-
