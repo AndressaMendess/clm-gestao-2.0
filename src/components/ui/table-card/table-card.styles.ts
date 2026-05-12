@@ -48,6 +48,13 @@ export const tableCardMobileRowTopStyles = "mb-2 flex items-start gap-2";
 export const tableCardMobileFieldStyles = "grid gap-1 py-2 first:pt-0";
 export const tableCardMobileFieldLabelStyles =
   "text-[var(--content-secondary)] [font-size:var(--typography-body-small-font-size)] [line-height:var(--typography-body-small-line-height)] [font-weight:var(--typography-body-small-semibold-font-weight)] [letter-spacing:var(--typography-body-small-letter-spacing)]";
+export const tableCardPaginationStyles =
+  "flex items-center justify-between border-t border-[var(--border-primary)] px-4 py-3";
+export const tableCardPaginationPagesStyles = "inline-flex items-center gap-1";
+export const tableCardPaginationPageButtonBaseStyles =
+  "inline-flex h-8 min-w-8 items-center justify-center rounded-[8px] px-2 [font-size:var(--typography-body-medium-regular-font-size)] [line-height:var(--typography-body-medium-regular-line-height)] [font-weight:var(--typography-body-medium-regular-font-weight)] [letter-spacing:var(--typography-body-medium-regular-letter-spacing)] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--button-focus-ring)] focus-visible:ring-offset-2";
+export const tableCardPaginationPageButtonActiveStyles =
+  "bg-[var(--brand-primary-subtle)] text-[var(--brand-primary-strong)]";
 
 export function getTableCardAlignStyles(align: TableCardAlign = "left"): string {
   if (align === "center") return "text-center";

@@ -1,8 +1,9 @@
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown, ChevronLeft, ChevronRight, ChevronUp } from "lucide-react";
 import { isValidElement, useMemo, useState } from "react";
 import type { ReactNode } from "react";
 import { cx } from "@/lib/cx";
 import { Badge } from "../badge";
+import { Button } from "../button";
 import { Checkbox } from "../checkbox";
 import {
   getTableCardAlignStyles,
@@ -19,6 +20,10 @@ import {
   tableCardMobileItemStyles,
   tableCardMobileListStyles,
   tableCardMobileRowTopStyles,
+  tableCardPaginationPageButtonActiveStyles,
+  tableCardPaginationPageButtonBaseStyles,
+  tableCardPaginationPagesStyles,
+  tableCardPaginationStyles,
   tableCardHeadRowStyles,
   tableCardScrollWrapperStyles,
   tableCardSelectionCellStyles,
@@ -114,6 +119,7 @@ export function TableCard<Row extends Record<string, unknown>>({
   rowClassName,
   rowKey,
   rows,
+  pageSize = 10,
   selectableRows = false,
   selectedRowKeys,
   sortState,
@@ -124,6 +130,7 @@ export function TableCard<Row extends Record<string, unknown>>({
   const [internalSortState, setInternalSortState] = useState<TableCardSortState | null>(null);
   const [internalSelectedRowKeys, setInternalSelectedRowKeys] =
     useState<string[]>(defaultSelectedRowKeys);
+  const [currentPage, setCurrentPage] = useState(1);
   const resolvedSortState = sortState === undefined ? internalSortState : sortState;
   const resolvedSelectedRowKeys =
     selectedRowKeys === undefined ? internalSelectedRowKeys : selectedRowKeys;
@@ -141,9 +148,17 @@ export function TableCard<Row extends Record<string, unknown>>({
   }, [activeSortColumn, resolvedSortState, rows]);
 
   const hasRows = resolvedRows.length > 0;
+  const shouldPaginate = !isLoading && resolvedRows.length > pageSize;
+  const totalPages = shouldPaginate ? Math.ceil(resolvedRows.length / pageSize) : 1;
+  const safeCurrentPage = Math.min(currentPage, totalPages);
+  const pageStart = (safeCurrentPage - 1) * pageSize;
+  const pageEnd = pageStart + pageSize;
+  const paginatedRows = shouldPaginate ? resolvedRows.slice(pageStart, pageEnd) : resolvedRows;
   const statusMessage = isLoading ? loadingMessage : emptyMessage;
   const showStatusRow = !hasRows || isLoading;
-  const visibleRowKeys = resolvedRows.map((row, rowIndex) => resolveRowKey(rowKey, row, rowIndex));
+  const visibleRowKeys = paginatedRows.map((row, rowIndex) =>
+    resolveRowKey(rowKey, row, pageStart + rowIndex),
+  );
   const selectedVisibleCount = visibleRowKeys.filter((key) => resolvedSelectedRowKeys.includes(key)).length;
   const allVisibleSelected = visibleRowKeys.length > 0 && selectedVisibleCount === visibleRowKeys.length;
   const someVisibleSelected = selectedVisibleCount > 0 && !allVisibleSelected;
@@ -187,6 +202,18 @@ export function TableCard<Row extends Record<string, unknown>>({
       ? resolvedSelectedRowKeys.filter((key) => key !== targetKey)
       : [...resolvedSelectedRowKeys, targetKey];
     updateSelection(nextKeys);
+  };
+
+  const goToPreviousPage = () => {
+    setCurrentPage((page) => Math.max(1, page - 1));
+  };
+
+  const goToNextPage = () => {
+    setCurrentPage((page) => Math.min(totalPages, page + 1));
+  };
+
+  const handleGoToPage = (page: number) => {
+    setCurrentPage(Math.min(Math.max(1, page), totalPages));
   };
 
   const renderCellValue = (row: Row, column: TableCardColumn<Row>, rowIndex: number) => {
@@ -274,9 +301,10 @@ export function TableCard<Row extends Record<string, unknown>>({
             ) : null}
 
             {!isLoading
-              ? resolvedRows.map((row, rowIndex) => {
+              ? paginatedRows.map((row, rowIndex) => {
                   const interactive = Boolean(onRowClick);
-                  const currentRowKey = resolveRowKey(rowKey, row, rowIndex);
+                  const absoluteRowIndex = pageStart + rowIndex;
+                  const currentRowKey = resolveRowKey(rowKey, row, absoluteRowIndex);
                   return (
                     <tr
                       className={cx(
@@ -285,13 +313,13 @@ export function TableCard<Row extends Record<string, unknown>>({
                         rowClassName,
                       )}
                       key={currentRowKey}
-                      onClick={interactive ? () => onRowClick?.(row, rowIndex) : undefined}
+                      onClick={interactive ? () => onRowClick?.(row, absoluteRowIndex) : undefined}
                       onKeyDown={
                         interactive
                           ? (event) => {
                               if (event.key === "Enter" || event.key === " ") {
                                 event.preventDefault();
-                                onRowClick?.(row, rowIndex);
+                                onRowClick?.(row, absoluteRowIndex);
                               }
                             }
                           : undefined
@@ -329,20 +357,21 @@ export function TableCard<Row extends Record<string, unknown>>({
         {showStatusRow ? (
           <div className={tableCardStatusCellStyles}>{statusMessage}</div>
         ) : (
-          resolvedRows.map((row, rowIndex) => {
+          paginatedRows.map((row, rowIndex) => {
             const interactive = Boolean(onRowClick);
-            const currentRowKey = resolveRowKey(rowKey, row, rowIndex);
+            const absoluteRowIndex = pageStart + rowIndex;
+            const currentRowKey = resolveRowKey(rowKey, row, absoluteRowIndex);
             return (
               <article
                 className={cx(tableCardMobileItemStyles, interactive && tableCardClickableRowStyles, rowClassName)}
                 key={currentRowKey}
-                onClick={interactive ? () => onRowClick?.(row, rowIndex) : undefined}
+                onClick={interactive ? () => onRowClick?.(row, absoluteRowIndex) : undefined}
                 onKeyDown={
                   interactive
                     ? (event) => {
                         if (event.key === "Enter" || event.key === " ") {
                           event.preventDefault();
-                          onRowClick?.(row, rowIndex);
+                          onRowClick?.(row, absoluteRowIndex);
                         }
                       }
                     : undefined
@@ -362,7 +391,7 @@ export function TableCard<Row extends Record<string, unknown>>({
                 {mobileColumns.map((column) => (
                   <div className={tableCardMobileFieldStyles} key={column.id}>
                     <span className={tableCardMobileFieldLabelStyles}>{column.header}</span>
-                    <div>{renderCellValue(row, column, rowIndex)}</div>
+                    <div>{renderCellValue(row, column, absoluteRowIndex)}</div>
                   </div>
                 ))}
               </article>
@@ -370,6 +399,46 @@ export function TableCard<Row extends Record<string, unknown>>({
           })
         )}
       </div>
+
+      {shouldPaginate ? (
+        <footer className={tableCardPaginationStyles}>
+          <Button
+            aria-label="Página anterior"
+            disabled={safeCurrentPage === 1}
+            icon={ChevronLeft}
+            variant="icon"
+            onClick={goToPreviousPage}
+          />
+          <div className={tableCardPaginationPagesStyles}>
+            {Array.from({ length: totalPages }, (_, index) => {
+              const page = index + 1;
+              const isActivePage = page === safeCurrentPage;
+              return (
+                <button
+                  aria-current={isActivePage ? "page" : undefined}
+                  aria-label={`Ir para página ${page}`}
+                  className={cx(
+                    tableCardPaginationPageButtonBaseStyles,
+                    isActivePage && tableCardPaginationPageButtonActiveStyles,
+                  )}
+                  key={page}
+                  onClick={() => handleGoToPage(page)}
+                  type="button"
+                >
+                  {page}
+                </button>
+              );
+            })}
+          </div>
+          <Button
+            aria-label="Próxima página"
+            disabled={safeCurrentPage === totalPages}
+            icon={ChevronRight}
+            variant="icon"
+            onClick={goToNextPage}
+          />
+        </footer>
+      ) : null}
     </div>
   );
 }

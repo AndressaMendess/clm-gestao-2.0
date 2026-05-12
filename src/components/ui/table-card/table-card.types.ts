@@ -50,6 +50,7 @@ export type TableCardProps<Row extends Record<string, unknown> = Record<string, 
   /** Stable row id: property name or function. Defaults to row index (not ideal for selection/sort). */
   rowKey?: keyof Row | ((row: Row, rowIndex: number) => string);
   rows: Row[];
+  pageSize?: number;
   selectableRows?: boolean;
   selectedRowKeys?: string[];
   sortState?: TableCardSortState | null;

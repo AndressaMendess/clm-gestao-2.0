@@ -96,6 +96,75 @@ export default function HomePage() {
       classroomVariant: "pink",
     },
   ];
+  const studentRowsPaginated: StudentTableRow[] = [
+    ...studentRows,
+    {
+      initials: "AM",
+      name: "Amanda Martins",
+      status: "Ativo",
+      phone: "(11) 91432-4455",
+      email: "amanda.martins@email.com",
+      module: "Módulo II",
+      moduleVariant: "orange",
+      classroom: "Violão",
+      classroomVariant: "pink",
+    },
+    {
+      initials: "CV",
+      name: "Caio Vieira",
+      status: "Ativo",
+      phone: "(11) 91543-5566",
+      email: "caio.vieira@email.com",
+      module: "Módulo I",
+      moduleVariant: "violet",
+      classroom: "Classe 5",
+      classroomVariant: "blue",
+    },
+    {
+      initials: "LM",
+      name: "Larissa Moura",
+      status: "Trancamento",
+      phone: "(11) 91654-6677",
+      email: "larissa.moura@email.com",
+      module: "Módulo III",
+      moduleVariant: "orange",
+      classroom: "Canto",
+      classroomVariant: "pink",
+    },
+    {
+      initials: "EG",
+      name: "Eduardo Gomes",
+      status: "Ativo",
+      phone: "(11) 91765-7788",
+      email: "eduardo.gomes@email.com",
+      module: "Módulo I",
+      moduleVariant: "violet",
+      classroom: "Classe 6",
+      classroomVariant: "blue",
+    },
+    {
+      initials: "NB",
+      name: "Natália Barbosa",
+      status: "Ativo",
+      phone: "(11) 91876-8899",
+      email: "natalia.barbosa@email.com",
+      module: "Módulo II",
+      moduleVariant: "orange",
+      classroom: "Percussão",
+      classroomVariant: "blue",
+    },
+    {
+      initials: "RF",
+      name: "Renato Faria",
+      status: "Trancamento",
+      phone: "(11) 91987-9900",
+      email: "renato.faria@email.com",
+      module: "Módulo III",
+      moduleVariant: "orange",
+      classroom: "Classe 7",
+      classroomVariant: "pink",
+    },
+  ];
 
   return (
     <main className="min-h-screen bg-[var(--background-primary)] px-6 py-10 text-[var(--content-primary)]">
@@ -341,6 +410,76 @@ export default function HomePage() {
               },
             ]}
             rows={studentRows}
+          />
+        </section>
+
+        <section className="flex flex-col gap-4">
+          <h2 className="text-lg font-medium">TableCard (Paginação)</h2>
+          <TableCard
+            ariaLabel="Tabela de alunos com paginação"
+            rowKey={(row) => row.email}
+            selectableRows
+            title="Alunos"
+            titleBadge={`${studentRowsPaginated.length} alunos`}
+            columns={[
+              {
+                id: "name",
+                header: "Nome",
+                key: "name",
+                sortable: true,
+                render: (row) => (
+                  <div className="flex items-center gap-3">
+                    <Avatar
+                      alt={`Avatar de ${row.name}`}
+                      initials={row.initials}
+                      name={row.name}
+                      src={row.avatarSrc}
+                      variant={row.avatarSrc ? "with-image" : "without-image"}
+                    />
+                    <span className="[font-size:var(--typography-body-medium-semibold-font-size)] [line-height:var(--typography-body-medium-semibold-line-height)] [font-weight:var(--typography-body-medium-semibold-font-weight)] [letter-spacing:var(--typography-body-medium-semibold-letter-spacing)] text-[var(--content-primary)]">
+                      {row.name}
+                    </span>
+                  </div>
+                ),
+              },
+              {
+                id: "status",
+                header: "Status",
+                key: "status",
+                sortable: true,
+                render: (row) => (
+                  <Badge appearance="dot" variant={row.status === "Ativo" ? "success" : "warning"}>
+                    {row.status}
+                  </Badge>
+                ),
+              },
+              {
+                id: "contact",
+                header: "Contato",
+                key: "phone",
+                render: (row) => (
+                  <div className="grid gap-0.5">
+                    <span>{row.phone}</span>
+                    <span className="text-[var(--content-secondary)]">{row.email}</span>
+                  </div>
+                ),
+              },
+              {
+                id: "module",
+                header: "Módulo",
+                key: "module",
+                sortable: true,
+                render: (row) => <Badge variant={row.moduleVariant}>{row.module}</Badge>,
+              },
+              {
+                id: "classroom",
+                header: "Turma",
+                key: "classroom",
+                sortable: true,
+                render: (row) => <Badge variant={row.classroomVariant}>{row.classroom}</Badge>,
+              },
+            ]}
+            rows={studentRowsPaginated}
           />
         </section>
 
