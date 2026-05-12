@@ -22,7 +22,7 @@ export const tableCardScrollWrapperStyles = "hidden overflow-x-auto sm:block";
 export const tableCardHeadRowStyles = "border-b border-[var(--border-primary)] bg-[var(--background-secondary)]";
 
 export const tableCardHeadCellBaseStyles =
-  "px-4 py-3 text-[var(--content-secondary)] [font-size:var(--typography-body-small-font-size)] [line-height:var(--typography-body-small-line-height)] [font-weight:var(--typography-body-small-semibold-font-weight)] [letter-spacing:var(--typography-body-small-letter-spacing)]";
+  "px-4 py-3 text-[var(--content-secondary)] [font-size:var(--typography-body-medium-semibold-font-size)] [line-height:var(--typography-body-medium-semibold-line-height)] [font-weight:var(--typography-body-medium-semibold-font-weight)] [letter-spacing:var(--typography-body-medium-semibold-letter-spacing)]";
 
 export const tableCardSelectionCellStyles = "w-10 px-3 py-3";
 
@@ -33,12 +33,12 @@ export const tableCardBodyRowStyles =
   "border-b border-[var(--border-primary)] last:border-b-0 transition-colors hover:bg-[var(--background-secondary)]";
 
 export const tableCardBodyCellBaseStyles =
-  "px-4 py-3 text-[var(--content-secondary)] [font-size:var(--typography-body-medium-font-size)] [line-height:var(--typography-body-medium-line-height)] [font-weight:var(--typography-body-medium-regular-font-weight)] [letter-spacing:var(--typography-body-medium-letter-spacing)]";
+  "px-4 py-3 text-[var(--content-secondary)] [font-size:var(--typography-body-medium-regular-font-size)] [line-height:var(--typography-body-medium-regular-line-height)] [font-weight:var(--typography-body-medium-regular-font-weight)] [letter-spacing:var(--typography-body-medium-regular-letter-spacing)]";
 
 export const tableCardStatusRowStyles = "border-b-0";
 
 export const tableCardStatusCellStyles =
-  "px-4 py-6 text-center text-[var(--content-secondary)] [font-size:var(--typography-body-medium-font-size)] [line-height:var(--typography-body-medium-line-height)] [font-weight:var(--typography-body-medium-regular-font-weight)] [letter-spacing:var(--typography-body-medium-letter-spacing)]";
+  "px-4 py-6 text-center text-[var(--content-secondary)] [font-size:var(--typography-body-medium-regular-font-size)] [line-height:var(--typography-body-medium-regular-line-height)] [font-weight:var(--typography-body-medium-regular-font-weight)] [letter-spacing:var(--typography-body-medium-regular-letter-spacing)]";
 
 export const tableCardClickableRowStyles = "cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--button-focus-ring)]";
 export const tableCardMobileListStyles = "space-y-3 p-3 sm:hidden";

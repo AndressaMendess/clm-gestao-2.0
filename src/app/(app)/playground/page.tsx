@@ -2,6 +2,7 @@
 
 import { CheckCircle2, Plus, Search, Users } from "lucide-react";
 import { useState } from "react";
+import { Avatar } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button, IconButton } from "@/components/ui/button";
 import { Checkbox, CheckboxField } from "@/components/ui/checkbox";
@@ -17,6 +18,7 @@ import { Stepper } from "@/components/ui/stepper";
 import { TableCard } from "@/components/ui/table-card";
 
 type StudentTableRow = {
+  avatarSrc?: string;
   classroom: string;
   classroomVariant: "blue" | "pink";
   email: string;
@@ -37,6 +39,8 @@ export default function HomePage() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const studentRows: StudentTableRow[] = [
     {
+      avatarSrc:
+        "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Crect width='80' height='80' fill='%23e6eef2'/%3E%3Ccircle cx='40' cy='30' r='14' fill='%23c0cfdb'/%3E%3Cpath d='M14 72c4-14 14-22 26-22s22 8 26 22' fill='%23c0cfdb'/%3E%3C/svg%3E",
       initials: "TL",
       name: "Thiago Fernandes Luz",
       status: "Ativo",
@@ -286,10 +290,14 @@ export default function HomePage() {
                 sortable: true,
                 render: (row) => (
                   <div className="flex items-center gap-3">
-                    <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[var(--accent-purple-background)] text-[var(--content-primary)] [font-size:var(--typography-body-large-medium-font-size)] [font-weight:var(--typography-body-large-medium-font-weight)]">
-                      {row.initials}
-                    </span>
-                    <span className="[font-size:var(--typography-body-large-semibold-font-size)] [line-height:var(--typography-body-large-semibold-line-height)] [font-weight:var(--typography-body-large-semibold-font-weight)] [letter-spacing:var(--typography-body-large-semibold-letter-spacing)] text-[var(--content-primary)]">
+                    <Avatar
+                      alt={`Avatar de ${row.name}`}
+                      initials={row.initials}
+                      name={row.name}
+                      src={row.avatarSrc}
+                      variant={row.avatarSrc ? "with-image" : "without-image"}
+                    />
+                    <span className="[font-size:var(--typography-body-medium-semibold-font-size)] [line-height:var(--typography-body-medium-semibold-line-height)] [font-weight:var(--typography-body-medium-semibold-font-weight)] [letter-spacing:var(--typography-body-medium-semibold-letter-spacing)] text-[var(--content-primary)]">
                       {row.name}
                     </span>
                   </div>

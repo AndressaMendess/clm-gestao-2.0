@@ -43,7 +43,7 @@ export function SelectField({
   const describedBy = [ariaDescribedBy, helperId].filter(Boolean).join(" ") || undefined;
   const resolvedValue = value === undefined ? undefined : value === "" ? NONE_VALUE : value;
   const resolvedDefaultValue =
-    defaultValue === undefined ? NONE_VALUE : defaultValue === "" ? NONE_VALUE : defaultValue;
+    defaultValue === undefined ? undefined : defaultValue === "" ? NONE_VALUE : defaultValue;
 
   const handleValueChange = (nextValue: string) => {
     const normalizedValue = nextValue === NONE_VALUE ? "" : nextValue;

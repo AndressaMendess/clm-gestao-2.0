@@ -2,10 +2,10 @@ import type { InputHelperTone } from "../input";
 
 export const selectFieldWrapperStyles = "flex flex-col gap-1.5";
 export const selectFieldLabelStyles =
-  "text-[var(--content-primary)] [font-size:var(--typography-body-medium-font-size)] [line-height:var(--typography-body-medium-line-height)] [font-weight:500] [letter-spacing:var(--typography-body-medium-letter-spacing)]";
+  "text-[var(--content-primary)] [font-size:var(--typography-body-medium-semibold-font-size)] [line-height:var(--typography-body-medium-semibold-line-height)] [font-weight:var(--typography-body-medium-semibold-font-weight)] [letter-spacing:var(--typography-body-medium-semibold-letter-spacing)]";
 
 const baseSelectTriggerStyles =
-  "inline-flex min-h-11 w-full items-center justify-between rounded-[10px] border bg-[var(--background-primary)] px-3 py-2 text-left text-[var(--content-primary)] [font-size:var(--typography-body-medium-font-size)] [line-height:var(--typography-body-medium-line-height)] [font-weight:var(--typography-body-medium-font-weight)] [letter-spacing:var(--typography-body-medium-letter-spacing)] outline-none transition-[border-color,box-shadow] duration-150 focus-visible:ring-2 focus-visible:ring-[var(--button-focus-ring)] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60 data-[placeholder]:text-[var(--content-tertiary)]";
+  "inline-flex min-h-11 w-full items-center justify-between rounded-[10px] border bg-[var(--background-primary)] px-3 py-2 text-left text-[var(--content-primary)] [font-size:var(--typography-body-medium-regular-font-size)] [line-height:var(--typography-body-medium-regular-line-height)] [font-weight:var(--typography-body-medium-regular-font-weight)] [letter-spacing:var(--typography-body-medium-regular-letter-spacing)] outline-none transition-[border-color,box-shadow] duration-150 focus-visible:ring-2 focus-visible:ring-[var(--button-focus-ring)] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60 data-[placeholder]:text-[var(--content-tertiary)]";
 
 const triggerToneStyles: Record<InputHelperTone, string> = {
   default: "border-[var(--border-primary)] hover:border-[var(--border-tertiary)]",
@@ -26,7 +26,7 @@ export function getSelectFieldStyles(tone: InputHelperTone): string {
 }
 
 export function getSelectFieldHelperStyles(tone: InputHelperTone): string {
-  return `[font-size:var(--typography-body-medium-font-size)] [line-height:var(--typography-body-medium-line-height)] [font-weight:var(--typography-body-medium-font-weight)] [letter-spacing:var(--typography-body-medium-letter-spacing)] ${helperToneStyles[tone]}`;
+  return `[font-size:var(--typography-body-medium-regular-font-size)] [line-height:var(--typography-body-medium-regular-line-height)] [font-weight:var(--typography-body-medium-regular-font-weight)] [letter-spacing:var(--typography-body-medium-regular-letter-spacing)] ${helperToneStyles[tone]}`;
 }
 
 export const selectFieldContentStyles =
@@ -35,4 +35,4 @@ export const selectFieldContentStyles =
 export const selectFieldViewportStyles = "p-1";
 
 export const selectFieldItemStyles =
-  "relative flex w-full cursor-default select-none items-center rounded-md px-2.5 py-2 text-[var(--content-primary)] [font-size:var(--typography-body-medium-font-size)] [line-height:var(--typography-body-medium-line-height)] [font-weight:var(--typography-body-medium-font-weight)] [letter-spacing:var(--typography-body-medium-letter-spacing)] outline-none data-[highlighted]:bg-[var(--brand-primary-subtle)] data-[highlighted]:text-[var(--content-primary)] data-[disabled]:pointer-events-none data-[disabled]:opacity-50";
+  "relative flex w-full cursor-default select-none items-center rounded-md px-2.5 py-2 text-[var(--content-primary)] [font-size:var(--typography-body-medium-regular-font-size)] [line-height:var(--typography-body-medium-regular-line-height)] [font-weight:var(--typography-body-medium-regular-font-weight)] [letter-spacing:var(--typography-body-medium-regular-letter-spacing)] outline-none data-[highlighted]:bg-[var(--brand-primary-subtle)] data-[highlighted]:text-[var(--content-primary)] data-[disabled]:pointer-events-none data-[disabled]:opacity-50";
