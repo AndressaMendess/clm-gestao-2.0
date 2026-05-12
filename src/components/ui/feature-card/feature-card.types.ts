@@ -1,6 +1,7 @@
 import type { LucideIcon } from "lucide-react";
 
 export type FeatureCardProps = {
+  arrowColorClassName?: string;
   ariaLabel?: string;
   backgroundColorClassName?: string;
   className?: string;
@@ -11,5 +12,7 @@ export type FeatureCardProps = {
   iconColorClassName?: string;
   onClick?: () => void;
   subtitle: string;
+  subtitleColorClassName?: string;
   title: string;
+  titleColorClassName?: string;
 };

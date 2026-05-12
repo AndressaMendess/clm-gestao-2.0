@@ -1,4 +1,4 @@
-import { ArrowUpRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { cx } from "@/lib/cx";
 import {
@@ -12,6 +12,7 @@ import {
 import type { FeatureCardProps } from "./feature-card.types";
 
 export function FeatureCard({
+  arrowColorClassName = "text-[var(--content-secondary)]",
   ariaLabel,
   backgroundColorClassName = "bg-[var(--accent-purple-background)]",
   className,
@@ -22,7 +23,9 @@ export function FeatureCard({
   iconColorClassName = "text-[var(--accent-purple-content)]",
   onClick,
   subtitle,
+  subtitleColorClassName,
   title,
+  titleColorClassName,
 }: FeatureCardProps) {
   const commonClassName = cx(
     featureCardRootStyles,
@@ -35,14 +38,14 @@ export function FeatureCard({
     <>
       <div className={featureCardHeaderStyles}>
         <span aria-hidden className={cx(featureCardIconContainerStyles, iconBackgroundColorClassName)}>
-          <Icon className={cx("h-7 w-7", iconColorClassName)} />
+          <Icon className={cx("h-5 w-5", iconColorClassName)} />
         </span>
-        <ArrowUpRight aria-hidden className="h-6 w-6 shrink-0 text-[var(--content-secondary)]" />
+        <ArrowRight aria-hidden className={cx("h-4 w-4 shrink-0", arrowColorClassName)} />
       </div>
 
       <div className="mt-6">
-        <h3 className={featureCardTitleStyles}>{title}</h3>
-        <p className={featureCardSubtitleStyles}>{subtitle}</p>
+        <h3 className={cx(featureCardTitleStyles, titleColorClassName)}>{title}</h3>
+        <p className={cx(featureCardSubtitleStyles, subtitleColorClassName)}>{subtitle}</p>
       </div>
     </>
   );

@@ -103,7 +103,7 @@ export default function AppLayout({ children }: AppShellProps) {
         <div className="flex-1 min-w-0">
           <ContentShell
             className="p-0"
-            contentClassName="min-h-screen"
+            contentClassName="min-h-screen py-8"
             onMenuClick={!isPlaygroundPage ? () => setIsSidebarOpen(true) : undefined}
             showTopbarMenuButton={!isPlaygroundPage}
           >

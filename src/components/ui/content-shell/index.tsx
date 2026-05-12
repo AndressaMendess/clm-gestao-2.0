@@ -1,6 +1,10 @@
 import { cx } from "@/lib/cx";
 import { Topbar } from "../topbar";
-import { contentShellContainerStyles, contentShellWrapperStyles } from "./content-shell.styles";
+import {
+  contentShellContainerStyles,
+  contentShellContentStyles,
+  contentShellWrapperStyles,
+} from "./content-shell.styles";
 import type { ContentShellProps } from "./content-shell.types";
 
 export function ContentShell({
@@ -12,9 +16,9 @@ export function ContentShell({
 }: ContentShellProps) {
   return (
     <section className={cx(contentShellWrapperStyles, className)}>
-      <div className={cx(contentShellContainerStyles, contentClassName)}>
+      <div className={contentShellContainerStyles}>
         <Topbar onMenuClick={onMenuClick} showMenuButton={showTopbarMenuButton} />
-        {children}
+        <div className={cx(contentShellContentStyles, contentClassName)}>{children}</div>
       </div>
     </section>
   );

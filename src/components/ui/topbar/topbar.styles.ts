@@ -2,7 +2,7 @@ export const topbarRootStyles =
   "mb-4 flex items-center justify-between";
 
 export const topbarQuoteStyles =
-  "hidden text-[var(--content-primary)] [font-size:var(--typography-heading-h6-font-size)] [line-height:var(--typography-heading-h6-line-height)] [font-weight:var(--typography-heading-h6-font-weight)] [letter-spacing:var(--typography-heading-h6-letter-spacing)] lg:block";
+  "hidden text-[var(--content-primary)] [font-size:var(--typography-body-x-large-semibold-font-size)] [line-height:var(--typography-body-x-large-semibold-line-height)] [font-weight:var(--typography-body-x-large-semibold-font-weight)] [letter-spacing:var(--typography-body-x-large-semibold-letter-spacing)] lg:block";
 
 export const topbarMobileGroupStyles = "flex w-full items-center justify-between lg:hidden";
 

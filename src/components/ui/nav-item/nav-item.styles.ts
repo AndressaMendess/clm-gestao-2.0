@@ -25,7 +25,7 @@ const subitemStateStyles: Record<NavItemState, string> = {
 };
 
 export const navItemLabelStyles =
-  "truncate font-[var(--font-family-sans)] [font-size:var(--typography-body-medium-font-size)] [line-height:var(--typography-body-medium-line-height)] [font-weight:var(--typography-body-medium-font-weight)] [letter-spacing:var(--typography-body-medium-letter-spacing)]";
+  "truncate font-[var(--font-family-sans)] [font-size:var(--typography-body-large-regular-font-size)] [line-height:var(--typography-body-large-regular-line-height)] [font-weight:var(--typography-body-large-regular-font-weight)] [letter-spacing:var(--typography-body-large-regular-letter-spacing)]";
 
 export function getNavItemStyles(variant: NavItemVariant, state: NavItemState): string {
   const resolvedStateStyles = variant === "subitem" ? subitemStateStyles[state] : defaultStateStyles[state];
