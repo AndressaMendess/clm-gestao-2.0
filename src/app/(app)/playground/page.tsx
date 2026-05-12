@@ -206,6 +206,16 @@ export default function HomePage() {
                 { label: "Turma C", value: "c" },
               ]}
             />
+            <SelectField
+              aria-label="Filtrar por turma"
+              placeholder="Filtrar por turma"
+              variant="without-label"
+              options={[
+                { label: "Turma A", value: "a" },
+                { label: "Turma B", value: "b" },
+                { label: "Turma C", value: "c" },
+              ]}
+            />
           </div>
         </section>
 

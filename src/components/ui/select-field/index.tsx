@@ -18,6 +18,7 @@ import type { SelectFieldProps } from "./select-field.types";
 const NONE_VALUE = "__select_none__";
 
 export function SelectField({
+  "aria-label": ariaLabel,
   "aria-describedby": ariaDescribedBy,
   defaultValue,
   disabled,
@@ -31,6 +32,7 @@ export function SelectField({
   placeholder = "Selecione",
   required,
   tone = "default",
+  variant = "with-label",
   triggerClassName,
   value,
   wrapperClassName,
@@ -49,6 +51,9 @@ export function SelectField({
     onChange?.(normalizedValue);
   };
 
+  const shouldShowLabel = variant === "with-label";
+  const computedAriaLabel = !shouldShowLabel ? ariaLabel ?? label ?? placeholder : undefined;
+
   const selectRoot = (
     <Select.Root
       defaultValue={resolvedDefaultValue}
@@ -59,6 +64,7 @@ export function SelectField({
       value={resolvedValue}
     >
       <Select.Trigger
+        aria-label={computedAriaLabel}
         aria-describedby={describedBy}
         className={cx(getSelectFieldStyles(tone), triggerClassName)}
         id={selectId}
@@ -88,9 +94,11 @@ export function SelectField({
 
   return (
     <div className={cx(selectFieldWrapperStyles, wrapperClassName)}>
-      <label className={selectFieldLabelStyles} htmlFor={selectId}>
-        {label}
-      </label>
+      {shouldShowLabel && label ? (
+        <label className={selectFieldLabelStyles} htmlFor={selectId}>
+          {label}
+        </label>
+      ) : null}
       {selectRoot}
       {helperText ? (
         <p className={getSelectFieldHelperStyles(tone)} id={helperId}>
@@ -101,4 +109,4 @@ export function SelectField({
   );
 }
 
-export type { SelectFieldOption, SelectFieldProps } from "./select-field.types";
+export type { SelectFieldOption, SelectFieldProps, SelectFieldVariant } from "./select-field.types";

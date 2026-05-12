@@ -45,3 +45,11 @@ export const Error: Story = {
   },
 };
 
+export const WithoutLabel: Story = {
+  args: {
+    label: undefined,
+    placeholder: "Filtre por turma",
+    variant: "without-label",
+  },
+};
+
