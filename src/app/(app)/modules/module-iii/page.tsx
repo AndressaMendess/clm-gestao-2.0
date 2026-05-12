@@ -1,3 +1,3 @@
 export default function ModuleIIIPage() {
-  return <section className="text-[var(--content-primary)]">Modulo III</section>;
+  return <section className="text-[var(--content-primary)]">Módulo III</section>;
 }

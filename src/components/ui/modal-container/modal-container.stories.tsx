@@ -15,9 +15,9 @@ const meta = {
     subtitle: "Preencha os dados para continuar",
     children: (
       <div className="grid gap-2">
-        <strong className="text-[var(--content-primary)]">Conteudo dinamico</strong>
+        <strong className="text-[var(--content-primary)]">Conteúdo dinâmico</strong>
         <p className="text-[var(--content-secondary)]">
-          Esse espaco representa o miolo variavel de cada modal.
+          Esse espaço representa o miolo variável de cada modal.
         </p>
       </div>
     ),

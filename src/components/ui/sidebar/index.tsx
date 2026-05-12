@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import {
   ClipboardList,
@@ -14,7 +14,7 @@ import {
   X,
 } from "lucide-react";
 import Image from "next/image";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { cx } from "@/lib/cx";
 import { NavItem } from "../nav-item";
 import {
@@ -38,20 +38,20 @@ import {
 import type { SidebarNavItem, SidebarProps } from "./sidebar.types";
 
 const defaultPrimaryItems: SidebarNavItem[] = [
-  { id: "overview", icon: Home, label: "Visao geral" },
+  { id: "overview", icon: Home, label: "Visão geral" },
   { id: "students", icon: Users, label: "Alunos" },
-  { id: "attendance", icon: ClipboardList, label: "Presencas" },
+  { id: "attendance", icon: ClipboardList, label: "Presenças" },
 ];
 
 const defaultSecondaryItems: SidebarNavItem[] = [
   { id: "teachers", icon: UserRound, label: "Professores" },
-  { id: "settings", icon: Settings, label: "Configuracoes" },
+  { id: "settings", icon: Settings, label: "Configurações" },
 ];
 
 const defaultModules = [
-  { id: "module-i", label: "Modulo I" },
-  { id: "module-ii", label: "Modulo II" },
-  { id: "module-iii", label: "Modulo III" },
+  { id: "module-i", label: "Módulo I" },
+  { id: "module-ii", label: "Módulo II" },
+  { id: "module-iii", label: "Módulo III" },
 ];
 
 const defaultUser = {
@@ -81,16 +81,8 @@ export function Sidebar({
   const [isModulesOpen, setIsModulesOpen] = useState(false);
   const [internalCollapsed, setInternalCollapsed] = useState(isCollapsed);
   const [selectedModuleId, setSelectedModuleId] = useState<string | null>(activeModuleId);
-
-  useEffect(() => {
-    setSelectedModuleId(activeModuleId);
-  }, [activeModuleId]);
-
-  useEffect(() => {
-    setInternalCollapsed(isCollapsed);
-  }, [isCollapsed]);
-
-  const isDesktopCollapsed = internalCollapsed;
+  const isDesktopCollapsed = onToggleCollapse ? isCollapsed : internalCollapsed;
+  const currentModuleId = activeModuleId ?? selectedModuleId;
   const showLabels = !isDesktopCollapsed;
   const ToggleIcon = isDesktopCollapsed ? PanelLeftOpen : PanelLeftClose;
 
@@ -127,7 +119,7 @@ export function Sidebar({
           <div className={sidebarBrandStyles}>
             {showLabels ? (
               <Image
-                alt="CLM Gestao"
+                alt="CLM Gestão"
                 className="h-8 w-auto object-contain"
                 height={33}
                 priority
@@ -165,7 +157,7 @@ export function Sidebar({
         <div className={sidebarContentStyles}>
           <div className={sidebarNavBlocksStyles}>
             <div>
-              <nav aria-label="Navegacao principal" className={sidebarNavStyles}>
+              <nav aria-label="Navegação principal" className={sidebarNavStyles}>
                 {primaryBlockItems.map((item) => {
                   const isActive = item.id === activeItem;
                   return (
@@ -185,12 +177,12 @@ export function Sidebar({
 
             <div className="flex flex-col gap-1.5">
               <div className={sidebarDividerStyles} />
-              <nav aria-label="Navegacao secundaria" className={sidebarNavStyles}>
+              <nav aria-label="Navegação secundaria" className={sidebarNavStyles}>
                 <NavItem
                   ariaControls={moduleSubitemsId}
                   ariaExpanded={isModulesOpen}
                   icon={Music2}
-                  label="Modulos"
+                  label="Módulos"
                   onClick={() => setIsModulesOpen((current) => !current)}
                   showChevron={showLabels}
                   showLabel={showLabels}
@@ -200,7 +192,7 @@ export function Sidebar({
                   {isModulesOpen && showLabels ? (
                     <div className={sidebarModulesListStyles} id={moduleSubitemsId}>
                       {moduleItems.map((moduleItem) => {
-                        const isActive = moduleItem.id === selectedModuleId;
+                        const isActive = moduleItem.id === currentModuleId;
                         return (
                           <NavItem
                             key={moduleItem.id}
@@ -268,3 +260,4 @@ export function Sidebar({
 }
 
 export type { SidebarItemId, SidebarModuleItem, SidebarNavItem, SidebarProps } from "./sidebar.types";
+

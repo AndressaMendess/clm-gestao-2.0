@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { CheckCircle2, Plus, Search, Users } from "lucide-react";
 import { useState } from "react";
@@ -99,7 +99,7 @@ export default function HomePage() {
         <section className="flex flex-col gap-4">
           <h1 className="text-2xl font-medium">UI Playground</h1>
           <p className="text-sm text-[var(--content-secondary)]">
-            Pagina de validacao visual dos componentes e variantes.
+            Página de validação visual dos componentes e variantes.
           </p>
         </section>
 
@@ -130,7 +130,7 @@ export default function HomePage() {
           <h2 className="text-lg font-medium">ContentShell</h2>
           <ContentShell contentClassName="min-h-[420px]">
             <div className="h-full rounded-2xl border border-[var(--border-primary)] bg-[var(--background-secondary)] p-4 text-[var(--content-secondary)]">
-              Area de conteudo interno da pagina
+              Área de conteúdo interno da página
             </div>
           </ContentShell>
         </section>
@@ -153,7 +153,7 @@ export default function HomePage() {
               Online
             </Badge>
             <Badge appearance="icon" icon={<CheckCircle2 size={14} />} variant="success">
-              Concluido
+              Concluído
             </Badge>
           </div>
         </section>
@@ -171,8 +171,8 @@ export default function HomePage() {
           <div className="flex flex-wrap items-center gap-4">
             <CheckboxField
               defaultChecked
-              description="Receber notificacoes por e-mail."
-              label="Notificacoes"
+              description="Receber notificações por e-mail."
+              label="Notificações"
               variant="success"
             />
           </div>
@@ -183,14 +183,14 @@ export default function HomePage() {
           <div className="grid w-full max-w-4xl grid-cols-1 gap-4 md:grid-cols-2">
             <Input label="Nome" placeholder="Digite seu nome" />
             <Input helperText="Use seu e-mail institucional." label="E-mail" placeholder="nome@empresa.com" />
-            <Input helperText="Campo obrigatorio." tone="error" label="Documento" placeholder="000.000.000-00" />
-            <Input defaultValue="Andressa" helperText="Valor valido." tone="success" label="Nome completo" />
+            <Input helperText="Campo obrigatório." tone="error" label="Documento" placeholder="000.000.000-00" />
+            <Input defaultValue="Andressa" helperText="Valor válido." tone="success" label="Nome completo" />
             <CpfInput label="CPF" placeholder="000.000.000-00" />
             <RgInput label="RG" placeholder="00.000.000-0" />
             <PhoneInput label="Telefone" placeholder="(00) 00000-0000" />
             <DatePicker label="Data de nascimento" />
-            <SearchInput placeholder="Buscar aluno, turma, matricula..." />
-            <TextArea label="Observacoes" placeholder="Digite observacoes adicionais..." />
+            <SearchInput placeholder="Buscar aluno, turma, matrícula..." />
+            <TextArea label="Observações" placeholder="Digite observações adicionais..." />
           </div>
         </section>
 
@@ -240,7 +240,7 @@ export default function HomePage() {
             }
           >
             <div className="grid gap-2">
-              <strong className="text-[var(--content-primary)]">Conteudo dinamico</strong>
+              <strong className="text-[var(--content-primary)]">Conteúdo dinâmico</strong>
               <p className="text-[var(--content-secondary)]">
                 O miolo muda por fluxo, mantendo estrutura padronizada.
               </p>
@@ -330,12 +330,12 @@ export default function HomePage() {
           <h2 className="text-lg font-medium">Stepper</h2>
           <div className="w-full max-w-4xl rounded-2xl bg-[var(--background-primary)] p-4">
             <Stepper
-              ariaLabel="Progresso da matricula"
+              ariaLabel="Progresso da matrícula"
               currentStep={2}
               steps={[
                 { id: "student", label: "Aluno" },
-                { id: "document", label: "Documentacao" },
-                { id: "review", label: "Revisao" },
+                { id: "document", label: "Documentação" },
+                { id: "review", label: "Revisão" },
                 { id: "finish", label: "Finalizar" },
               ]}
             />
@@ -364,13 +364,13 @@ export default function HomePage() {
               />
               <div className="h-full pl-[280px] pr-6 pt-6">
                 <div className="rounded-xl border border-[var(--border-primary)] bg-[var(--background-secondary)] p-4 text-[var(--content-secondary)]">
-                  Area de conteudo da pagina. Item ativo: {activeSidebarItem}
+                  Área de conteúdo da página. Item ativo: {activeSidebarItem}
                 </div>
               </div>
             </div>
           </div>
           <p className="text-sm text-[var(--content-tertiary)] lg:hidden">
-            Preview da Sidebar disponivel apenas em telas desktop no playground.
+            Preview da Sidebar disponível apenas em telas desktop no playground.
           </p>
         </section>
 
@@ -406,14 +406,14 @@ export default function HomePage() {
               {isNavItemCompositeOpen ? (
                 <div className="grid gap-1" id="nav-item-subpages">
                   <NavItem
-                    label="Subpagina 1"
+                    label="Subpágina 1"
                     onClick={() => undefined}
                     showLabel
                     state="active"
                     variant="subitem"
                   />
                   <NavItem
-                    label="Subpagina 2"
+                    label="Subpágina 2"
                     onClick={() => undefined}
                     showLabel
                     state="inactive"
@@ -455,3 +455,4 @@ export default function HomePage() {
     </main>
   );
 }
+

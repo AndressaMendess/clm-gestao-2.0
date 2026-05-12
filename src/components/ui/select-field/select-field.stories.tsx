@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+﻿import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { SelectField } from "./index";
 
 const options = [
@@ -15,7 +15,7 @@ const meta = {
     docs: {
       description: {
         component:
-          "Para integracao com formularios, use `onValueChange` ou `onChange` (ambos retornam `string`). A opcao neutra sempre usa o texto do placeholder e retorna valor vazio (`\"\"`).",
+          "Para integração com formulários, use `onValueChange` ou `onChange` (ambos retornam `string`). A opção neutra sempre usa o texto do placeholder e retorna valor vazio (`\"\"`).",
       },
     },
   },
@@ -44,3 +44,4 @@ export const Error: Story = {
     tone: "error",
   },
 };
+

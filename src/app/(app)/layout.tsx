@@ -1,7 +1,7 @@
 "use client";
 import { usePathname, useRouter } from "next/navigation";
 import type { ReactNode } from "react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ContentShell } from "@/components/ui/content-shell";
 import { Sidebar } from "@/components/ui/sidebar";
 import type { SidebarItemId } from "@/components/ui/sidebar";
@@ -47,10 +47,6 @@ export default function AppLayout({ children }: AppShellProps) {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const isPlaygroundPage = pathname.startsWith("/playground");
-
-  useEffect(() => {
-    setIsSidebarOpen(false);
-  }, [pathname]);
 
   const activeItem = resolveActiveItem(pathname);
   const activeModule = resolveActiveModule(pathname);

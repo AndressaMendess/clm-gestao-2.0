@@ -1,10 +1,10 @@
-import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+﻿import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { Stepper } from "./index";
 
 const defaultSteps = [
   { id: "student", label: "Aluno" },
-  { id: "document", label: "Documentacao" },
-  { id: "review", label: "Revisao" },
+  { id: "document", label: "Documentação" },
+  { id: "review", label: "Revisão" },
   { id: "finish", label: "Finalizar" },
 ];
 
@@ -15,7 +15,7 @@ const meta = {
     layout: "padded",
   },
   args: {
-    ariaLabel: "Progresso da matricula",
+    ariaLabel: "Progresso da matrícula",
     currentStep: 2,
     steps: defaultSteps,
   },

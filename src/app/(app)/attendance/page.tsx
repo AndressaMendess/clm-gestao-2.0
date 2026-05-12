@@ -1,3 +1,3 @@
 export default function AttendancePage() {
-  return <section className="text-[var(--content-primary)]">Presencas</section>;
+  return <section className="text-[var(--content-primary)]">Presenças</section>;
 }

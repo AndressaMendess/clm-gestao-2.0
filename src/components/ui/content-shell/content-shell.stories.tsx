@@ -11,10 +11,10 @@ const meta = {
     children: (
       <div className="grid gap-2">
         <h3 className="text-[var(--content-primary)] [font-size:var(--typography-body-large-font-size)] [line-height:var(--typography-body-large-line-height)] [font-weight:600]">
-          Conteudo da pagina
+          Conteúdo da página
         </h3>
         <p className="text-[var(--content-secondary)]">
-          Componente base para renderizar todas as paginas internas do sistema.
+          Componente base para renderizar todas as páginas internas do sistema.
         </p>
       </div>
     ),

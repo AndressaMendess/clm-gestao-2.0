@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+﻿import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { DocumentUploadField } from "./index";
 
 const meta = {
@@ -9,7 +9,7 @@ const meta = {
     docs: {
       description: {
         component:
-          "O `tone` e aplicado apenas no estado vazio. Quando existe erro de validacao, o estado `error` tem prioridade. Quando ha arquivo selecionado, o estado `success` e aplicado automaticamente. Para back-end, use `onFileChange` e `onFileStateChange`.",
+          "O `tone` é aplicado apenas no estado vazio. Quando existe erro de validação, o estado `error` tem prioridade. Quando há arquivo selecionado, o estado `success` é aplicado automaticamente. Para back-end, use `onFileChange` e `onFileStateChange`.",
       },
     },
   },
@@ -48,3 +48,4 @@ export const Disabled: Story = {
     disabled: true,
   },
 };
+
