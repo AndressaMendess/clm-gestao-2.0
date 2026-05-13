@@ -126,8 +126,8 @@ export const tokens = {
           },
           content: {
             enabled: { light: primitives.orange[500], dark: primitives.orange[400] },
-            hover: { light: primitives.blue[600], dark: primitives.blue[300] },
-            pressed: { light: primitives.blue[700], dark: primitives.blue[200] },
+            hover: { light: primitives.orange[600], dark: primitives.orange[300] },
+            pressed: { light: primitives.orange[700], dark: primitives.orange[200] },
             disabled: { light: primitives.gray[500], dark: primitives.gray[500] },
           },
         },
@@ -160,6 +160,10 @@ export const tokens = {
       "body-small-semibold": { fontSize: "12px", lineHeight: "150%", fontWeight: 600, letterSpacing: "-0.04em" },
       "body-small-medium": { fontSize: "12px", lineHeight: "150%", fontWeight: 500, letterSpacing: "-0.04em" },
       "body-small-regular": { fontSize: "12px", lineHeight: "150%", fontWeight: 400, letterSpacing: "-0.04em" },
+      "body-xsmall-bold": { fontSize: "10px", lineHeight: "150%", fontWeight: 700, letterSpacing: "-0.04em" },
+      "body-xsmall-semibold": { fontSize: "10px", lineHeight: "150%", fontWeight: 600, letterSpacing: "-0.04em" },
+      "body-xsmall-medium": { fontSize: "10px", lineHeight: "150%", fontWeight: 500, letterSpacing: "-0.04em" },
+      "body-xsmall-regular": { fontSize: "10px", lineHeight: "150%", fontWeight: 400, letterSpacing: "-0.04em" },
     },
   },
   spacing: {

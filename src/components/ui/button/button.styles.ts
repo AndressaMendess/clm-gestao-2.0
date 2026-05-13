@@ -18,8 +18,8 @@ const variantStyles: Record<ButtonVariant, string> = {
 
 const sizeStyles: Record<ButtonSize, string> = {
   sm: "min-h-10 px-4 py-2.5",
-  md: "min-h-[52px] px-6 py-3.5",
-  icon: "h-10 w-10 min-w-10 rounded-[10px] p-0",
+  md: " px-6 py-2.5",
+  icon: "h-10 w-10 min-w-10 rounded-[12px] p-0",
 };
 
 export const iconButtonStyles =

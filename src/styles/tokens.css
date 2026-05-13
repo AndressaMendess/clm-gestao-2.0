@@ -93,6 +93,22 @@
   --typography-body-small-regular-line-height: 150%;
   --typography-body-small-regular-font-weight: 400;
   --typography-body-small-regular-letter-spacing: -0.04em;
+  --typography-body-xsmall-bold-font-size: 10px;
+  --typography-body-xsmall-bold-line-height: 150%;
+  --typography-body-xsmall-bold-font-weight: 700;
+  --typography-body-xsmall-bold-letter-spacing: -0.04em;
+  --typography-body-xsmall-semibold-font-size: 10px;
+  --typography-body-xsmall-semibold-line-height: 150%;
+  --typography-body-xsmall-semibold-font-weight: 600;
+  --typography-body-xsmall-semibold-letter-spacing: -0.04em;
+  --typography-body-xsmall-medium-font-size: 10px;
+  --typography-body-xsmall-medium-line-height: 150%;
+  --typography-body-xsmall-medium-font-weight: 500;
+  --typography-body-xsmall-medium-letter-spacing: -0.04em;
+  --typography-body-xsmall-regular-font-size: 10px;
+  --typography-body-xsmall-regular-line-height: 150%;
+  --typography-body-xsmall-regular-font-weight: 400;
+  --typography-body-xsmall-regular-letter-spacing: -0.04em;
   --color-orange-100: #fff1eb;
   --color-orange-200: #ffd9c9;
   --color-orange-300: #ffb79c;
@@ -250,8 +266,8 @@
   --button-ghost-background-pressed: #d9dbdd;
   --button-ghost-background-disabled: transparent;
   --button-ghost-content-enabled: #f1672c;
-  --button-ghost-content-hover: #0e3247;
-  --button-ghost-content-pressed: #0b2a3b;
+  --button-ghost-content-hover: #d95522;
+  --button-ghost-content-pressed: #b8471c;
   --button-ghost-content-disabled: #7f8489;
 }
 
@@ -332,7 +348,7 @@
   --button-ghost-background-pressed: #44484d;
   --button-ghost-background-disabled: transparent;
   --button-ghost-content-enabled: #ff8a5f;
-  --button-ghost-content-hover: #8fafbe;
-  --button-ghost-content-pressed: #c0d3dc;
+  --button-ghost-content-hover: #ffb79c;
+  --button-ghost-content-pressed: #ffd9c9;
   --button-ghost-content-disabled: #7f8489;
 }
