@@ -1,8 +1,11 @@
 ﻿"use client";
 
 import { useMemo, useState } from "react";
+import { Copy } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
+import { Card } from "@/components/ui/card";
+import { IconButton } from "@/components/ui/button";
 import { Drawer } from "@/components/ui/drawer";
 import { STUDENT_ROWS } from "../_data/students.mock";
 import StudentsPage from "../page";
@@ -10,6 +13,7 @@ import StudentsPage from "../page";
 type StudentDetails = {
   address: {
     city: string;
+    complement: string;
     neighborhood: string;
     number: string;
     state: string;
@@ -34,12 +38,14 @@ type StudentDetails = {
     rg: string;
     sex: string;
   };
+  schoolEmail: string;
 };
 
 const STUDENT_DETAILS_BY_EMAIL: Record<string, StudentDetails> = {
   "ana.costa@email.com": {
     address: {
       city: "São Paulo",
+      complement: "Apto 42",
       neighborhood: "Vila Mariana",
       number: "120",
       state: "SP",
@@ -59,10 +65,12 @@ const STUDENT_DETAILS_BY_EMAIL: Record<string, StudentDetails> = {
       rg: "45.678.901-2",
       sex: "Feminino",
     },
+    schoolEmail: "ana.costa@escola-musica.edu.br",
   },
   "bruno.silva@email.com": {
     address: {
       city: "São Paulo",
+      complement: "Casa 2",
       neighborhood: "Ipiranga",
       number: "42",
       state: "SP",
@@ -82,10 +90,12 @@ const STUDENT_DETAILS_BY_EMAIL: Record<string, StudentDetails> = {
       rg: "56.789.012-3",
       sex: "Masculino",
     },
+    schoolEmail: "bruno.silva@escola-musica.edu.br",
   },
   "camila.rocha@email.com": {
     address: {
       city: "São Bernardo do Campo",
+      complement: "Bloco B",
       neighborhood: "Centro",
       number: "300",
       state: "SP",
@@ -105,12 +115,14 @@ const STUDENT_DETAILS_BY_EMAIL: Record<string, StudentDetails> = {
       rg: "67.890.123-4",
       sex: "Feminino",
     },
+    schoolEmail: "camila.rocha@escola-musica.edu.br",
   },
 };
 
 const EMPTY_DETAILS: StudentDetails = {
   address: {
     city: "-",
+    complement: "-",
     neighborhood: "-",
     number: "-",
     state: "-",
@@ -130,6 +142,7 @@ const EMPTY_DETAILS: StudentDetails = {
     rg: "-",
     sex: "-",
   },
+  schoolEmail: "-",
 };
 
 export default function StudentDetailsPage() {
@@ -170,6 +183,15 @@ export default function StudentDetailsPage() {
         ? "subtle"
         : "warning";
 
+  const copyToClipboard = async (value: string) => {
+    if (!value || value === "-") return;
+    try {
+      await navigator.clipboard.writeText(value);
+    } catch {
+      // noop for unsupported clipboard contexts
+    }
+  };
+
   return (
     <>
       <StudentsPage />
@@ -190,111 +212,107 @@ export default function StudentDetailsPage() {
       >
         {activeTab === "personal-data" ? (
           <div className="grid gap-6">
-            <article className="rounded-[24px] border border-[var(--border-primary)] bg-[var(--background-primary)] p-5 shadow-[0_8px_20px_rgb(0_0_0_/_0.06)]">
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                <div>
-                  <p className="[font-size:var(--typography-body-small-semibold-font-size)] [line-height:var(--typography-body-small-semibold-line-height)] [font-weight:var(--typography-body-small-semibold-font-weight)] [letter-spacing:var(--typography-body-small-semibold-letter-spacing)] text-[var(--content-secondary)]">
-                    Nome completo
-                  </p>
-                  <p className="[font-size:var(--typography-body-medium-regular-font-size)] [line-height:var(--typography-body-medium-regular-line-height)] [font-weight:var(--typography-body-medium-regular-font-weight)] [letter-spacing:var(--typography-body-medium-regular-letter-spacing)] text-[var(--content-secondary)]">{details.personalData.fullName}</p>
-                </div>
-                <div>
-                  <p className="[font-size:var(--typography-body-small-semibold-font-size)] [line-height:var(--typography-body-small-semibold-line-height)] [font-weight:var(--typography-body-small-semibold-font-weight)] [letter-spacing:var(--typography-body-small-semibold-letter-spacing)] text-[var(--content-secondary)]">
-                    RG
-                  </p>
-                  <p className="[font-size:var(--typography-body-medium-regular-font-size)] [line-height:var(--typography-body-medium-regular-line-height)] [font-weight:var(--typography-body-medium-regular-font-weight)] [letter-spacing:var(--typography-body-medium-regular-letter-spacing)] text-[var(--content-secondary)]">{details.personalData.rg}</p>
-                </div>
-                <div>
-                  <p className="[font-size:var(--typography-body-small-semibold-font-size)] [line-height:var(--typography-body-small-semibold-line-height)] [font-weight:var(--typography-body-small-semibold-font-weight)] [letter-spacing:var(--typography-body-small-semibold-letter-spacing)] text-[var(--content-secondary)]">
-                    CPF
-                  </p>
-                  <p className="[font-size:var(--typography-body-medium-regular-font-size)] [line-height:var(--typography-body-medium-regular-line-height)] [font-weight:var(--typography-body-medium-regular-font-weight)] [letter-spacing:var(--typography-body-medium-regular-letter-spacing)] text-[var(--content-secondary)]">{details.personalData.cpf}</p>
-                </div>
-                <div>
-                  <p className="[font-size:var(--typography-body-small-semibold-font-size)] [line-height:var(--typography-body-small-semibold-line-height)] [font-weight:var(--typography-body-small-semibold-font-weight)] [letter-spacing:var(--typography-body-small-semibold-letter-spacing)] text-[var(--content-secondary)]">
-                    Data de nascimento
-                  </p>
-                  <p className="[font-size:var(--typography-body-medium-regular-font-size)] [line-height:var(--typography-body-medium-regular-line-height)] [font-weight:var(--typography-body-medium-regular-font-weight)] [letter-spacing:var(--typography-body-medium-regular-letter-spacing)] text-[var(--content-secondary)]">{details.personalData.birthDate}</p>
-                </div>
-                <div>
-                  <p className="[font-size:var(--typography-body-small-semibold-font-size)] [line-height:var(--typography-body-small-semibold-line-height)] [font-weight:var(--typography-body-small-semibold-font-weight)] [letter-spacing:var(--typography-body-small-semibold-letter-spacing)] text-[var(--content-secondary)]">
-                    Sexo
-                  </p>
-                  <p className="[font-size:var(--typography-body-medium-regular-font-size)] [line-height:var(--typography-body-medium-regular-line-height)] [font-weight:var(--typography-body-medium-regular-font-weight)] [letter-spacing:var(--typography-body-medium-regular-letter-spacing)] text-[var(--content-secondary)]">{details.personalData.sex}</p>
-                </div>
-                <div>
-                  <p className="[font-size:var(--typography-body-small-semibold-font-size)] [line-height:var(--typography-body-small-semibold-line-height)] [font-weight:var(--typography-body-small-semibold-font-weight)] [letter-spacing:var(--typography-body-small-semibold-letter-spacing)] text-[var(--content-secondary)]">
-                    Estado Civil
-                  </p>
-                  <p className="[font-size:var(--typography-body-medium-regular-font-size)] [line-height:var(--typography-body-medium-regular-line-height)] [font-weight:var(--typography-body-medium-regular-font-weight)] [letter-spacing:var(--typography-body-medium-regular-letter-spacing)] text-[var(--content-secondary)]">{details.personalData.maritalStatus}</p>
-                </div>
-                <div>
-                  <p className="[font-size:var(--typography-body-small-semibold-font-size)] [line-height:var(--typography-body-small-semibold-line-height)] [font-weight:var(--typography-body-small-semibold-font-weight)] [letter-spacing:var(--typography-body-small-semibold-letter-spacing)] text-[var(--content-secondary)]">
-                    Nacionalidade
-                  </p>
-                  <p className="[font-size:var(--typography-body-medium-regular-font-size)] [line-height:var(--typography-body-medium-regular-line-height)] [font-weight:var(--typography-body-medium-regular-font-weight)] [letter-spacing:var(--typography-body-medium-regular-letter-spacing)] text-[var(--content-secondary)]">{details.personalData.nationality}</p>
-                </div>
-              </div>
-            </article>
+            <Card
+              columns={2}
+              fields={[
+                { id: "fullName", label: "Nome completo", value: details.personalData.fullName },
+                { id: "rg", label: "RG", value: details.personalData.rg },
+                { id: "cpf", label: "CPF", value: details.personalData.cpf },
+                { id: "birthDate", label: "Data de nascimento", value: details.personalData.birthDate },
+                { id: "sex", label: "Sexo", value: details.personalData.sex },
+                { id: "maritalStatus", label: "Estado Civil", value: details.personalData.maritalStatus },
+                { id: "nationality", label: "Nacionalidade", value: details.personalData.nationality },
+              ]}
+            />
 
-            <article className="rounded-[24px] border border-[var(--border-primary)] bg-[var(--background-primary)] p-5 shadow-[0_8px_20px_rgb(0_0_0_/_0.06)]">
-              <div className="grid gap-4">
-                <div>
-                  <p className="[font-size:var(--typography-body-small-semibold-font-size)] [line-height:var(--typography-body-small-semibold-line-height)] [font-weight:var(--typography-body-small-semibold-font-weight)] [letter-spacing:var(--typography-body-small-semibold-letter-spacing)] text-[var(--content-secondary)]">
-                    Nome do pai
-                  </p>
-                  <p className="[font-size:var(--typography-body-medium-regular-font-size)] [line-height:var(--typography-body-medium-regular-line-height)] [font-weight:var(--typography-body-medium-regular-font-weight)] [letter-spacing:var(--typography-body-medium-regular-letter-spacing)] text-[var(--content-secondary)]">{details.personalData.fatherName}</p>
-                </div>
-                <div>
-                  <p className="[font-size:var(--typography-body-small-semibold-font-size)] [line-height:var(--typography-body-small-semibold-line-height)] [font-weight:var(--typography-body-small-semibold-font-weight)] [letter-spacing:var(--typography-body-small-semibold-letter-spacing)] text-[var(--content-secondary)]">
-                    Nome da mãe
-                  </p>
-                  <p className="[font-size:var(--typography-body-medium-regular-font-size)] [line-height:var(--typography-body-medium-regular-line-height)] [font-weight:var(--typography-body-medium-regular-font-weight)] [letter-spacing:var(--typography-body-medium-regular-letter-spacing)] text-[var(--content-secondary)]">{details.personalData.motherName}</p>
-                </div>
-              </div>
-            </article>
+            <Card
+              fields={[
+                { id: "fatherName", label: "Nome do pai", value: details.personalData.fatherName },
+                { id: "motherName", label: "Nome da mãe", value: details.personalData.motherName },
+              ]}
+            />
 
-            <article className="rounded-[24px] border border-[var(--border-primary)] bg-[var(--background-primary)] p-5 shadow-[0_8px_20px_rgb(0_0_0_/_0.06)]">
-              <div className="grid gap-4">
-                <div>
-                  <p className="[font-size:var(--typography-body-small-semibold-font-size)] [line-height:var(--typography-body-small-semibold-line-height)] [font-weight:var(--typography-body-small-semibold-font-weight)] [letter-spacing:var(--typography-body-small-semibold-letter-spacing)] text-[var(--content-secondary)]">
-                    Módulo
-                  </p>
-                  <div className="pt-1">
-                    <Badge variant={student?.moduleVariant ?? "violet"}>
-                      {student?.module ?? "-"}
-                    </Badge>
-                  </div>
-                </div>
-                <div>
-                  <p className="[font-size:var(--typography-body-small-semibold-font-size)] [line-height:var(--typography-body-small-semibold-line-height)] [font-weight:var(--typography-body-small-semibold-font-weight)] [letter-spacing:var(--typography-body-small-semibold-letter-spacing)] text-[var(--content-secondary)]">
-                    Turma
-                  </p>
-                  <div className="pt-1">
-                    <Badge variant={student?.classroomVariant ?? "blue"}>
-                      {student?.classroom ?? "-"}
-                    </Badge>
-                  </div>
-                </div>
-              </div>
-            </article>
+            <Card
+              fields={[
+                {
+                  id: "module",
+                  label: "Módulo",
+                  value: (
+                    <div className="pt-1">
+                      <Badge variant={student?.moduleVariant ?? "violet"}>{student?.module ?? "-"}</Badge>
+                    </div>
+                  ),
+                },
+                {
+                  id: "classroom",
+                  label: "Turma",
+                  value: (
+                    <div className="pt-1">
+                      <Badge variant={student?.classroomVariant ?? "blue"}>{student?.classroom ?? "-"}</Badge>
+                    </div>
+                  ),
+                },
+              ]}
+            />
           </div>
         ) : null}
 
         {activeTab === "contact" ? (
-          <div className="grid gap-4 text-[var(--content-secondary)]">
-            <p><strong className="text-[var(--content-primary)]">E-mail:</strong> {student?.email ?? "-"}</p>
-            <p><strong className="text-[var(--content-primary)]">Telefone:</strong> {student?.phone ?? "-"}</p>
-          </div>
+          <Card
+            fields={[
+              {
+                id: "phone",
+                label: "Telefone",
+                value: (
+                  <div className="flex items-start justify-between gap-3">
+                    <p className="[font-size:var(--typography-body-medium-semibold-font-size)] [line-height:var(--typography-body-medium-semibold-line-height)] [font-weight:var(--typography-body-medium-semibold-font-weight)] [letter-spacing:var(--typography-body-medium-semibold-letter-spacing)] text-[var(--brand-primary-main)]">
+                      {student?.phone ?? "-"}
+                    </p>
+                    <IconButton icon={Copy} label="Copiar telefone" onClick={() => copyToClipboard(student?.phone ?? "")} />
+                  </div>
+                ),
+              },
+              {
+                id: "email",
+                label: "E-mail",
+                value: (
+                  <div className="flex items-start justify-between gap-3">
+                    <p className="[font-size:var(--typography-body-medium-semibold-font-size)] [line-height:var(--typography-body-medium-semibold-line-height)] [font-weight:var(--typography-body-medium-semibold-font-weight)] [letter-spacing:var(--typography-body-medium-semibold-letter-spacing)] text-[var(--brand-primary-main)]">
+                      {student?.email ?? "-"}
+                    </p>
+                    <IconButton icon={Copy} label="Copiar e-mail" onClick={() => copyToClipboard(student?.email ?? "")} />
+                  </div>
+                ),
+              },
+              {
+                id: "schoolEmail",
+                label: "E-mail escolar",
+                value: (
+                  <div className="flex items-start justify-between gap-3">
+                    <p className="[font-size:var(--typography-body-medium-semibold-font-size)] [line-height:var(--typography-body-medium-semibold-line-height)] [font-weight:var(--typography-body-medium-semibold-font-weight)] [letter-spacing:var(--typography-body-medium-semibold-letter-spacing)] text-[var(--brand-primary-main)]">
+                      {details.schoolEmail}
+                    </p>
+                    <IconButton icon={Copy} label="Copiar e-mail escolar" onClick={() => copyToClipboard(details.schoolEmail)} />
+                  </div>
+                ),
+              },
+            ]}
+          />
         ) : null}
 
         {activeTab === "address" ? (
-          <div className="grid gap-4 text-[var(--content-secondary)]">
-            <p><strong className="text-[var(--content-primary)]">CEP:</strong> {details.address.zipCode}</p>
-            <p><strong className="text-[var(--content-primary)]">Logradouro:</strong> {details.address.street}, {details.address.number}</p>
-            <p><strong className="text-[var(--content-primary)]">Bairro:</strong> {details.address.neighborhood}</p>
-            <p><strong className="text-[var(--content-primary)]">Cidade/UF:</strong> {details.address.city} - {details.address.state}</p>
-          </div>
+          <Card
+            columns={2}
+            fields={[
+              { id: "zipCode", label: "CEP", value: details.address.zipCode },
+              { id: "number", label: "Número", value: details.address.number },
+              { id: "street", label: "Rua", value: details.address.street },
+              { id: "complement", label: "Complemento", value: details.address.complement },
+              { id: "neighborhood", label: "Bairro", value: details.address.neighborhood },
+              { id: "city", label: "Cidade", value: details.address.city },
+              { id: "state", label: "Estado", value: details.address.state },
+            ]}
+          />
         ) : null}
 
         {activeTab === "attachments" ? (
