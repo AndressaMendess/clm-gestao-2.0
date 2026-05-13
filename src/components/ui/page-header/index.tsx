@@ -3,13 +3,14 @@ import { Button } from "@/components/ui/button";
 import type { ButtonVariant } from "@/components/ui/button";
 
 type PageHeaderProps = {
+  ctaOnClick?: () => void;
   ctaLabel?: string;
   ctaVariant?: Exclude<ButtonVariant, "icon">;
   subtitle: string;
   title: string;
 };
 
-export function PageHeader({ ctaLabel, ctaVariant = "primary", subtitle, title }: PageHeaderProps) {
+export function PageHeader({ ctaLabel, ctaOnClick, ctaVariant = "primary", subtitle, title }: PageHeaderProps) {
   return (
     <header className="flex flex-col items-start gap-4 pb-6 sm:flex-row sm:items-center sm:justify-between">
       <div className="flex flex-col items-start gap-1 sm:flex-row sm:flex-wrap sm:items-baseline sm:gap-2">
@@ -22,7 +23,7 @@ export function PageHeader({ ctaLabel, ctaVariant = "primary", subtitle, title }
       </div>
 
       {ctaLabel ? (
-        <Button className="justify-center sm:w-auto" icon={Plus} variant={ctaVariant}>
+        <Button className="justify-center sm:w-auto" icon={Plus} onClick={ctaOnClick} variant={ctaVariant}>
           {ctaLabel}
         </Button>
       ) : null}

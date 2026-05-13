@@ -1,10 +1,13 @@
 ﻿"use client";
 
 import { useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
 import { SearchInput } from "@/components/ui/input";
 import { PageHeader } from "@/components/ui/page-header";
 import { SelectField } from "@/components/ui/select-field";
 import { TableCard } from "@/components/ui/table-card";
+import { StudentDetailsDrawer } from "./_components/student-details-drawer";
+import { StudentsFlowShortcuts } from "./_components/students-flow-shortcuts";
 import { STUDENT_ROWS } from "./_data/students.mock";
 import {
   STUDENT_CLASSROOM_OPTIONS,
@@ -13,26 +16,41 @@ import {
   STUDENT_STATUS_OPTIONS,
   toSelectFieldOptions,
 } from "./_config/students-filter-options";
-import { STUDENTS_TABLE_COLUMNS } from "./_config/students-table-columns";
+import { getStudentsTableColumns } from "./_config/students-table-columns";
 import type { StudentFilters } from "./_types/students.types";
+import { useStudentsUiState } from "./_state/use-students-ui-state";
 import { filterStudents } from "./_utils/students-filters";
 
 export default function StudentsPage() {
+  const router = useRouter();
   const [search, setSearch] = useState("");
   const [filters, setFilters] = useState<StudentFilters>(STUDENT_FILTERS_DEFAULT_VALUE);
+  const { closeDetailsDrawer, isDetailsDrawerOpen, openDetailsDrawer, selectedStudentId } = useStudentsUiState();
 
   const filteredRows = useMemo(
     () => filterStudents(STUDENT_ROWS, filters, search),
     [filters, search],
+  );
+  const tableColumns = useMemo(
+    () =>
+      getStudentsTableColumns({
+        onNameClick: (row) => {
+          openDetailsDrawer(row.email);
+          router.push(`/students/${encodeURIComponent(row.email)}`);
+        },
+      }),
+    [openDetailsDrawer, router],
   );
 
   return (
     <section className="space-y-6">
       <PageHeader
         ctaLabel="Adicionar aluno"
+        ctaOnClick={() => router.push("/students/new")}
         subtitle="Gerencie o cadastro completo de alunos."
         title="Alunos"
       />
+      <StudentsFlowShortcuts />
 
       <div className="grid grid-cols-1 gap-2 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1fr)]">
         <div className="w-full min-w-0">
@@ -83,7 +101,7 @@ export default function StudentsPage() {
       <div className="pt-3">
         <TableCard
           ariaLabel="Tabela de alunos"
-          columns={STUDENTS_TABLE_COLUMNS}
+          columns={tableColumns}
           emptyMessage="Nenhum aluno encontrado para os filtros selecionados."
           rowKey={(row) => row.email}
           rows={filteredRows}
@@ -92,6 +110,12 @@ export default function StudentsPage() {
           titleBadge={`${filteredRows.length} alunos`}
         />
       </div>
+
+      <StudentDetailsDrawer
+        isOpen={isDetailsDrawerOpen}
+        onClose={closeDetailsDrawer}
+        studentId={selectedStudentId}
+      />
     </section>
   );
 }
