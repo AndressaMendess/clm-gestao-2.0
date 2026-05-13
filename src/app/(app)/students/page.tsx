@@ -6,7 +6,6 @@ import { SearchInput } from "@/components/ui/input";
 import { PageHeader } from "@/components/ui/page-header";
 import { SelectField } from "@/components/ui/select-field";
 import { TableCard } from "@/components/ui/table-card";
-import { StudentDetailsDrawer } from "./_components/student-details-drawer";
 import { StudentsFlowShortcuts } from "./_components/students-flow-shortcuts";
 import { STUDENT_ROWS } from "./_data/students.mock";
 import {
@@ -18,14 +17,12 @@ import {
 } from "./_config/students-filter-options";
 import { getStudentsTableColumns } from "./_config/students-table-columns";
 import type { StudentFilters } from "./_types/students.types";
-import { useStudentsUiState } from "./_state/use-students-ui-state";
 import { filterStudents } from "./_utils/students-filters";
 
 export default function StudentsPage() {
   const router = useRouter();
   const [search, setSearch] = useState("");
   const [filters, setFilters] = useState<StudentFilters>(STUDENT_FILTERS_DEFAULT_VALUE);
-  const { closeDetailsDrawer, isDetailsDrawerOpen, openDetailsDrawer, selectedStudentId } = useStudentsUiState();
 
   const filteredRows = useMemo(
     () => filterStudents(STUDENT_ROWS, filters, search),
@@ -34,12 +31,9 @@ export default function StudentsPage() {
   const tableColumns = useMemo(
     () =>
       getStudentsTableColumns({
-        onNameClick: (row) => {
-          openDetailsDrawer(row.email);
-          router.push(`/students/${encodeURIComponent(row.email)}`);
-        },
+        onNameClick: (row) => router.push(`/students/${encodeURIComponent(row.email)}`),
       }),
-    [openDetailsDrawer, router],
+    [router],
   );
 
   return (
@@ -110,12 +104,6 @@ export default function StudentsPage() {
           titleBadge={`${filteredRows.length} alunos`}
         />
       </div>
-
-      <StudentDetailsDrawer
-        isOpen={isDetailsDrawerOpen}
-        onClose={closeDetailsDrawer}
-        studentId={selectedStudentId}
-      />
     </section>
   );
 }

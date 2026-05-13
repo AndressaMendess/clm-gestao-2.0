@@ -20,6 +20,6 @@ export const drawerEditButtonStyles = "flex-1";
 export const drawerCloseButtonStyles =
   "inline-flex h-10 w-10 items-center justify-center rounded-[10px] text-[var(--content-tertiary)] transition-colors hover:bg-[var(--button-ghost-background-hover)] hover:text-[var(--content-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--button-focus-ring)] focus-visible:ring-offset-2";
 
-export const drawerTabsSectionStyles = "px-6 py-3";
+export const drawerTabsSectionStyles = "overflow-x-auto px-6 py-3";
 
 export const drawerContentStyles = "flex-1 overflow-y-auto px-6 py-5";

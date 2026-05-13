@@ -47,14 +47,29 @@ export function Drawer({
 }: DrawerProps) {
   const generatedId = useId();
   const [internalTab, setInternalTab] = useState<string | undefined>(tabs.find((item) => !item.disabled)?.id);
+  const [isMounted, setIsMounted] = useState(isOpen);
+  const [isVisible, setIsVisible] = useState(isOpen);
   const resolvedTab = tabValue ?? internalTab;
   const firstEnabledTab = useMemo(() => tabs.find((item) => !item.disabled)?.id, [tabs]);
+  const transitionMs = 220;
 
   useEffect(() => {
     if (!resolvedTab && firstEnabledTab) {
       setInternalTab(firstEnabledTab);
     }
   }, [firstEnabledTab, resolvedTab]);
+
+  useEffect(() => {
+    if (isOpen) {
+      setIsMounted(true);
+      const frame = requestAnimationFrame(() => setIsVisible(true));
+      return () => cancelAnimationFrame(frame);
+    }
+
+    setIsVisible(false);
+    const timeout = window.setTimeout(() => setIsMounted(false), transitionMs);
+    return () => window.clearTimeout(timeout);
+  }, [isOpen]);
 
   const requestClose = useCallback(() => {
     if (isLoading) return;
@@ -76,15 +91,28 @@ export function Drawer({
     };
   }, [isOpen, requestClose]);
 
-  if (!isOpen || typeof document === "undefined") return null;
+  if (!isMounted || typeof document === "undefined") return null;
 
   return createPortal(
     <>
-      <div className={drawerOverlayStyles} onClick={requestClose} role="presentation" />
+      <div
+        className={cx(
+          drawerOverlayStyles,
+          "transition-opacity duration-200",
+          isVisible ? "opacity-100" : "opacity-0",
+        )}
+        onClick={requestClose}
+        role="presentation"
+      />
       <aside
         aria-labelledby={`drawer-title-${generatedId}`}
         aria-modal="true"
-        className={cx(drawerShellStyles, className)}
+        className={cx(
+          drawerShellStyles,
+          "transform transition-transform duration-200 ease-out",
+          isVisible ? "translate-x-0" : "translate-x-4",
+          className,
+        )}
         role="dialog"
       >
         <header className={drawerHeaderStyles}>
