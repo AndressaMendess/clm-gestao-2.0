@@ -1,8 +1,9 @@
 ﻿"use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Copy } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
+import { AttachmentCollapsible } from "@/components/ui/attachment-collapsible";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { IconButton } from "@/components/ui/button";
@@ -149,6 +150,7 @@ export default function StudentDetailsPage() {
   const router = useRouter();
   const params = useParams<{ studentId: string }>();
   const [activeTab, setActiveTab] = useState("personal-data");
+  const [attachmentItems, setAttachmentItems] = useState<Array<{ id: string; name: string }>>([]);
 
   const student = useMemo(() => {
     const decodedStudentId = decodeURIComponent(params.studentId);
@@ -156,6 +158,15 @@ export default function StudentDetailsPage() {
   }, [params.studentId]);
 
   const details = student ? STUDENT_DETAILS_BY_EMAIL[student.email] ?? EMPTY_DETAILS : EMPTY_DETAILS;
+
+  useEffect(() => {
+    setAttachmentItems(
+      details.attachments.map((attachmentName, index) => ({
+        id: `${student?.email ?? "student"}-${index}`,
+        name: attachmentName,
+      })),
+    );
+  }, [details.attachments, student?.email]);
 
   const drawerTabs = useMemo(
     () => [
@@ -167,13 +178,13 @@ export default function StudentDetailsPage() {
         label: (
           <span className="inline-flex items-center gap-2">
             <span>Anexos</span>
-            <Badge variant="blue">{details.attachments.length}</Badge>
+            <Badge variant="blue">{attachmentItems.length}</Badge>
           </span>
         ),
       },
       { id: "attendance", label: "Frequência" },
     ],
-    [details.attachments.length],
+    [attachmentItems.length],
   );
 
   const statusVariant =
@@ -316,15 +327,13 @@ export default function StudentDetailsPage() {
         ) : null}
 
         {activeTab === "attachments" ? (
-          <div className="grid gap-3 text-[var(--content-secondary)]">
-            {details.attachments.length ? (
-              details.attachments.map((item) => (
-                <p key={item}><strong className="text-[var(--content-primary)]">•</strong> {item}</p>
-              ))
-            ) : (
-              <p>Nenhum anexo cadastrado.</p>
-            )}
-          </div>
+          <AttachmentCollapsible
+            items={attachmentItems}
+            onItemsChange={(nextItems) =>
+              setAttachmentItems(nextItems.map((item) => ({ id: item.id, name: item.name })))
+            }
+            title="Documentos pessoais"
+          />
         ) : null}
 
         {activeTab === "attendance" ? (

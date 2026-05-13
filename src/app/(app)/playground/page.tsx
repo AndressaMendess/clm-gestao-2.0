@@ -1,8 +1,9 @@
 ﻿"use client";
 
-import { CheckCircle2, Plus, Search, Users } from "lucide-react";
+import { CheckCircle2, ChevronLeft, Plus, Search, Users, X } from "lucide-react";
 import { useState } from "react";
 import { Avatar } from "@/components/ui/avatar";
+import { AttachmentCollapsible } from "@/components/ui/attachment-collapsible";
 import { Badge } from "@/components/ui/badge";
 import { Button, IconButton } from "@/components/ui/button";
 import { Checkbox, CheckboxField } from "@/components/ui/checkbox";
@@ -185,8 +186,12 @@ export default function HomePage() {
           <h2 className="text-lg font-medium">Button</h2>
           <div className="flex flex-wrap items-center gap-4">
             <Button variant="primary">Salvar</Button>
-            <Button variant="secondary">Cancelar</Button>
-            <Button variant="ghost">Voltar</Button>
+            <Button icon={X} variant="secondary">
+              Cancelar
+            </Button>
+            <Button icon={ChevronLeft} variant="ghost">
+              Voltar
+            </Button>
             <Button variant="danger">Excluir</Button>
             <Button icon={Search}>Buscar</Button>
             <IconButton icon={Plus} label="Adicionar" />
@@ -301,6 +306,19 @@ export default function HomePage() {
           <h2 className="text-lg font-medium">DocumentUploadField</h2>
           <div className="grid w-full max-w-4xl grid-cols-1 gap-4 md:grid-cols-2">
             <DocumentUploadField label="Upload de documento" maxSizeMb={5} />
+          </div>
+        </section>
+
+        <section className="flex flex-col gap-4">
+          <h2 className="text-lg font-medium">AttachmentCollapsible</h2>
+          <div className="w-full max-w-4xl">
+            <AttachmentCollapsible
+              initialItems={[
+                { id: "rg-frente", name: "RG frente.pdf", sizeInBytes: 182000 },
+                { id: "comprovante", name: "Comprovante de residência.jpg", sizeInBytes: 264000 },
+              ]}
+              title="Documentos pessoais"
+            />
           </div>
         </section>
 
