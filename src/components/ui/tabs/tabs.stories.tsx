@@ -21,6 +21,9 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
+  args: {
+    items: [],
+  },
   render: () => {
     const [value, setValue] = useState("students");
     return (

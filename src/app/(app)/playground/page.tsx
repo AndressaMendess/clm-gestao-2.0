@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button, IconButton } from "@/components/ui/button";
 import { Checkbox, CheckboxField } from "@/components/ui/checkbox";
 import { ContentShell } from "@/components/ui/content-shell";
+import { Drawer } from "@/components/ui/drawer";
 import { DocumentUploadField } from "@/components/ui/document-upload-field";
 import { FeatureCard } from "@/components/ui/feature-card";
 import { CpfInput, DatePicker, Input, PhoneInput, RgInput, SearchInput, TextArea } from "@/components/ui/input";
@@ -39,6 +40,8 @@ export default function HomePage() {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [activeTab, setActiveTab] = useState("students");
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [activeDrawerTab, setActiveDrawerTab] = useState("overview");
   const studentRows: StudentTableRow[] = [
     {
       avatarSrc:
@@ -331,6 +334,58 @@ export default function HomePage() {
               </p>
             </div>
           </ModalContainer>
+        </section>
+
+        <section className="flex flex-col gap-4">
+          <h2 className="text-lg font-medium">Drawer</h2>
+          <div className="flex items-center gap-4">
+            <Button onClick={() => setIsDrawerOpen(true)} variant="primary">
+              Abrir drawer
+            </Button>
+          </div>
+          <Drawer
+            avatarInitials="TL"
+            closeLabel="Fechar drawer do aluno"
+            isOpen={isDrawerOpen}
+            onClose={() => setIsDrawerOpen(false)}
+            onDeleteStudent={() => undefined}
+            onEditStudent={() => undefined}
+            onTabChange={setActiveDrawerTab}
+            statusLabel="Ativo"
+            statusVariant="success"
+            studentName="Thiago Fernandes Luz"
+            tabValue={activeDrawerTab}
+            tabs={[
+              { id: "overview", label: "Resumo" },
+              { id: "enrollment", label: "Matrícula" },
+              { id: "history", label: "Histórico" },
+            ]}
+          >
+            {activeDrawerTab === "overview" ? (
+              <div className="grid gap-2">
+                <strong className="text-[var(--content-primary)]">Resumo do aluno</strong>
+                <p className="text-[var(--content-secondary)]">
+                  Informações dinâmicas do perfil, status e turma atual.
+                </p>
+              </div>
+            ) : null}
+            {activeDrawerTab === "enrollment" ? (
+              <div className="grid gap-2">
+                <strong className="text-[var(--content-primary)]">Dados de matrícula</strong>
+                <p className="text-[var(--content-secondary)]">
+                  Conteúdo da matrícula pode ser alterado sem mudar o layout do drawer.
+                </p>
+              </div>
+            ) : null}
+            {activeDrawerTab === "history" ? (
+              <div className="grid gap-2">
+                <strong className="text-[var(--content-primary)]">Histórico</strong>
+                <p className="text-[var(--content-secondary)]">
+                  Exemplo de histórico acadêmico e eventos relevantes do aluno.
+                </p>
+              </div>
+            ) : null}
+          </Drawer>
         </section>
 
         <section className="flex flex-col gap-4">
