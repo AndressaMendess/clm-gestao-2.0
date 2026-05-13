@@ -16,6 +16,7 @@ import { SelectField } from "@/components/ui/select-field";
 import { Sidebar } from "@/components/ui/sidebar";
 import { Stepper } from "@/components/ui/stepper";
 import { TableCard } from "@/components/ui/table-card";
+import { Tabs } from "@/components/ui/tabs";
 
 type StudentTableRow = {
   avatarSrc?: string;
@@ -37,6 +38,7 @@ export default function HomePage() {
   const [activeSidebarModule, setActiveSidebarModule] = useState<string | null>("module-i");
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [activeTab, setActiveTab] = useState("students");
   const studentRows: StudentTableRow[] = [
     {
       avatarSrc:
@@ -480,6 +482,20 @@ export default function HomePage() {
               },
             ]}
             rows={studentRowsPaginated}
+          />
+        </section>
+
+        <section className="flex flex-col gap-4">
+          <h2 className="text-lg font-medium">Tabs</h2>
+          <Tabs
+            ariaLabel="Navegação por abas"
+            items={[
+              { id: "students", label: "Alunos" },
+              { id: "classes", label: "Turmas" },
+              { id: "modules", label: "Módulos" },
+            ]}
+            onValueChange={setActiveTab}
+            value={activeTab}
           />
         </section>
 
