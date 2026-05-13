@@ -26,7 +26,13 @@ type StudentDetails = {
   personalData: {
     birthDate: string;
     cpf: string;
+    fatherName: string;
+    fullName: string;
+    maritalStatus: string;
+    motherName: string;
+    nationality: string;
     rg: string;
+    sex: string;
   };
 };
 
@@ -42,7 +48,17 @@ const STUDENT_DETAILS_BY_EMAIL: Record<string, StudentDetails> = {
     },
     attendance: { justifiedAbsences: 1, presentRate: "92%", totalAbsences: 2, totalClasses: 24 },
     attachments: ["RG frente", "RG verso", "Comprovante de residência"],
-    personalData: { birthDate: "2008-03-12", cpf: "123.456.789-00", rg: "45.678.901-2" },
+    personalData: {
+      birthDate: "2008-03-12",
+      cpf: "123.456.789-00",
+      fatherName: "Carlos Eduardo Costa",
+      fullName: "Ana Clara Costa",
+      maritalStatus: "Solteira",
+      motherName: "Fernanda Lima Costa",
+      nationality: "Brasileira",
+      rg: "45.678.901-2",
+      sex: "Feminino",
+    },
   },
   "bruno.silva@email.com": {
     address: {
@@ -55,7 +71,17 @@ const STUDENT_DETAILS_BY_EMAIL: Record<string, StudentDetails> = {
     },
     attendance: { justifiedAbsences: 0, presentRate: "88%", totalAbsences: 3, totalClasses: 25 },
     attachments: ["RG frente", "RG verso"],
-    personalData: { birthDate: "2007-11-02", cpf: "234.567.890-11", rg: "56.789.012-3" },
+    personalData: {
+      birthDate: "2007-11-02",
+      cpf: "234.567.890-11",
+      fatherName: "Marcos Silva",
+      fullName: "Bruno Henrique Silva",
+      maritalStatus: "Solteiro",
+      motherName: "Luciana Souza Silva",
+      nationality: "Brasileiro",
+      rg: "56.789.012-3",
+      sex: "Masculino",
+    },
   },
   "camila.rocha@email.com": {
     address: {
@@ -68,7 +94,17 @@ const STUDENT_DETAILS_BY_EMAIL: Record<string, StudentDetails> = {
     },
     attendance: { justifiedAbsences: 2, presentRate: "79%", totalAbsences: 5, totalClasses: 24 },
     attachments: ["RG frente", "RG verso", "CPF", "Laudo médico"],
-    personalData: { birthDate: "2009-08-19", cpf: "345.678.901-22", rg: "67.890.123-4" },
+    personalData: {
+      birthDate: "2009-08-19",
+      cpf: "345.678.901-22",
+      fatherName: "Roberto Rocha",
+      fullName: "Camila Rocha",
+      maritalStatus: "Solteira",
+      motherName: "Patrícia Almeida Rocha",
+      nationality: "Brasileira",
+      rg: "67.890.123-4",
+      sex: "Feminino",
+    },
   },
 };
 
@@ -83,7 +119,17 @@ const EMPTY_DETAILS: StudentDetails = {
   },
   attendance: { justifiedAbsences: 0, presentRate: "-", totalAbsences: 0, totalClasses: 0 },
   attachments: [],
-  personalData: { birthDate: "-", cpf: "-", rg: "-" },
+  personalData: {
+    birthDate: "-",
+    cpf: "-",
+    fatherName: "-",
+    fullName: "-",
+    maritalStatus: "-",
+    motherName: "-",
+    nationality: "-",
+    rg: "-",
+    sex: "-",
+  },
 };
 
 export default function StudentDetailsPage() {
@@ -143,10 +189,95 @@ export default function StudentDetailsPage() {
         tabs={drawerTabs}
       >
         {activeTab === "personal-data" ? (
-          <div className="grid gap-4 text-[var(--content-secondary)]">
-            <p><strong className="text-[var(--content-primary)]">Data de nascimento:</strong> {details.personalData.birthDate}</p>
-            <p><strong className="text-[var(--content-primary)]">CPF:</strong> {details.personalData.cpf}</p>
-            <p><strong className="text-[var(--content-primary)]">RG:</strong> {details.personalData.rg}</p>
+          <div className="grid gap-6">
+            <article className="rounded-[24px] border border-[var(--border-primary)] bg-[var(--background-primary)] p-5 shadow-[0_8px_20px_rgb(0_0_0_/_0.06)]">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <div>
+                  <p className="[font-size:var(--typography-body-small-semibold-font-size)] [line-height:var(--typography-body-small-semibold-line-height)] [font-weight:var(--typography-body-small-semibold-font-weight)] [letter-spacing:var(--typography-body-small-semibold-letter-spacing)] text-[var(--content-secondary)]">
+                    Nome completo
+                  </p>
+                  <p className="[font-size:var(--typography-body-medium-regular-font-size)] [line-height:var(--typography-body-medium-regular-line-height)] [font-weight:var(--typography-body-medium-regular-font-weight)] [letter-spacing:var(--typography-body-medium-regular-letter-spacing)] text-[var(--content-secondary)]">{details.personalData.fullName}</p>
+                </div>
+                <div>
+                  <p className="[font-size:var(--typography-body-small-semibold-font-size)] [line-height:var(--typography-body-small-semibold-line-height)] [font-weight:var(--typography-body-small-semibold-font-weight)] [letter-spacing:var(--typography-body-small-semibold-letter-spacing)] text-[var(--content-secondary)]">
+                    RG
+                  </p>
+                  <p className="[font-size:var(--typography-body-medium-regular-font-size)] [line-height:var(--typography-body-medium-regular-line-height)] [font-weight:var(--typography-body-medium-regular-font-weight)] [letter-spacing:var(--typography-body-medium-regular-letter-spacing)] text-[var(--content-secondary)]">{details.personalData.rg}</p>
+                </div>
+                <div>
+                  <p className="[font-size:var(--typography-body-small-semibold-font-size)] [line-height:var(--typography-body-small-semibold-line-height)] [font-weight:var(--typography-body-small-semibold-font-weight)] [letter-spacing:var(--typography-body-small-semibold-letter-spacing)] text-[var(--content-secondary)]">
+                    CPF
+                  </p>
+                  <p className="[font-size:var(--typography-body-medium-regular-font-size)] [line-height:var(--typography-body-medium-regular-line-height)] [font-weight:var(--typography-body-medium-regular-font-weight)] [letter-spacing:var(--typography-body-medium-regular-letter-spacing)] text-[var(--content-secondary)]">{details.personalData.cpf}</p>
+                </div>
+                <div>
+                  <p className="[font-size:var(--typography-body-small-semibold-font-size)] [line-height:var(--typography-body-small-semibold-line-height)] [font-weight:var(--typography-body-small-semibold-font-weight)] [letter-spacing:var(--typography-body-small-semibold-letter-spacing)] text-[var(--content-secondary)]">
+                    Data de nascimento
+                  </p>
+                  <p className="[font-size:var(--typography-body-medium-regular-font-size)] [line-height:var(--typography-body-medium-regular-line-height)] [font-weight:var(--typography-body-medium-regular-font-weight)] [letter-spacing:var(--typography-body-medium-regular-letter-spacing)] text-[var(--content-secondary)]">{details.personalData.birthDate}</p>
+                </div>
+                <div>
+                  <p className="[font-size:var(--typography-body-small-semibold-font-size)] [line-height:var(--typography-body-small-semibold-line-height)] [font-weight:var(--typography-body-small-semibold-font-weight)] [letter-spacing:var(--typography-body-small-semibold-letter-spacing)] text-[var(--content-secondary)]">
+                    Sexo
+                  </p>
+                  <p className="[font-size:var(--typography-body-medium-regular-font-size)] [line-height:var(--typography-body-medium-regular-line-height)] [font-weight:var(--typography-body-medium-regular-font-weight)] [letter-spacing:var(--typography-body-medium-regular-letter-spacing)] text-[var(--content-secondary)]">{details.personalData.sex}</p>
+                </div>
+                <div>
+                  <p className="[font-size:var(--typography-body-small-semibold-font-size)] [line-height:var(--typography-body-small-semibold-line-height)] [font-weight:var(--typography-body-small-semibold-font-weight)] [letter-spacing:var(--typography-body-small-semibold-letter-spacing)] text-[var(--content-secondary)]">
+                    Estado Civil
+                  </p>
+                  <p className="[font-size:var(--typography-body-medium-regular-font-size)] [line-height:var(--typography-body-medium-regular-line-height)] [font-weight:var(--typography-body-medium-regular-font-weight)] [letter-spacing:var(--typography-body-medium-regular-letter-spacing)] text-[var(--content-secondary)]">{details.personalData.maritalStatus}</p>
+                </div>
+                <div>
+                  <p className="[font-size:var(--typography-body-small-semibold-font-size)] [line-height:var(--typography-body-small-semibold-line-height)] [font-weight:var(--typography-body-small-semibold-font-weight)] [letter-spacing:var(--typography-body-small-semibold-letter-spacing)] text-[var(--content-secondary)]">
+                    Nacionalidade
+                  </p>
+                  <p className="[font-size:var(--typography-body-medium-regular-font-size)] [line-height:var(--typography-body-medium-regular-line-height)] [font-weight:var(--typography-body-medium-regular-font-weight)] [letter-spacing:var(--typography-body-medium-regular-letter-spacing)] text-[var(--content-secondary)]">{details.personalData.nationality}</p>
+                </div>
+              </div>
+            </article>
+
+            <article className="rounded-[24px] border border-[var(--border-primary)] bg-[var(--background-primary)] p-5 shadow-[0_8px_20px_rgb(0_0_0_/_0.06)]">
+              <div className="grid gap-4">
+                <div>
+                  <p className="[font-size:var(--typography-body-small-semibold-font-size)] [line-height:var(--typography-body-small-semibold-line-height)] [font-weight:var(--typography-body-small-semibold-font-weight)] [letter-spacing:var(--typography-body-small-semibold-letter-spacing)] text-[var(--content-secondary)]">
+                    Nome do pai
+                  </p>
+                  <p className="[font-size:var(--typography-body-medium-regular-font-size)] [line-height:var(--typography-body-medium-regular-line-height)] [font-weight:var(--typography-body-medium-regular-font-weight)] [letter-spacing:var(--typography-body-medium-regular-letter-spacing)] text-[var(--content-secondary)]">{details.personalData.fatherName}</p>
+                </div>
+                <div>
+                  <p className="[font-size:var(--typography-body-small-semibold-font-size)] [line-height:var(--typography-body-small-semibold-line-height)] [font-weight:var(--typography-body-small-semibold-font-weight)] [letter-spacing:var(--typography-body-small-semibold-letter-spacing)] text-[var(--content-secondary)]">
+                    Nome da mãe
+                  </p>
+                  <p className="[font-size:var(--typography-body-medium-regular-font-size)] [line-height:var(--typography-body-medium-regular-line-height)] [font-weight:var(--typography-body-medium-regular-font-weight)] [letter-spacing:var(--typography-body-medium-regular-letter-spacing)] text-[var(--content-secondary)]">{details.personalData.motherName}</p>
+                </div>
+              </div>
+            </article>
+
+            <article className="rounded-[24px] border border-[var(--border-primary)] bg-[var(--background-primary)] p-5 shadow-[0_8px_20px_rgb(0_0_0_/_0.06)]">
+              <div className="grid gap-4">
+                <div>
+                  <p className="[font-size:var(--typography-body-small-semibold-font-size)] [line-height:var(--typography-body-small-semibold-line-height)] [font-weight:var(--typography-body-small-semibold-font-weight)] [letter-spacing:var(--typography-body-small-semibold-letter-spacing)] text-[var(--content-secondary)]">
+                    Módulo
+                  </p>
+                  <div className="pt-1">
+                    <Badge variant={student?.moduleVariant ?? "violet"}>
+                      {student?.module ?? "-"}
+                    </Badge>
+                  </div>
+                </div>
+                <div>
+                  <p className="[font-size:var(--typography-body-small-semibold-font-size)] [line-height:var(--typography-body-small-semibold-line-height)] [font-weight:var(--typography-body-small-semibold-font-weight)] [letter-spacing:var(--typography-body-small-semibold-letter-spacing)] text-[var(--content-secondary)]">
+                    Turma
+                  </p>
+                  <div className="pt-1">
+                    <Badge variant={student?.classroomVariant ?? "blue"}>
+                      {student?.classroom ?? "-"}
+                    </Badge>
+                  </div>
+                </div>
+              </div>
+            </article>
           </div>
         ) : null}
 
