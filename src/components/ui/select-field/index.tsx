@@ -69,7 +69,7 @@ export function SelectField({
         className={cx(getSelectFieldStyles(tone), triggerClassName)}
         id={selectId}
       >
-        <Select.Value placeholder={placeholder} />
+        <Select.Value className="min-w-0 flex-1 truncate whitespace-nowrap" placeholder={placeholder} />
         <Select.Icon asChild>
           <ChevronDown className="h-4 w-4 shrink-0 text-[var(--content-tertiary)]" />
         </Select.Icon>

@@ -30,7 +30,7 @@ export const tableCardHeadSortButtonStyles =
   "inline-flex w-full items-center gap-1 text-inherit focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--button-focus-ring)] focus-visible:ring-offset-2";
 
 export const tableCardBodyRowStyles =
-  "border-b border-[var(--border-primary)] last:border-b-0 transition-colors hover:bg-[var(--background-secondary)]";
+  "border-b border-[var(--border-primary)] last:border-b-0 transition-colors";
 
 export const tableCardBodyCellBaseStyles =
   "px-4 py-3 text-[var(--content-secondary)] [font-size:var(--typography-body-medium-regular-font-size)] [line-height:var(--typography-body-medium-regular-line-height)] [font-weight:var(--typography-body-medium-regular-font-weight)] [letter-spacing:var(--typography-body-medium-regular-letter-spacing)]";

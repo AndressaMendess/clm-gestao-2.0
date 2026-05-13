@@ -366,7 +366,7 @@ export default function HomePage() {
                       src={row.avatarSrc}
                       variant={row.avatarSrc ? "with-image" : "without-image"}
                     />
-                    <span className="[font-size:var(--typography-body-medium-semibold-font-size)] [line-height:var(--typography-body-medium-semibold-line-height)] [font-weight:var(--typography-body-medium-semibold-font-weight)] [letter-spacing:var(--typography-body-medium-semibold-letter-spacing)] text-[var(--content-primary)]">
+                    <span className="[font-size:var(--typography-body-medium-semibold-font-size)] [line-height:var(--typography-body-medium-semibold-line-height)] [font-weight:var(--typography-body-medium-semibold-font-weight)] [letter-spacing:var(--typography-body-medium-semibold-letter-spacing)] text-[var(--content-primary)] transition-colors hover:text-[var(--brand-primary-main)]">
                       {row.name}
                     </span>
                   </div>
@@ -436,7 +436,7 @@ export default function HomePage() {
                       src={row.avatarSrc}
                       variant={row.avatarSrc ? "with-image" : "without-image"}
                     />
-                    <span className="[font-size:var(--typography-body-medium-semibold-font-size)] [line-height:var(--typography-body-medium-semibold-line-height)] [font-weight:var(--typography-body-medium-semibold-font-weight)] [letter-spacing:var(--typography-body-medium-semibold-letter-spacing)] text-[var(--content-primary)]">
+                    <span className="[font-size:var(--typography-body-medium-semibold-font-size)] [line-height:var(--typography-body-medium-semibold-line-height)] [font-weight:var(--typography-body-medium-semibold-font-weight)] [letter-spacing:var(--typography-body-medium-semibold-letter-spacing)] text-[var(--content-primary)] transition-colors hover:text-[var(--brand-primary-main)]">
                       {row.name}
                     </span>
                   </div>
