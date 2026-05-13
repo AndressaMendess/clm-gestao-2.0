@@ -6,7 +6,6 @@ import { SearchInput } from "@/components/ui/input";
 import { PageHeader } from "@/components/ui/page-header";
 import { SelectField } from "@/components/ui/select-field";
 import { TableCard } from "@/components/ui/table-card";
-import { StudentsFlowShortcuts } from "./_components/students-flow-shortcuts";
 import { STUDENT_ROWS } from "./_data/students.mock";
 import {
   STUDENT_CLASSROOM_OPTIONS,
@@ -44,7 +43,6 @@ export default function StudentsPage() {
         subtitle="Gerencie o cadastro completo de alunos."
         title="Alunos"
       />
-      <StudentsFlowShortcuts />
 
       <div className="grid grid-cols-1 gap-2 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1fr)]">
         <div className="w-full min-w-0">
