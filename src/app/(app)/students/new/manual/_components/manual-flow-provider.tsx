@@ -9,8 +9,13 @@ export type ManualFlowFormData = {
   cpf: string;
   district: string;
   email: string;
+  enrollmentClassroom: string;
+  enrollmentModule: string;
+  enrollmentStatus: string;
+  fatherName: string;
   fullName: string;
   maritalStatus: string;
+  motherName: string;
   nationality: string;
   number: string;
   phone: string;
@@ -28,8 +33,13 @@ const INITIAL_FORM_DATA: ManualFlowFormData = {
   cpf: "",
   district: "",
   email: "",
+  enrollmentClassroom: "",
+  enrollmentModule: "",
+  enrollmentStatus: "",
+  fatherName: "",
   fullName: "",
   maritalStatus: "",
+  motherName: "",
   nationality: "",
   number: "",
   phone: "",
@@ -75,4 +85,3 @@ export function useManualFlowForm() {
   }
   return context;
 }
-

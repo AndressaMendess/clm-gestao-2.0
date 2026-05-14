@@ -14,6 +14,8 @@ export const STUDENT_MODULE_OPTIONS = [
 ] as const;
 
 export const STUDENT_CLASSROOM_OPTIONS = [
+  { label: "Classe 1", value: "classe-1" },
+  { label: "Classe 2", value: "classe-2" },
   { label: "Teoria musical", value: "teoria-musical" },
   { label: "Solfejo", value: "solfejo" },
   { label: "Violino", value: "violino" },
@@ -28,6 +30,7 @@ export const STUDENT_CLASSROOM_OPTIONS = [
   { label: "Guitarra", value: "guitarra" },
   { label: "Violão", value: "violao" },
   { label: "Contrabaixo", value: "contrabaixo" },
+  { label: "Canto coral", value: "canto-coral" },
 ] as const;
 
 export const STUDENT_ATTENDANCE_STATUS_OPTIONS = [

@@ -1,6 +1,8 @@
 ﻿export type StudentStatusFilter = "active" | "inactive" | "locked";
 export type StudentModuleFilter = "module-i" | "module-ii" | "module-iii";
 export type StudentClassroomFilter =
+  | "classe-1"
+  | "classe-2"
   | "teoria-musical"
   | "solfejo"
   | "violino"
@@ -14,7 +16,8 @@ export type StudentClassroomFilter =
   | "trombone"
   | "guitarra"
   | "violao"
-  | "contrabaixo";
+  | "contrabaixo"
+  | "canto-coral";
 
 export type StudentAttendanceStatusFilter = "present" | "absent" | "excused";
 
