@@ -1,0 +1,48 @@
+﻿import type { TeacherRow } from "../_types/teachers.types";
+
+export const TEACHER_ROWS: TeacherRow[] = [
+  {
+    email: "marina.alves@email.com",
+    initials: "MA",
+    name: "Marina Alves",
+    phone: "(11) 98888-1111",
+    specialty: "Teoria Musical",
+    specialtyFilter: "teoria-musical",
+    specialtyVariant: "violet",
+    status: "Ativo",
+    statusFilter: "active",
+  },
+  {
+    email: "rafael.souza@email.com",
+    initials: "RS",
+    name: "Rafael Souza",
+    phone: "(11) 98888-2222",
+    specialty: "Violino",
+    specialtyFilter: "violino",
+    specialtyVariant: "blue",
+    status: "Inativo",
+    statusFilter: "inactive",
+  },
+  {
+    email: "camila.lima@email.com",
+    initials: "CL",
+    name: "Camila Lima",
+    phone: "(11) 98888-3333",
+    specialty: "Trompete",
+    specialtyFilter: "trompete",
+    specialtyVariant: "orange",
+    status: "Trancamento",
+    statusFilter: "locked",
+  },
+  {
+    email: "joao.mendes@email.com",
+    initials: "JM",
+    name: "Joao Mendes",
+    phone: "(11) 98888-4444",
+    specialty: "Canto Coral",
+    specialtyFilter: "canto-coral",
+    specialtyVariant: "pink",
+    status: "Ativo",
+    statusFilter: "active",
+  },
+];
