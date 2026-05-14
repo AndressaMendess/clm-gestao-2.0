@@ -12,6 +12,7 @@ import { Drawer } from "@/components/ui/drawer";
 import { DocumentUploadField } from "@/components/ui/document-upload-field";
 import { FeatureCard } from "@/components/ui/feature-card";
 import { CpfInput, DatePicker, Input, PhoneInput, RgInput, SearchInput, TextArea } from "@/components/ui/input";
+import { ListCollapsible } from "@/components/ui/list-collapsible";
 import { ModalContainer } from "@/components/ui/modal-container";
 import { NavItem } from "@/components/ui/nav-item";
 import { SelectField } from "@/components/ui/select-field";
@@ -318,6 +319,36 @@ export default function HomePage() {
                 { id: "comprovante", name: "Comprovante de residência.jpg", sizeInBytes: 264000 },
               ]}
               title="Documentos pessoais"
+            />
+          </div>
+        </section>
+
+        <section className="flex flex-col gap-4">
+          <h2 className="text-lg font-medium">ListCollapsible</h2>
+          <div className="w-full max-w-4xl">
+            <ListCollapsible
+              items={[
+                {
+                  badgeLabel: "Ativo",
+                  badgeVariant: "success",
+                  id: "item-1",
+                  text: "Matrícula validada",
+                },
+                {
+                  badgeLabel: "Pendente",
+                  badgeVariant: "warning",
+                  id: "item-2",
+                  text: "Aguardando confirmação de endereço",
+                },
+                {
+                  badgeLabel: "Inativo",
+                  badgeVariant: "error",
+                  id: "item-3",
+                  text: "Documentação incompleta",
+                },
+              ]}
+              subtitle="Status detalhado por item"
+              title="Lista de acompanhamento"
             />
           </div>
         </section>
