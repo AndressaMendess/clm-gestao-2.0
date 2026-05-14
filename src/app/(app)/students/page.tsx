@@ -1,12 +1,12 @@
 ﻿"use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { SearchInput } from "@/components/ui/input";
 import { PageHeader } from "@/components/ui/page-header";
 import { SelectField } from "@/components/ui/select-field";
 import { TableCard } from "@/components/ui/table-card";
-import { STUDENT_ROWS } from "./_data/students.mock";
+import { getStudentRowsFromRegistry } from "./_data/students-registry";
 import {
   STUDENT_CLASSROOM_OPTIONS,
   STUDENT_FILTERS_DEFAULT_VALUE,
@@ -22,10 +22,15 @@ export default function StudentsPage() {
   const router = useRouter();
   const [search, setSearch] = useState("");
   const [filters, setFilters] = useState<StudentFilters>(STUDENT_FILTERS_DEFAULT_VALUE);
+  const [studentRows, setStudentRows] = useState(() => getStudentRowsFromRegistry());
+
+  useEffect(() => {
+    setStudentRows(getStudentRowsFromRegistry());
+  }, []);
 
   const filteredRows = useMemo(
-    () => filterStudents(STUDENT_ROWS, filters, search),
-    [filters, search],
+    () => filterStudents(studentRows, filters, search),
+    [filters, search, studentRows],
   );
   const tableColumns = useMemo(
     () =>
