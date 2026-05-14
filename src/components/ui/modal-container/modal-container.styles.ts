@@ -1,5 +1,5 @@
 export const modalContainerOverlayStyles =
-  "fixed inset-0 z-50 flex items-center justify-center bg-[rgb(0_0_0_/_0.55)] p-4 sm:p-6";
+  "fixed inset-0 z-[80] flex items-center justify-center bg-[rgb(0_0_0_/_0.55)] p-4 sm:p-6";
 
 export const modalContainerStyles =
   "font-[var(--font-family-sans)] w-full max-w-[680px] overflow-hidden rounded-2xl border border-[var(--border-primary)] bg-[var(--background-primary)] shadow-[0_24px_56px_rgb(0_0_0_/_0.28)]";

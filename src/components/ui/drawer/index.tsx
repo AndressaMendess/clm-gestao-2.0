@@ -47,8 +47,8 @@ export function Drawer({
 }: DrawerProps) {
   const generatedId = useId();
   const [internalTab, setInternalTab] = useState<string | undefined>(tabs.find((item) => !item.disabled)?.id);
-  const [isMounted, setIsMounted] = useState(isOpen);
-  const [isVisible, setIsVisible] = useState(isOpen);
+  const [isMounted, setIsMounted] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
   const resolvedTab = tabValue ?? internalTab;
   const firstEnabledTab = useMemo(() => tabs.find((item) => !item.disabled)?.id, [tabs]);
   const transitionMs = 220;

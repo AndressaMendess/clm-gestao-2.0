@@ -5,8 +5,8 @@ import { Copy } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { AttachmentCollapsible } from "@/components/ui/attachment-collapsible";
 import { Badge } from "@/components/ui/badge";
+import { Button, IconButton } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { IconButton } from "@/components/ui/button";
 import { Drawer } from "@/components/ui/drawer";
 import { STUDENT_ROWS } from "../_data/students.mock";
 import StudentsPage from "../page";
@@ -22,6 +22,11 @@ type StudentDetails = {
     zipCode: string;
   };
   attendance: {
+    history: Array<{
+      date: string;
+      notes?: string;
+      status: "Presente" | "Ausente" | "Justificado";
+    }>;
     justifiedAbsences: number;
     presentRate: string;
     totalAbsences: number;
@@ -53,7 +58,16 @@ const STUDENT_DETAILS_BY_EMAIL: Record<string, StudentDetails> = {
       street: "Rua das Flores",
       zipCode: "04101-100",
     },
-    attendance: { justifiedAbsences: 1, presentRate: "92%", totalAbsences: 2, totalClasses: 24 },
+    attendance: {
+      history: [
+        { date: "2026-05-11", notes: "Chegou no horário", status: "Presente" },
+        { date: "2026-05-08", status: "Ausente" },
+      ],
+      justifiedAbsences: 1,
+      presentRate: "92%",
+      totalAbsences: 2,
+      totalClasses: 24,
+    },
     attachments: ["RG frente", "RG verso", "Comprovante de residência"],
     personalData: {
       birthDate: "2008-03-12",
@@ -78,7 +92,13 @@ const STUDENT_DETAILS_BY_EMAIL: Record<string, StudentDetails> = {
       street: "Rua Maestro Lima",
       zipCode: "04210-050",
     },
-    attendance: { justifiedAbsences: 0, presentRate: "88%", totalAbsences: 3, totalClasses: 25 },
+    attendance: {
+      history: [{ date: "2026-05-10", notes: "Participação ativa", status: "Presente" }],
+      justifiedAbsences: 0,
+      presentRate: "88%",
+      totalAbsences: 3,
+      totalClasses: 25,
+    },
     attachments: ["RG frente", "RG verso"],
     personalData: {
       birthDate: "2007-11-02",
@@ -103,7 +123,16 @@ const STUDENT_DETAILS_BY_EMAIL: Record<string, StudentDetails> = {
       street: "Av. Harmonia",
       zipCode: "09710-110",
     },
-    attendance: { justifiedAbsences: 2, presentRate: "79%", totalAbsences: 5, totalClasses: 24 },
+    attendance: {
+      history: [
+        { date: "2026-05-12", notes: "Atestado médico", status: "Justificado" },
+        { date: "2026-05-09", status: "Ausente" },
+      ],
+      justifiedAbsences: 2,
+      presentRate: "79%",
+      totalAbsences: 5,
+      totalClasses: 24,
+    },
     attachments: ["RG frente", "RG verso", "CPF", "Laudo médico"],
     personalData: {
       birthDate: "2009-08-19",
@@ -130,7 +159,7 @@ const EMPTY_DETAILS: StudentDetails = {
     street: "-",
     zipCode: "-",
   },
-  attendance: { justifiedAbsences: 0, presentRate: "-", totalAbsences: 0, totalClasses: 0 },
+  attendance: { history: [], justifiedAbsences: 0, presentRate: "-", totalAbsences: 0, totalClasses: 0 },
   attachments: [],
   personalData: {
     birthDate: "-",
@@ -337,11 +366,75 @@ export default function StudentDetailsPage() {
         ) : null}
 
         {activeTab === "attendance" ? (
-          <div className="grid gap-4 text-[var(--content-secondary)]">
-            <p><strong className="text-[var(--content-primary)]">Aulas totais:</strong> {details.attendance.totalClasses}</p>
-            <p><strong className="text-[var(--content-primary)]">Faltas:</strong> {details.attendance.totalAbsences}</p>
-            <p><strong className="text-[var(--content-primary)]">Faltas justificadas:</strong> {details.attendance.justifiedAbsences}</p>
-            <p><strong className="text-[var(--content-primary)]">Presença:</strong> {details.attendance.presentRate}</p>
+          <div className="grid gap-4">
+            <Card
+              fields={[]}
+              title={
+                <div className="grid gap-1">
+                  <p>Histórico Recente</p>
+                  <p className="[font-size:var(--typography-body-small-regular-font-size)] [line-height:var(--typography-body-small-regular-line-height)] [font-weight:var(--typography-body-small-regular-font-weight)] [letter-spacing:var(--typography-body-small-regular-letter-spacing)] text-[var(--content-secondary)]">
+                    Últimas {details.attendance.history.length} ocorrências de presença
+                  </p>
+                </div>
+              }
+            />
+
+            {details.attendance.history.length ? (
+              <Card
+                className="border border-[var(--border-primary)]"
+                columns={2}
+                fields={[
+                  {
+                    id: "lastDate",
+                    label: "Data",
+                    value: details.attendance.history[0].date,
+                  },
+                  {
+                    id: "lastStatus",
+                    label: "Status",
+                    value: (
+                      <Badge
+                        variant={
+                          details.attendance.history[0].status === "Presente"
+                            ? "success"
+                            : details.attendance.history[0].status === "Justificado"
+                              ? "blue"
+                              : "warning"
+                        }
+                      >
+                        {details.attendance.history[0].status}
+                      </Badge>
+                    ),
+                  },
+                  {
+                    id: "lastNotes",
+                    label: "Observações",
+                    value: details.attendance.history[0].notes ?? "Sem observações.",
+                  },
+                ]}
+              />
+            ) : (
+              <Card
+                className="border border-[var(--border-primary)]"
+                fields={[
+                  {
+                    id: "emptyAttendance",
+                    label: "Sem registros",
+                    value: "Nenhuma atualização de frequência disponível.",
+                  },
+                ]}
+              />
+            )}
+
+            <div className="w-full">
+              <Button
+                className="w-full"
+                onClick={() => router.push(`/students/${encodeURIComponent(student?.email ?? "")}/attendance-history`)}
+                variant="secondary"
+              >
+                Ver histórico completo
+              </Button>
+            </div>
           </div>
         ) : null}
       </Drawer>
