@@ -1,9 +1,9 @@
-"use client";
+﻿"use client";
 
-import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { DatePicker, Input, PhoneInput } from "@/components/ui/input";
 import { SelectField } from "@/components/ui/select-field";
+import { useManualFlowForm } from "../_components/manual-flow-provider";
 import { ManualFlowShell } from "../_components/manual-flow-shell";
 
 const SEX_OPTIONS = [
@@ -21,14 +21,8 @@ const MARITAL_STATUS_OPTIONS = [
 
 export default function StudentCreateManualPersonalDataPage() {
   const router = useRouter();
-  const [fullName, setFullName] = useState("");
-  const [birthDate, setBirthDate] = useState("");
-  const [sex, setSex] = useState("");
-  const [maritalStatus, setMaritalStatus] = useState("");
-  const [nationality, setNationality] = useState("");
-  const [email, setEmail] = useState("");
-  const [schoolEmail, setSchoolEmail] = useState("");
-  const [phone, setPhone] = useState("");
+  const { formData, updateFormData } = useManualFlowForm();
+  const { fullName, birthDate, sex, maritalStatus, nationality, email, schoolEmail, phone } = formData;
 
   const phoneDigits = phone.replace(/\D/g, "");
   const isNextDisabled =
@@ -49,7 +43,7 @@ export default function StudentCreateManualPersonalDataPage() {
           </label>
           <Input
             id="manual-full-name"
-            onChange={(event) => setFullName(event.currentTarget.value)}
+            onChange={(event) => updateFormData({ fullName: event.currentTarget.value })}
             placeholder="Digite o nome completo"
             required
             showLabel={false}
@@ -64,7 +58,7 @@ export default function StudentCreateManualPersonalDataPage() {
             </label>
             <DatePicker
               id="manual-birth-date"
-              onDateChange={({ maskedValue }) => setBirthDate(maskedValue)}
+              onDateChange={({ maskedValue }) => updateFormData({ birthDate: maskedValue })}
               required
               showLabel={false}
               value={birthDate}
@@ -73,15 +67,15 @@ export default function StudentCreateManualPersonalDataPage() {
 
           <SelectField
             label="Sexo"
-            onValueChange={setSex}
+            onValueChange={(value) => updateFormData({ sex: value })}
             options={SEX_OPTIONS.map((item) => ({ label: item.label, value: item.value }))}
             placeholder="Selecione"
             value={sex}
           />
 
           <SelectField
-            label="Estado cívil"
-            onValueChange={setMaritalStatus}
+            label="Estado civil"
+            onValueChange={(value) => updateFormData({ maritalStatus: value })}
             options={MARITAL_STATUS_OPTIONS.map((item) => ({ label: item.label, value: item.value }))}
             placeholder="Selecione"
             value={maritalStatus}
@@ -89,7 +83,7 @@ export default function StudentCreateManualPersonalDataPage() {
 
           <Input
             label="Nacionalidade"
-            onChange={(event) => setNationality(event.currentTarget.value)}
+            onChange={(event) => updateFormData({ nationality: event.currentTarget.value })}
             placeholder="Digite a nacionalidade"
             value={nationality}
           />
@@ -101,7 +95,7 @@ export default function StudentCreateManualPersonalDataPage() {
           </label>
           <Input
             id="manual-email"
-            onChange={(event) => setEmail(event.currentTarget.value)}
+            onChange={(event) => updateFormData({ email: event.currentTarget.value })}
             placeholder="nome@email.com"
             required
             showLabel={false}
@@ -113,8 +107,8 @@ export default function StudentCreateManualPersonalDataPage() {
         <Input
           helperText="Caso não tenha, deixe em branco."
           label="Email escolar"
-          onChange={(event) => setSchoolEmail(event.currentTarget.value)}
-          placeholder="nome@escola.edu.br"
+          onChange={(event) => updateFormData({ schoolEmail: event.currentTarget.value })}
+          placeholder="nome@escolaclm.com"
           type="email"
           value={schoolEmail}
         />
@@ -125,7 +119,7 @@ export default function StudentCreateManualPersonalDataPage() {
           </label>
           <PhoneInput
             id="manual-phone"
-            onValueChange={(_, maskedValue) => setPhone(maskedValue)}
+            onValueChange={(_, maskedValue) => updateFormData({ phone: maskedValue })}
             placeholder="(00) 00000-0000"
             required
             showLabel={false}

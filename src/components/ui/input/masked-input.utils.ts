@@ -30,3 +30,10 @@ export function formatPhone(value: string): string {
   }
   return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`;
 }
+
+export function formatCep(value: string): string {
+  const digits = onlyDigits(value).slice(0, 8);
+  if (!digits) return "";
+  if (digits.length <= 5) return digits;
+  return `${digits.slice(0, 5)}-${digits.slice(5)}`;
+}

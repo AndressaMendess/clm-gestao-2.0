@@ -1,11 +1,13 @@
 "use client";
 
+import { useCallback } from "react";
 import { useRouter } from "next/navigation";
 import type { ReactNode } from "react";
 import { Button } from "@/components/ui/button";
 import { ModalContainer } from "@/components/ui/modal-container";
 import { Stepper } from "@/components/ui/stepper";
 import StudentsPage from "../../../page";
+import { useManualFlowForm } from "./manual-flow-provider";
 
 const STEPS = [
   { id: "personal-data", label: "Dados pessoais" },
@@ -30,6 +32,12 @@ export function ManualFlowShell({
   onPrevious,
 }: ManualFlowShellProps) {
   const router = useRouter();
+  const { resetFormData } = useManualFlowForm();
+
+  const handleCloseFlow = useCallback(() => {
+    resetFormData();
+    router.push("/students");
+  }, [resetFormData, router]);
 
   return (
     <>
@@ -39,12 +47,12 @@ export function ManualFlowShell({
         className="max-w-[920px]"
         closeLabel="Fechar cadastro manual"
         isOpen
-        onClose={() => router.push("/students")}
+        onClose={handleCloseFlow}
         subtitle="Preencha os dados do novo aluno"
         title="Adicionar Aluno"
         footer={
           <>
-            <Button onClick={onPrevious ?? (() => router.push("/students"))} variant="ghost">
+            <Button onClick={onPrevious ?? handleCloseFlow} variant="ghost">
               {onPrevious ? "Voltar" : "Cancelar"}
             </Button>
             <Button disabled={nextDisabled} onClick={onNext} variant="primary">
@@ -63,4 +71,3 @@ export function ManualFlowShell({
     </>
   );
 }
-

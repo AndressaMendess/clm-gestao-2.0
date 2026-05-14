@@ -42,6 +42,7 @@ export const tokens = {
         secondary: { light: primitives.gray[800], dark: primitives.gray[200] },
         tertiary: { light: primitives.gray[700], dark: primitives.gray[300] },
         inverse: { light: primitives.gray[100], dark: primitives.gray[900] },
+        brand: { light: primitives.orange[500], dark: primitives.orange[400] },
       },
       border: {
         primary: { light: primitives.gray[100], dark: primitives.gray[800] },

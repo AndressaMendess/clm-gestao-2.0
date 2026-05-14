@@ -212,6 +212,7 @@
   --content-secondary: #2c2f33;
   --content-tertiary: #44484d;
   --content-inverse: #f0f1f2;
+  --content-brand: #f1672c;
   --border-primary: #f0f1f2;
   --border-secondary: #d9dbdd;
   --border-tertiary: #c2c5c8;
@@ -294,6 +295,7 @@
   --content-secondary: #d9dbdd;
   --content-tertiary: #c2c5c8;
   --content-inverse: #1b1b1b;
+  --content-brand: #ff8a5f;
   --border-primary: #2c2f33;
   --border-secondary: #44484d;
   --border-tertiary: #61666b;

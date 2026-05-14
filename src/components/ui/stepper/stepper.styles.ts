@@ -14,7 +14,7 @@ const indicatorBaseStyles =
 
 const indicatorStatusStyles: Record<StepperStatus, string> = {
   complete:
-    "border-[var(--feedback-success-border)] bg-[var(--feedback-success-background)] text-[var(--feedback-success-content)]",
+    "border-transparent bg-[var(--feedback-success-background)] text-[var(--feedback-success-content)]",
   current:
     "border-[var(--brand-primary-main)] bg-[var(--brand-primary-main)] !text-[var(--content-inverse)]",
   upcoming:
@@ -23,7 +23,7 @@ const indicatorStatusStyles: Record<StepperStatus, string> = {
 
 const labelStatusStyles: Record<StepperStatus, string> = {
   complete: "text-[var(--content-secondary)]",
-  current: "text-[var(--content-primary)]",
+  current: "text-[var(--content-brand)]",
   upcoming: "text-[var(--content-tertiary)]",
 };
 

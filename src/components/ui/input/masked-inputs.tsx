@@ -4,7 +4,7 @@ import { forwardRef } from "react";
 import type { ChangeEvent } from "react";
 import { Input } from "./input.base";
 import type { InputProps } from "./input.types";
-import { formatCpf, formatPhone, formatRg, onlyDigits } from "./masked-input.utils";
+import { formatCep, formatCpf, formatPhone, formatRg, onlyDigits } from "./masked-input.utils";
 
 type MaskedInputProps = Omit<InputProps, "defaultValue" | "onChange" | "value"> & {
   defaultValue?: string;
@@ -78,6 +78,23 @@ export const PhoneInput = forwardRef<HTMLInputElement, MaskedInputProps>(functio
       onChange={createMaskedChangeHandler(formatPhone, onChange, onValueChange)}
       ref={ref}
       value={applyMaskValue(value, formatPhone)}
+    />
+  );
+});
+
+export const CepInput = forwardRef<HTMLInputElement, MaskedInputProps>(function CepInput(
+  { defaultValue, onChange, onValueChange, value, ...props },
+  ref,
+) {
+  return (
+    <Input
+      {...props}
+      defaultValue={applyMaskValue(defaultValue, formatCep)}
+      inputMode="numeric"
+      maxLength={9}
+      onChange={createMaskedChangeHandler(formatCep, onChange, onValueChange)}
+      ref={ref}
+      value={applyMaskValue(value, formatCep)}
     />
   );
 });
