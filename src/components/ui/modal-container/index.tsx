@@ -41,12 +41,27 @@ export function ModalContainer({
   const generatedId = useId();
   const resolvedTitleId = titleId ?? `modal-container-title-${generatedId}`;
   const dialogRef = useRef<HTMLElement | null>(null);
+  const isLoadingRef = useRef(isLoading);
+  const onCloseRef = useRef(onClose);
+  const onOpenChangeRef = useRef(onOpenChange);
+
+  useEffect(() => {
+    isLoadingRef.current = isLoading;
+  }, [isLoading]);
+
+  useEffect(() => {
+    onCloseRef.current = onClose;
+  }, [onClose]);
+
+  useEffect(() => {
+    onOpenChangeRef.current = onOpenChange;
+  }, [onOpenChange]);
 
   const requestClose = useCallback(() => {
-    if (isLoading) return;
-    onOpenChange?.(false);
-    onClose();
-  }, [isLoading, onClose, onOpenChange]);
+    if (isLoadingRef.current) return;
+    onOpenChangeRef.current?.(false);
+    onCloseRef.current();
+  }, []);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -60,7 +75,7 @@ export function ModalContainer({
     (focusTarget ?? fallbackTarget ?? dialogRef.current)?.focus();
 
     const handleEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape" && !isLoading) {
+      if (event.key === "Escape" && !isLoadingRef.current) {
         requestClose();
       }
     };
@@ -96,7 +111,7 @@ export function ModalContainer({
       window.removeEventListener("keydown", handleEscape);
       window.removeEventListener("keydown", handleTab);
     };
-  }, [initialFocusRef, isLoading, isOpen, requestClose]);
+  }, [initialFocusRef, isOpen, requestClose]);
 
   useEffect(() => {
     onOpenChange?.(isOpen);

@@ -30,7 +30,7 @@ export function getSelectFieldHelperStyles(tone: InputHelperTone): string {
 }
 
 export const selectFieldContentStyles =
-  "z-50 max-h-80 min-w-[var(--radix-select-trigger-width)] overflow-hidden rounded-[10px] border border-[var(--border-primary)] bg-[var(--background-primary)] p-1 shadow-[0_8px_24px_rgba(0,0,0,0.08)]";
+  "z-[90] max-h-80 min-w-[var(--radix-select-trigger-width)] overflow-hidden rounded-[10px] border border-[var(--border-primary)] bg-[var(--background-primary)] p-1 shadow-[0_8px_24px_rgba(0,0,0,0.08)]";
 
 export const selectFieldViewportStyles = "p-1";
 
