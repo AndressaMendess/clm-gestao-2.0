@@ -5,6 +5,7 @@ export type ListCollapsibleItem = {
   badgeLabel: string;
   badgeVariant?: BadgeVariant;
   id: string;
+  secondaryText?: string;
   text: string;
 };
 

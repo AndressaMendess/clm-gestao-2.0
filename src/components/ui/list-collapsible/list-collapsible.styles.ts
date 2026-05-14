@@ -18,10 +18,15 @@ export const listCollapsibleContentStyles =
 export const listCollapsibleListStyles = "grid";
 
 export const listCollapsibleItemStyles =
-  "flex items-center justify-between gap-3 border-b border-[var(--border-primary)] py-3 last:border-b-0";
+  "flex items-start justify-between gap-3 border-b border-[var(--border-primary)] py-3 last:border-b-0";
 
 export const listCollapsibleItemTextStyles =
   "min-w-0 truncate text-[var(--content-primary)] [font-size:var(--typography-body-medium-semibold-font-size)] [line-height:var(--typography-body-medium-semibold-line-height)] [font-weight:var(--typography-body-medium-semibold-font-weight)] [letter-spacing:var(--typography-body-medium-semibold-letter-spacing)]";
+
+export const listCollapsibleItemTextGroupStyles = "grid min-w-0 gap-1";
+
+export const listCollapsibleItemSecondaryTextStyles =
+  "min-w-0 truncate text-[var(--content-secondary)] [font-size:var(--typography-body-small-regular-font-size)] [line-height:var(--typography-body-small-regular-line-height)] [font-weight:var(--typography-body-small-regular-font-weight)] [letter-spacing:var(--typography-body-small-regular-letter-spacing)]";
 
 export const listCollapsibleEmptyStyles =
   "text-[var(--content-secondary)] [font-size:var(--typography-body-medium-regular-font-size)] [line-height:var(--typography-body-medium-regular-line-height)] [font-weight:var(--typography-body-medium-regular-font-weight)] [letter-spacing:var(--typography-body-medium-regular-letter-spacing)]";

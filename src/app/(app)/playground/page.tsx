@@ -7,6 +7,7 @@ import { AttachmentCollapsible } from "@/components/ui/attachment-collapsible";
 import { Badge } from "@/components/ui/badge";
 import { Button, IconButton } from "@/components/ui/button";
 import { Checkbox, CheckboxField } from "@/components/ui/checkbox";
+import { ClickableCard } from "@/components/ui/clickable-card";
 import { ContentShell } from "@/components/ui/content-shell";
 import { Drawer } from "@/components/ui/drawer";
 import { DocumentUploadField } from "@/components/ui/document-upload-field";
@@ -217,6 +218,16 @@ export default function HomePage() {
               Área de conteúdo interno da página
             </div>
           </ContentShell>
+        </section>
+
+        <section className="flex flex-col gap-4">
+          <h2 className="text-lg font-medium">ClickableCard</h2>
+          <div className="w-full max-w-4xl">
+            <ClickableCard
+              subtitle="Atualizado há 2 minutos"
+              title="Status de matrícula"
+            />
+          </div>
         </section>
 
         <section className="flex flex-col gap-4">

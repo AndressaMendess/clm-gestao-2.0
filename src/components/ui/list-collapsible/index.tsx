@@ -9,7 +9,9 @@ import {
   listCollapsibleEmptyStyles,
   listCollapsibleHeaderStyles,
   listCollapsibleItemStyles,
+  listCollapsibleItemSecondaryTextStyles,
   listCollapsibleItemTextStyles,
+  listCollapsibleItemTextGroupStyles,
   listCollapsibleListStyles,
   listCollapsibleRootStyles,
   listCollapsibleSubtitleStyles,
@@ -76,7 +78,12 @@ export function ListCollapsible({
               <div className={listCollapsibleListStyles}>
                 {items.map((item) => (
                   <article className={listCollapsibleItemStyles} key={item.id}>
-                    <p className={listCollapsibleItemTextStyles}>{item.text}</p>
+                    <div className={listCollapsibleItemTextGroupStyles}>
+                      <p className={listCollapsibleItemTextStyles}>{item.text}</p>
+                      {item.secondaryText ? (
+                        <p className={listCollapsibleItemSecondaryTextStyles}>{item.secondaryText}</p>
+                      ) : null}
+                    </div>
                     <Badge appearance="dot" variant={item.badgeVariant ?? "default"}>
                       {item.badgeLabel}
                     </Badge>

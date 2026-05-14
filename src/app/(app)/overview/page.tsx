@@ -22,7 +22,7 @@ export default function OverviewPage() {
           arrowColorClassName="text-[var(--content-inverse)]"
           backgroundColorClassName="bg-[linear-gradient(148deg,var(--brand-primary-main)_34%,#f12c2c_100%)]"
           className="shadow-[0_10px_24px_rgb(241_108_44_/_0.24)]"
-          href="/attendance"
+          href="/attendance/new"
           icon={ClipboardCheck}
           iconBackgroundColorClassName="bg-[rgb(255_255_255_/_0.2)]"
           iconColorClassName="text-[var(--content-inverse)]"
