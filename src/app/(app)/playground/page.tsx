@@ -12,7 +12,7 @@ import { ContentShell } from "@/components/ui/content-shell";
 import { Drawer } from "@/components/ui/drawer";
 import { DocumentUploadField } from "@/components/ui/document-upload-field";
 import { FeatureCard } from "@/components/ui/feature-card";
-import { CpfInput, DatePicker, Input, PhoneInput, RgInput, SearchInput, TextArea } from "@/components/ui/input";
+import { CpfInput, DatePicker, Input, PasswordInput, PhoneInput, RgInput, SearchInput, TextArea } from "@/components/ui/input";
 import { ListCollapsible } from "@/components/ui/list-collapsible";
 import { ModalContainer } from "@/components/ui/modal-container";
 import { NavItem } from "@/components/ui/nav-item";
@@ -284,6 +284,7 @@ export default function HomePage() {
             <CpfInput label="CPF" placeholder="000.000.000-00" />
             <RgInput label="RG" placeholder="00.000.000-0" />
             <PhoneInput label="Telefone" placeholder="(00) 00000-0000" />
+            <PasswordInput helperText="Use pelo menos 8 caracteres." label="Senha" placeholder="Digite sua senha" />
             <DatePicker label="Data de nascimento" />
             <SearchInput placeholder="Buscar aluno, turma, matrícula..." />
             <TextArea label="Observações" placeholder="Digite observações adicionais..." />

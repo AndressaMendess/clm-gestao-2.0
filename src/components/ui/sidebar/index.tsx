@@ -3,6 +3,7 @@
 import {
   ClipboardList,
   Home,
+  ListChecks,
   LogOut,
   Menu,
   Music2,
@@ -41,6 +42,7 @@ const defaultPrimaryItems: SidebarNavItem[] = [
   { id: "overview", icon: Home, label: "Visão geral" },
   { id: "students", icon: Users, label: "Alunos" },
   { id: "attendance", icon: ClipboardList, label: "Presenças" },
+  { id: "complementary-activities", icon: ListChecks, label: "Atividades complementares" },
 ];
 
 const defaultSecondaryItems: SidebarNavItem[] = [
@@ -55,6 +57,7 @@ const defaultModules = [
 ];
 
 const defaultUser = {
+  avatarSrc: "",
   email: "andressa.clm@gmail.com",
   name: "Andressa Mendes",
 };
@@ -95,7 +98,7 @@ export function Sidebar({
     setInternalCollapsed((current) => !current);
   };
 
-  const primaryBlockItems = useMemo(() => primaryItems.slice(0, 3), [primaryItems]);
+  const primaryBlockItems = useMemo(() => primaryItems, [primaryItems]);
   const secondaryBlockItems = useMemo(() => secondaryItems.slice(0, 2), [secondaryItems]);
   const moduleSubitemsId = `${instanceId}-modules-subitems`;
 
@@ -233,7 +236,12 @@ export function Sidebar({
         <footer className={sidebarFooterStyles}>
           {showLabels ? (
             <div className="flex items-center gap-2">
-              <Avatar name={user.name} size="sm" />
+              <Avatar
+                name={user.name}
+                size="sm"
+                src={user.avatarSrc}
+                variant={user.avatarSrc ? "with-image" : "without-image"}
+              />
               <div className="min-w-0">
                 <p className={sidebarUserNameStyles}>{user.name}</p>
                 <p className={sidebarUserEmailStyles}>{user.email}</p>
@@ -269,4 +277,5 @@ export function Sidebar({
 }
 
 export type { SidebarItemId, SidebarModuleItem, SidebarNavItem, SidebarProps } from "./sidebar.types";
+
 

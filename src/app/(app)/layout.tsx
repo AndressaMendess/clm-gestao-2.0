@@ -1,16 +1,29 @@
-"use client";
+﻿"use client";
+
 import { usePathname, useRouter } from "next/navigation";
 import type { ReactNode } from "react";
 import { useState } from "react";
+import { AppProfileProvider, useAppProfile } from "./_context/app-profile-context";
 import { ContentShell } from "@/components/ui/content-shell";
 import { Sidebar } from "@/components/ui/sidebar";
 import type { SidebarItemId } from "@/components/ui/sidebar";
 
-type NavRouteItemId = "overview" | "students" | "attendance" | "teachers" | "settings";
+type NavRouteItemId =
+  | "overview"
+  | "students"
+  | "attendance"
+  | "complementary-activities"
+  | "teachers"
+  | "settings";
 
 const navRouteDefs: { itemId: NavRouteItemId; route: string; matchPrefix: string }[] = [
   { itemId: "students", route: "/students", matchPrefix: "/students" },
   { itemId: "attendance", route: "/attendance", matchPrefix: "/attendance" },
+  {
+    itemId: "complementary-activities",
+    route: "/complementary-activities",
+    matchPrefix: "/complementary-activities",
+  },
   { itemId: "teachers", route: "/teachers", matchPrefix: "/teachers" },
   { itemId: "settings", route: "/settings", matchPrefix: "/settings" },
   { itemId: "overview", route: "/overview", matchPrefix: "/overview" },
@@ -41,9 +54,10 @@ type AppShellProps = {
   children: ReactNode;
 };
 
-export default function AppLayout({ children }: AppShellProps) {
+function AppLayoutContent({ children }: AppShellProps) {
   const pathname = usePathname();
   const router = useRouter();
+  const { profile } = useAppProfile();
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const isPlaygroundPage = pathname.startsWith("/playground");
@@ -75,13 +89,14 @@ export default function AppLayout({ children }: AppShellProps) {
               setIsSidebarOpen(false);
             }}
             showFloatingTrigger={false}
+            user={{ avatarSrc: profile.avatarSrc, email: profile.email, name: profile.name }}
           />
         </div>
       ) : null}
 
-      <div className="flex min-h-screen">
+      <div className="flex min-h-screen overflow-visible">
         {!isPlaygroundPage ? (
-          <div className="hidden lg:block">
+          <div className="hidden lg:relative lg:z-50 lg:block">
             <Sidebar
               instanceId="desktop-sidebar"
               activeItem={activeItem}
@@ -96,11 +111,12 @@ export default function AppLayout({ children }: AppShellProps) {
               }}
               onToggleCollapse={() => setIsSidebarCollapsed((current) => !current)}
               showFloatingTrigger={false}
+              user={{ avatarSrc: profile.avatarSrc, email: profile.email, name: profile.name }}
             />
           </div>
         ) : null}
 
-        <div className="flex-1 min-w-0">
+        <div className="relative z-0 flex-1 min-w-0">
           <ContentShell
             className="p-0"
             contentClassName="min-h-screen py-8"
@@ -112,5 +128,13 @@ export default function AppLayout({ children }: AppShellProps) {
         </div>
       </div>
     </main>
+  );
+}
+
+export default function AppLayout({ children }: AppShellProps) {
+  return (
+    <AppProfileProvider>
+      <AppLayoutContent>{children}</AppLayoutContent>
+    </AppProfileProvider>
   );
 }

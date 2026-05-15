@@ -1,4 +1,4 @@
-import Image from "next/image";
+﻿import Image from "next/image";
 import { cx } from "@/lib/cx";
 import { getAvatarImageStyles, getAvatarInitialsStyles, getAvatarStyles } from "./avatar.styles";
 import type { AvatarProps } from "./avatar.types";
@@ -22,6 +22,7 @@ export function Avatar({
 }: AvatarProps) {
   const fallbackInitials = (initials?.trim() || getInitialsFromName(name) || "?").slice(0, 2);
   const shouldRenderImage = variant === "with-image" && Boolean(src);
+  const imageDimension = size === "sm" ? 32 : size === "md" ? 40 : size === "lg" ? 48 : 64;
 
   return (
     <span aria-label={alt ?? name ?? "Avatar"} className={cx(getAvatarStyles(size), className)} role="img">
@@ -29,9 +30,9 @@ export function Avatar({
         <Image
           alt={alt ?? name ?? "Foto do usuário"}
           className={getAvatarImageStyles(size)}
-          height={size === "sm" ? 32 : size === "md" ? 40 : 48}
+          height={imageDimension}
           src={src!}
-          width={size === "sm" ? 32 : size === "md" ? 40 : 48}
+          width={imageDimension}
         />
       ) : (
         <span aria-hidden className={getAvatarInitialsStyles(size)}>

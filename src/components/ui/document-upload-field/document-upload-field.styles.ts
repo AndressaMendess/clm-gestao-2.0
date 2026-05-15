@@ -2,7 +2,7 @@ import type { InputHelperTone } from "../input";
 
 export const documentUploadFieldWrapperStyles = "flex flex-col gap-1.5";
 export const documentUploadFieldLabelStyles =
-  "text-[var(--content-primary)] [font-size:var(--typography-body-medium-font-size)] [line-height:var(--typography-body-medium-line-height)] [font-weight:500] [letter-spacing:var(--typography-body-medium-letter-spacing)]";
+  "text-[var(--content-primary)] [font-size:var(--typography-body-medium-medium-font-size)] [line-height:var(--typography-body-medium-medium-line-height)] [font-weight:var(--typography-body-medium-medium-font-weight)] [letter-spacing:var(--typography-body-medium-medium-letter-spacing)]";
 
 const baseDropzoneStyles =
   "w-full rounded-[10px] border border-dashed bg-[var(--background-primary)] p-4 text-left outline-none transition-[border-color,box-shadow,background-color] duration-150 focus-visible:ring-2 focus-visible:ring-[var(--button-focus-ring)] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60";

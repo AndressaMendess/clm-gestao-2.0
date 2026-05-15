@@ -213,6 +213,8 @@
   --content-tertiary: #44484d;
   --content-inverse: #f0f1f2;
   --content-brand: #f1672c;
+  --content-always-light: #f0f1f2;
+  --content-always-dark: #1b1b1b;
   --border-primary: #f0f1f2;
   --border-secondary: #d9dbdd;
   --border-tertiary: #c2c5c8;
@@ -277,7 +279,7 @@
   --brand-primary-subtle: #6b2910;
   --brand-primary-muted: #b8471c;
   --brand-primary-soft: #d95522;
-  --brand-primary-main: #ff8a5f;
+  --brand-primary-main: #f1672c;
   --brand-primary-strong: #ffb79c;
   --brand-primary-bold: #ffd9c9;
   --brand-primary-intense: #fff1eb;
@@ -296,6 +298,8 @@
   --content-tertiary: #c2c5c8;
   --content-inverse: #1b1b1b;
   --content-brand: #ff8a5f;
+  --content-always-light: #f0f1f2;
+  --content-always-dark: #1b1b1b;
   --border-primary: #2c2f33;
   --border-secondary: #44484d;
   --border-tertiary: #61666b;
@@ -322,11 +326,11 @@
   --accent-yellow-content: #ffe2bf;
   --accent-yellow-background: #663a04;
   --button-focus-ring: #8fafbe;
-  --button-primary-background-enabled: #ff8a5f;
-  --button-primary-background-hover: #ffb79c;
-  --button-primary-background-pressed: #ffd9c9;
+  --button-primary-background-enabled: #f1672c;
+  --button-primary-background-hover: #f1672c;
+  --button-primary-background-pressed: #ff8a5f;
   --button-primary-background-disabled: #2c2f33;
-  --button-primary-shadow-enabled: inset 0 4px 12px 0 #ffb79c;
+  --button-primary-shadow-enabled: inset 0 4px 12px 0 #ff8a5f;
   --button-primary-content-enabled: #fafafa;
   --button-primary-content-hover: #fafafa;
   --button-primary-content-pressed: #fafafa;

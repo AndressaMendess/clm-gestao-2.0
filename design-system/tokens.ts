@@ -18,7 +18,7 @@ export const tokens = {
         subtle: { light: primitives.orange[100], dark: primitives.orange[900] },
         muted: { light: primitives.orange[200], dark: primitives.orange[700] },
         soft: { light: primitives.orange[300], dark: primitives.orange[600] },
-        main: { light: primitives.orange[500], dark: primitives.orange[400] },
+        main: { light: primitives.orange[500], dark: primitives.orange[500] },
         strong: { light: primitives.orange[600], dark: primitives.orange[300] },
         bold: { light: primitives.orange[700], dark: primitives.orange[200] },
         intense: { light: primitives.orange[900], dark: primitives.orange[100] },
@@ -43,6 +43,8 @@ export const tokens = {
         tertiary: { light: primitives.gray[700], dark: primitives.gray[300] },
         inverse: { light: primitives.gray[100], dark: primitives.gray[900] },
         brand: { light: primitives.orange[500], dark: primitives.orange[400] },
+        alwaysLight: { light: primitives.gray[100], dark: primitives.gray[100] },
+        alwaysDark: { light: primitives.gray[900], dark: primitives.gray[900] },
       },
       border: {
         primary: { light: primitives.gray[100], dark: primitives.gray[800] },
@@ -81,13 +83,13 @@ export const tokens = {
         focusRing: { light: primitives.blue[300], dark: primitives.blue[300] },
         primary: {
           background: {
-            enabled: { light: primitives.orange[500], dark: primitives.orange[400] },
-            hover: { light: primitives.orange[600], dark: primitives.orange[300] },
-            pressed: { light: primitives.orange[700], dark: primitives.orange[200] },
+            enabled: { light: primitives.orange[500], dark: primitives.orange[500] },
+            hover: { light: primitives.orange[600], dark: primitives.orange[500] },
+            pressed: { light: primitives.orange[700], dark: primitives.orange[400] },
             disabled: { light: primitives.gray[300], dark: primitives.gray[800] },
           },
           shadow: {
-            enabled: { light: `inset 0 4px 12px 0 ${primitives.orange[400]}`, dark: `inset 0 4px 12px 0 ${primitives.orange[300]}` },
+            enabled: { light: `inset 0 4px 12px 0 ${primitives.orange[400]}`, dark: `inset 0 4px 12px 0 ${primitives.orange[400]}` },
           },
           content: {
             enabled: { light: primitives.gray[50], dark: primitives.gray[50] },

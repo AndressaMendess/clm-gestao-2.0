@@ -1,4 +1,4 @@
-import type { LucideIcon } from "lucide-react";
+﻿import type { LucideIcon } from "lucide-react";
 
 export type SidebarItemId =
   | "overview"
@@ -21,6 +21,7 @@ export type SidebarModuleItem = {
 };
 
 export type SidebarUser = {
+  avatarSrc?: string;
   email: string;
   name: string;
 };

@@ -1,13 +1,6 @@
-﻿import { PageHeader } from "@/components/ui/page-header";
+﻿import { redirect } from "next/navigation";
 
 export default function SettingsPage() {
-  return (
-    <section className="space-y-6">
-      <PageHeader
-        ctaLabel="Salvar alterações"
-        subtitle="Ajuste preferências e parâmetros da plataforma."
-        title="Configurações"
-      />
-    </section>
-  );
+  redirect("/settings/profile");
 }
+
