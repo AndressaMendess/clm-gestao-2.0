@@ -2,7 +2,7 @@ export const drawerOverlayStyles =
   "fixed inset-0 z-50 bg-[rgb(0_0_0_/_0.45)] transition-opacity";
 
 export const drawerShellStyles =
-  "fixed inset-y-0 right-0 z-[60] flex w-full max-w-[500px] flex-col border-l border-[var(--border-primary)] bg-[var(--background-primary)] shadow-[-8px_0_24px_rgb(0_0_0_/_0.12)]";
+  "fixed bottom-2 right-2 top-2 z-[60] flex w-[calc(100%-1rem)] max-w-[500px] flex-col overflow-hidden rounded-[24px] border border-[var(--border-primary)] bg-[var(--background-primary)] shadow-[-8px_0_24px_rgb(0_0_0_/_0.12)]";
 
 export const drawerHeaderStyles = "flex flex-col gap-4 px-6 py-5";
 
