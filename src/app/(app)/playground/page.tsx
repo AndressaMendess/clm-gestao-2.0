@@ -21,6 +21,7 @@ import { Sidebar } from "@/components/ui/sidebar";
 import { Stepper } from "@/components/ui/stepper";
 import { TableCard } from "@/components/ui/table-card";
 import { Tabs } from "@/components/ui/tabs";
+import { Tooltip } from "@/components/ui/tooltip";
 
 type StudentTableRow = {
   avatarSrc?: string;
@@ -612,6 +613,15 @@ export default function HomePage() {
             onValueChange={setActiveTab}
             value={activeTab}
           />
+        </section>
+
+        <section className="flex flex-col gap-4">
+          <h2 className="text-lg font-medium">Tooltip</h2>
+          <div className="w-full max-w-4xl">
+            <Tooltip content="Visualizar dados do aluno">
+              <Button variant="secondary">Passar mouse</Button>
+            </Tooltip>
+          </div>
         </section>
 
         <section className="flex flex-col gap-4">
