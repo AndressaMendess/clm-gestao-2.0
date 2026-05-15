@@ -7,8 +7,8 @@ const navItemVariantStyles: Record<NavItemVariant, string> = {
   simple: "px-4 py-3",
   composite: "px-4 py-3",
   subitem: "px-4 py-3",
-  "simple-collapsed": "justify-center px-0 py-4",
-  "composite-collapsed": "justify-center px-0 py-4",
+  "simple-collapsed": "min-w-16 justify-center px-0 py-4",
+  "composite-collapsed": "min-w-16 justify-center px-0 py-4",
 };
 
 const defaultStateStyles: Record<NavItemState, string> = {

@@ -7,3 +7,5 @@ export { CepInput, CpfInput, PhoneInput, RgInput } from "./masked-inputs";
 export type { MaskedInputProps } from "./masked-inputs";
 export { SearchInput } from "./search-input";
 export type { SearchInputProps } from "./search-input";
+export { PasswordInput } from "./password-input";
+export type { PasswordInputProps } from "./password-input";

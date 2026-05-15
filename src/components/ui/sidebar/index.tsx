@@ -16,6 +16,7 @@ import {
 import Image from "next/image";
 import { useMemo, useState } from "react";
 import { cx } from "@/lib/cx";
+import { Avatar } from "../avatar";
 import { NavItem } from "../nav-item";
 import {
   getSidebarOverlayStateStyles,
@@ -26,7 +27,6 @@ import {
   sidebarFooterStyles,
   sidebarHeaderStyles,
   sidebarIconButtonStyles,
-  sidebarLogoutStyles,
   sidebarModulesListStyles,
   sidebarNavBlocksStyles,
   sidebarNavStyles,
@@ -232,16 +232,25 @@ export function Sidebar({
 
         <footer className={sidebarFooterStyles}>
           {showLabels ? (
-            <div>
-              <p className={sidebarUserNameStyles}>{user.name}</p>
-              <p className={sidebarUserEmailStyles}>{user.email}</p>
+            <div className="flex items-center gap-2">
+              <Avatar name={user.name} size="sm" />
+              <div className="min-w-0">
+                <p className={sidebarUserNameStyles}>{user.name}</p>
+                <p className={sidebarUserEmailStyles}>{user.email}</p>
+              </div>
             </div>
           ) : null}
 
-          <button aria-label="Sair" className={sidebarLogoutStyles} onClick={onLogout} type="button">
-            <LogOut className="h-4 w-4 shrink-0" />
-            {showLabels ? <span>Sair</span> : null}
-          </button>
+          <div className="mt-3">
+            <NavItem
+              icon={LogOut}
+              label="Sair"
+              onClick={onLogout}
+              showLabel={showLabels}
+              state="inactive"
+              variant={showLabels ? "simple" : "simple-collapsed"}
+            />
+          </div>
         </footer>
       </aside>
 

@@ -8,7 +8,7 @@ export function getSidebarOverlayStateStyles(open: boolean): string {
 }
 
 export const sidebarShellStyles =
-  "z-50 flex h-screen w-[280px] shrink-0 flex-col border-r border-[var(--border-primary)] bg-[var(--background-secondary)] transition-[width,transform] duration-200";
+  "z-50 flex h-screen w-[280px] shrink-0 flex-col overflow-visible border-r border-[var(--border-primary)] bg-[var(--background-secondary)] transition-[width,transform] duration-200";
 
 export function getSidebarStateStyles(collapsed: boolean, open: boolean): string {
   return cx(
@@ -28,7 +28,7 @@ export const sidebarBrandTextStyles =
 export const sidebarIconButtonStyles =
   "inline-flex h-10 w-10 items-center justify-center rounded-[10px] border border-[var(--border-primary)] text-[var(--content-secondary)] transition-colors hover:bg-[var(--background-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--button-focus-ring)] focus-visible:ring-offset-2";
 
-export const sidebarContentStyles = "flex flex-1 flex-col overflow-y-auto px-3 pb-3";
+export const sidebarContentStyles = "flex flex-1 flex-col overflow-x-visible overflow-y-auto px-3 pb-3";
 export const sidebarNavStyles = "flex flex-col gap-1";
 export const sidebarNavBlocksStyles = "flex flex-col gap-5";
 
@@ -45,5 +45,3 @@ export const sidebarUserNameStyles =
   "truncate text-[var(--content-primary)] [font-size:var(--typography-body-medium-font-size)] [line-height:var(--typography-body-medium-line-height)] [font-weight:600]";
 export const sidebarUserEmailStyles =
   "truncate text-[var(--content-tertiary)] [font-size:var(--typography-body-small-font-size)] [line-height:var(--typography-body-small-line-height)]";
-export const sidebarLogoutStyles =
-  "mt-3 inline-flex w-full items-center gap-2 rounded-lg px-2 py-2 text-[var(--content-secondary)] transition-colors hover:bg-[var(--background-primary)] hover:text-[var(--content-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--button-focus-ring)] focus-visible:ring-offset-2";
