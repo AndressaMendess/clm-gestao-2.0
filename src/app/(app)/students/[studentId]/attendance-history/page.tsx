@@ -11,13 +11,16 @@ import { SelectField } from "@/components/ui/select-field";
 import { TableCard } from "@/components/ui/table-card";
 import type { TableCardColumn } from "@/components/ui/table-card";
 import { getAttendanceCallsFromRegistry, type AttendanceRegistryCall, type AttendanceStatus } from "@/app/(app)/attendance/_data/attendance-registry";
+import { getAllAttendanceJustifications } from "./_data/attendance-justifications-registry";
 import { STUDENT_ROWS } from "../../_data/students.mock";
+import type { AttendanceJustificationRecord } from "./_data/attendance-justifications-registry";
 
 type StudentAttendanceHistoryRow = {
   callId: string;
   classroom: string;
   classroomVariant: "blue" | "pink";
   dateIso: string;
+  hasJustification: boolean;
   module: string;
   moduleVariant: "orange" | "violet";
   note: string;
@@ -30,6 +33,7 @@ const ANA_CLARA_HISTORY_MOCK: StudentAttendanceHistoryRow[] = [
   {
     callId: "mock-call-1",
     dateIso: "2026-05-12T14:00:00.000Z",
+    hasJustification: false,
     module: "Módulo I",
     moduleVariant: "violet",
     classroom: "Teoria musical",
@@ -40,6 +44,7 @@ const ANA_CLARA_HISTORY_MOCK: StudentAttendanceHistoryRow[] = [
   {
     callId: "mock-call-2",
     dateIso: "2026-05-10T14:00:00.000Z",
+    hasJustification: false,
     module: "Módulo I",
     moduleVariant: "violet",
     classroom: "Teoria musical",
@@ -50,6 +55,7 @@ const ANA_CLARA_HISTORY_MOCK: StudentAttendanceHistoryRow[] = [
   {
     callId: "mock-call-3",
     dateIso: "2026-05-08T14:00:00.000Z",
+    hasJustification: false,
     module: "Módulo I",
     moduleVariant: "violet",
     classroom: "Teoria musical",
@@ -85,6 +91,8 @@ export default function StudentAttendanceHistoryPage() {
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [selectedStatus, setSelectedStatus] = useState("");
   const [attendanceCalls, setAttendanceCalls] = useState<AttendanceRegistryCall[]>([]);
+  const [justificationVersion, setJustificationVersion] = useState(0);
+  const [justifications, setJustifications] = useState<Record<string, AttendanceJustificationRecord>>({});
 
   const decodedStudentId = useMemo(() => decodeURIComponent(params.studentId), [params.studentId]);
 
@@ -96,11 +104,22 @@ export default function StudentAttendanceHistoryPage() {
     setAttendanceCalls(getAttendanceCallsFromRegistry());
   }, []);
 
+  useEffect(() => {
+    setJustifications(getAllAttendanceJustifications());
+  }, [justificationVersion]);
+
+  useEffect(() => {
+    const handleFocus = () => setJustificationVersion((current) => current + 1);
+    window.addEventListener("focus", handleFocus);
+    return () => window.removeEventListener("focus", handleFocus);
+  }, []);
+
   const rows = useMemo<StudentAttendanceHistoryRow[]>(() => {
     const registryRows = attendanceCalls
       .flatMap((call) => {
         const attendance = call.students.find((studentRow) => studentRow.id === decodedStudentId);
         if (!attendance) return [];
+        const justification = justifications[`${decodedStudentId}::${call.id}`] ?? null;
 
         return [
           {
@@ -110,8 +129,9 @@ export default function StudentAttendanceHistoryPage() {
             moduleVariant: student?.moduleVariant ?? "violet",
             classroom: call.classroom,
             classroomVariant: student?.classroomVariant ?? "blue",
-            status: attendance.attendance,
-            note: attendance.note ?? "-",
+            status: justification?.status ?? attendance.attendance,
+            note: justification?.note || attendance.note || "-",
+            hasJustification: Boolean(justification),
           },
         ];
       });
@@ -120,13 +140,33 @@ export default function StudentAttendanceHistoryPage() {
       registryRows.length > 0 ? registryRows : decodedStudentId === ANA_CLARA_EMAIL ? ANA_CLARA_HISTORY_MOCK : [];
 
     return sourceRows
+      .map((row) => {
+        const justification = justifications[`${decodedStudentId}::${row.callId}`] ?? null;
+        if (!justification) return row;
+
+        return {
+          ...row,
+          status: justification.status,
+          note: justification.note || row.note,
+          hasJustification: true,
+          dateIso: justification.dateIso ?? row.dateIso,
+        };
+      })
       .filter((row) => {
         const matchesDate = selectedDate ? row.dateIso.startsWith(selectedDate) : true;
         const matchesStatus = selectedStatus ? row.status === selectedStatus : true;
         return matchesDate && matchesStatus;
       })
       .sort((a, b) => new Date(b.dateIso).getTime() - new Date(a.dateIso).getTime());
-  }, [attendanceCalls, decodedStudentId, selectedDate, selectedStatus, student?.classroomVariant, student?.moduleVariant]);
+  }, [
+    attendanceCalls,
+    decodedStudentId,
+    justificationVersion,
+    selectedDate,
+    selectedStatus,
+    student?.classroomVariant,
+    student?.moduleVariant,
+  ]);
 
   const columns = useMemo<TableCardColumn<StudentAttendanceHistoryRow>[]>(
     () => [
@@ -136,16 +176,6 @@ export default function StudentAttendanceHistoryPage() {
         sortable: true,
         sortValue: (row) => row.dateIso,
         render: (row) => formatDate(row.dateIso),
-      },
-      {
-        id: "moduleClassroom",
-        header: "Módulo e turma",
-        render: (row) => (
-          <div className="flex flex-wrap items-center gap-2">
-            <Badge variant={row.moduleVariant}>{row.module}</Badge>
-            <Badge variant={row.classroomVariant}>{row.classroom}</Badge>
-          </div>
-        ),
       },
       {
         id: "status",
@@ -163,16 +193,25 @@ export default function StudentAttendanceHistoryPage() {
         id: "action",
         header: "Ação",
         render: (row) =>
-          row.status === "absent" ? (
-            <Button icon={MessageCircle} variant="ghost">
-              Adicionar justificativa
+          row.status === "absent" || row.hasJustification ? (
+            <Button
+              className={row.hasJustification ? "text-[var(--content-tertiary)] hover:text-[var(--content-secondary)]" : undefined}
+              icon={MessageCircle}
+              onClick={() =>
+                router.push(
+                  `/students/${encodeURIComponent(decodedStudentId)}/attendance-history/${encodeURIComponent(row.callId)}/justification`,
+                )
+              }
+              variant="ghost"
+            >
+              {row.hasJustification ? "Editar justificativa" : "Adicionar justificativa"}
             </Button>
           ) : (
             "-"
           ),
       },
     ],
-    [],
+    [decodedStudentId, router],
   );
 
   return (
@@ -186,7 +225,15 @@ export default function StudentAttendanceHistoryPage() {
           <h1 className="[font-size:var(--typography-body-x-large-semibold-font-size)] [line-height:var(--typography-body-x-large-semibold-line-height)] [font-weight:var(--typography-body-x-large-semibold-font-weight)] [letter-spacing:var(--typography-body-x-large-semibold-letter-spacing)] text-[var(--content-primary)]">
             Histórico de frequência
           </h1>
-          <p className="text-[var(--content-secondary)]">{student?.name ?? "Estudante não encontrado"}</p>
+          <div className="flex flex-wrap items-center gap-2 text-[var(--content-secondary)]">
+            <span>{student?.name ?? "Estudante não encontrado"}</span>
+            {student ? (
+              <>
+                <Badge variant={student.moduleVariant}>{student.module}</Badge>
+                <Badge variant={student.classroomVariant}>{student.classroom}</Badge>
+              </>
+            ) : null}
+          </div>
         </div>
 
         <div className="grid gap-3 sm:grid-cols-2">
