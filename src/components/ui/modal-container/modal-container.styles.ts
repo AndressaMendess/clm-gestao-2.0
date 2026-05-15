@@ -10,10 +10,10 @@ export const modalContainerHeaderStyles =
 export const modalContainerCopyStyles = "flex min-w-0 flex-col gap-1";
 
 export const modalContainerTitleStyles =
-  "text-[var(--content-primary)] [font-size:var(--typography-heading-h6-font-size)] [line-height:var(--typography-heading-h6-line-height)] [font-weight:var(--typography-heading-h6-font-weight)] [letter-spacing:var(--typography-heading-h6-letter-spacing)]";
+  "text-[var(--content-primary)] [font-size:var(--typography-body-x-large-semibold-font-size)] [line-height:var(--typography-body-x-large-semibold-line-height)] [font-weight:var(--typography-body-x-large-semibold-font-weight)] [letter-spacing:var(--typography-body-x-large-semibold-letter-spacing)]";
 
 export const modalContainerSubtitleStyles =
-  "text-[var(--content-tertiary)] [font-size:var(--typography-body-medium-font-size)] [line-height:var(--typography-body-medium-line-height)] [font-weight:var(--typography-body-medium-font-weight)] [letter-spacing:var(--typography-body-medium-letter-spacing)]";
+  "text-[var(--content-tertiary)] [font-size:var(--typography-body-medium-regular-font-size)] [line-height:var(--typography-body-medium-regular-line-height)] [font-weight:var(--typography-body-medium-regular-font-weight)] [letter-spacing:var(--typography-body-medium-regular-letter-spacing)]";
 
 export const modalContainerCloseStyles =
   "inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-[10px] text-[var(--content-tertiary)] transition-colors hover:bg-[var(--button-ghost-background-hover)] hover:text-[var(--content-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--button-focus-ring)] focus-visible:ring-offset-2";

@@ -1,6 +1,7 @@
 ﻿"use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
 import { Avatar } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import type { BadgeVariant } from "@/components/ui/badge";
@@ -15,74 +16,15 @@ import {
   COMPLEMENTARY_ACTIVITY_TERM_OPTIONS,
   toSelectFieldOptions,
 } from "./_config/complementary-activities-filter-options";
+import {
+  getComplementaryActivitiesRepository,
+} from "./_data/complementary-activities-service";
+import type {
+  ComplementaryActivityRecord,
+  ComplementaryActivityStatus,
+} from "./_data/complementary-activities.types";
 
-type ComplementaryActivityStatus = "pending" | "completed" | "failed";
-
-type ComplementaryActivityRow = {
-  id: string;
-  studentName: string;
-  studentInitials: string;
-  moduleLabel: string;
-  moduleValue: "module-i" | "module-ii" | "module-iii";
-  eventName: string | null;
-  eventDate: string | null;
-  termValue: "term-1" | "term-2" | "term-3";
-  statusLabel: "Pendente" | "Concluído" | "Reprovado";
-  statusValue: ComplementaryActivityStatus;
-};
-
-const COMPLEMENTARY_ACTIVITY_ROWS: ComplementaryActivityRow[] = [
-  {
-    id: "activity-001",
-    studentName: "Ana Beatriz",
-    studentInitials: "AB",
-    moduleLabel: "Módulo I",
-    moduleValue: "module-i",
-    eventName: null,
-    eventDate: null,
-    termValue: "term-1",
-    statusLabel: "Pendente",
-    statusValue: "pending",
-  },
-  {
-    id: "activity-002",
-    studentName: "Lucas Mendes",
-    studentInitials: "LM",
-    moduleLabel: "Módulo II",
-    moduleValue: "module-ii",
-    eventName: "Recital de Corda",
-    eventDate: "2026-03-18",
-    termValue: "term-1",
-    statusLabel: "Concluído",
-    statusValue: "completed",
-  },
-  {
-    id: "activity-003",
-    studentName: "João Pedro",
-    studentInitials: "JP",
-    moduleLabel: "Módulo III",
-    moduleValue: "module-iii",
-    eventName: "Mostra de Teoria Musical",
-    eventDate: "2026-04-04",
-    termValue: "term-2",
-    statusLabel: "Reprovado",
-    statusValue: "failed",
-  },
-  {
-    id: "activity-004",
-    studentName: "Maria Clara",
-    studentInitials: "MC",
-    moduleLabel: "Módulo I",
-    moduleValue: "module-i",
-    eventName: "Apresentação de Classe",
-    eventDate: "2026-02-27",
-    termValue: "term-1",
-    statusLabel: "Concluído",
-    statusValue: "completed",
-  },
-];
-
-const MODULE_BADGE_VARIANT: Record<ComplementaryActivityRow["moduleValue"], BadgeVariant> = {
+const MODULE_BADGE_VARIANT: Record<ComplementaryActivityRecord["moduleValue"], BadgeVariant> = {
   "module-i": "violet",
   "module-ii": "orange",
   "module-iii": "blue",
@@ -104,14 +46,41 @@ function formatDateLabel(date: string | null, status: ComplementaryActivityStatu
 }
 
 export default function ComplementaryActivitiesPage() {
+  const router = useRouter();
   const [search, setSearch] = useState("");
   const [moduleFilter, setModuleFilter] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
   const [termFilter, setTermFilter] = useState("");
+  const [rows, setRows] = useState<ComplementaryActivityRecord[]>([]);
+  const [isLoadingRows, setIsLoadingRows] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let isActive = true;
+    const repository = getComplementaryActivitiesRepository();
+    void repository
+      .list()
+      .then((records) => {
+        if (!isActive) return;
+        setRows(records);
+      })
+      .catch(() => {
+        if (!isActive) return;
+        setLoadError("Não foi possível carregar as atividades complementares.");
+      })
+      .finally(() => {
+        if (!isActive) return;
+        setIsLoadingRows(false);
+      });
+
+    return () => {
+      isActive = false;
+    };
+  }, []);
 
   const filteredRows = useMemo(() => {
     const normalizedSearch = search.trim().toLocaleLowerCase();
-    return COMPLEMENTARY_ACTIVITY_ROWS.filter((row) => {
+    return rows.filter((row) => {
       const matchesSearch = normalizedSearch
         ? row.studentName.toLocaleLowerCase().includes(normalizedSearch) ||
           (row.eventName ?? "").toLocaleLowerCase().includes(normalizedSearch)
@@ -121,9 +90,9 @@ export default function ComplementaryActivitiesPage() {
       const matchesTerm = termFilter ? row.termValue === termFilter : true;
       return matchesSearch && matchesModule && matchesStatus && matchesTerm;
     });
-  }, [moduleFilter, search, statusFilter, termFilter]);
+  }, [moduleFilter, rows, search, statusFilter, termFilter]);
 
-  const tableColumns = useMemo<TableCardColumn<ComplementaryActivityRow>[]>(
+  const tableColumns = useMemo<TableCardColumn<ComplementaryActivityRecord>[]>(
     () => [
       {
         header: "Aluno",
@@ -179,6 +148,7 @@ export default function ComplementaryActivitiesPage() {
     <section className="space-y-6">
       <PageHeader
         ctaLabel="Adicionar atividade"
+        ctaOnClick={() => router.push("/complementary-activities/new")}
         subtitle="Gerencie registros, prazos e documentação das atividades complementares."
         title="Atividades complementares"
       />
@@ -224,10 +194,17 @@ export default function ComplementaryActivitiesPage() {
       </div>
 
       <div className="pt-3">
+        {loadError ? (
+          <p className="pb-2 text-[var(--feedback-error-content)] [font-size:var(--typography-body-small-regular-font-size)]">
+            {loadError}
+          </p>
+        ) : null}
         <TableCard
           ariaLabel="Tabela de atividades complementares"
           columns={tableColumns}
           emptyMessage="Nenhuma atividade complementar encontrada para os filtros selecionados."
+          isLoading={isLoadingRows}
+          loadingMessage="Carregando atividades complementares..."
           rowKey={(row) => row.id}
           rows={filteredRows}
           title="Atividades complementares"
