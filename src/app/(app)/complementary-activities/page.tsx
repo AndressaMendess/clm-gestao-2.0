@@ -1,15 +1,19 @@
 ﻿"use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { Eye } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Avatar } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import type { BadgeVariant } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { SearchInput } from "@/components/ui/input";
 import { PageHeader } from "@/components/ui/page-header";
 import { SelectField } from "@/components/ui/select-field";
 import { TableCard } from "@/components/ui/table-card";
 import type { TableCardColumn } from "@/components/ui/table-card";
+import { getStudentRowsFromRegistry } from "../students/_data/students-registry";
+import type { StudentRow } from "../students/_types/students.types";
 import {
   COMPLEMENTARY_ACTIVITY_MODULE_OPTIONS,
   COMPLEMENTARY_ACTIVITY_STATUS_OPTIONS,
@@ -52,6 +56,7 @@ export default function ComplementaryActivitiesPage() {
   const [statusFilter, setStatusFilter] = useState("");
   const [termFilter, setTermFilter] = useState("");
   const [rows, setRows] = useState<ComplementaryActivityRecord[]>([]);
+  const [students] = useState<StudentRow[]>(() => getStudentRowsFromRegistry());
   const [isLoadingRows, setIsLoadingRows] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
 
@@ -78,9 +83,47 @@ export default function ComplementaryActivitiesPage() {
     };
   }, []);
 
+  const studentRowsWithActivity = useMemo<ComplementaryActivityRecord[]>(() => {
+    const latestByStudentEmail = new Map<string, ComplementaryActivityRecord>();
+    rows.forEach((row) => {
+      if (!latestByStudentEmail.has(row.studentEmail)) {
+        latestByStudentEmail.set(row.studentEmail, row);
+      }
+    });
+
+    return students.map((student) => {
+      const latest = latestByStudentEmail.get(student.email);
+      if (!latest) {
+        return {
+          id: `pending-${student.email}`,
+          studentEmail: student.email,
+          studentName: student.name,
+          studentInitials: student.initials,
+          moduleLabel: student.module,
+          moduleValue: student.moduleFilter,
+          eventName: null,
+          eventDate: null,
+          termValue: "",
+          statusLabel: "Pendente",
+          statusValue: "pending",
+          attachment: null,
+          createdAt: "",
+        } satisfies ComplementaryActivityRecord;
+      }
+
+      return {
+        ...latest,
+        studentName: student.name,
+        studentInitials: student.initials,
+        moduleLabel: student.module,
+        moduleValue: student.moduleFilter,
+      };
+    });
+  }, [rows, students]);
+
   const filteredRows = useMemo(() => {
     const normalizedSearch = search.trim().toLocaleLowerCase();
-    return rows.filter((row) => {
+    return studentRowsWithActivity.filter((row) => {
       const matchesSearch = normalizedSearch
         ? row.studentName.toLocaleLowerCase().includes(normalizedSearch) ||
           (row.eventName ?? "").toLocaleLowerCase().includes(normalizedSearch)
@@ -90,7 +133,7 @@ export default function ComplementaryActivitiesPage() {
       const matchesTerm = termFilter ? row.termValue === termFilter : true;
       return matchesSearch && matchesModule && matchesStatus && matchesTerm;
     });
-  }, [moduleFilter, rows, search, statusFilter, termFilter]);
+  }, [moduleFilter, search, statusFilter, studentRowsWithActivity, termFilter]);
 
   const tableColumns = useMemo<TableCardColumn<ComplementaryActivityRecord>[]>(
     () => [
@@ -140,8 +183,29 @@ export default function ComplementaryActivitiesPage() {
           </Badge>
         ),
       },
+      {
+        header: "Ação",
+        id: "action",
+        align: "right",
+        render: (row) =>
+          row.statusValue === "completed" ? (
+            <Button
+              icon={Eye}
+              onClick={() =>
+                router.push(
+                  `/complementary-activities/${encodeURIComponent(row.id)}/edit`,
+                )
+              }
+              variant="ghost"
+            >
+              Ver detalhes
+            </Button>
+          ) : (
+            "-"
+          ),
+      },
     ],
-    [],
+    [router],
   );
 
   return (

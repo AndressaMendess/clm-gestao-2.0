@@ -10,13 +10,14 @@ export type ComplementaryActivityAttachment = {
 
 export type ComplementaryActivityRecord = {
   id: string;
+  studentEmail: string;
   studentName: string;
   studentInitials: string;
   moduleLabel: string;
   moduleValue: ComplementaryActivityModule;
   eventName: string | null;
   eventDate: string | null;
-  termValue: ComplementaryActivityTerm;
+  termValue: ComplementaryActivityTerm | "";
   statusLabel: "Pendente" | "Concluído" | "Reprovado";
   statusValue: ComplementaryActivityStatus;
   attachment: ComplementaryActivityAttachment | null;
@@ -24,6 +25,7 @@ export type ComplementaryActivityRecord = {
 };
 
 export type CreateComplementaryActivityInput = {
+  studentEmail: string;
   studentName: string;
   studentInitials: string;
   moduleLabel: string;
@@ -36,3 +38,16 @@ export type CreateComplementaryActivityInput = {
   attachment: ComplementaryActivityAttachment | null;
 };
 
+export type UpdateComplementaryActivityInput = {
+  studentEmail: string;
+  studentName: string;
+  studentInitials: string;
+  moduleLabel: string;
+  moduleValue: ComplementaryActivityModule;
+  eventName: string | null;
+  eventDate: string | null;
+  termValue: ComplementaryActivityTerm;
+  statusLabel: "Pendente" | "Concluído" | "Reprovado";
+  statusValue: ComplementaryActivityStatus;
+  attachment: ComplementaryActivityAttachment | null;
+};

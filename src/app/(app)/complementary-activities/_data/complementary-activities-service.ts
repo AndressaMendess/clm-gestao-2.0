@@ -3,6 +3,7 @@
 import type {
   ComplementaryActivityRecord,
   CreateComplementaryActivityInput,
+  UpdateComplementaryActivityInput,
 } from "./complementary-activities.types";
 
 const STORAGE_KEY = "clm.complementary-activities.registry.v1";
@@ -10,7 +11,8 @@ const STORAGE_KEY = "clm.complementary-activities.registry.v1";
 const INITIAL_COMPLEMENTARY_ACTIVITIES: ComplementaryActivityRecord[] = [
   {
     id: "activity-001",
-    studentName: "Ana Beatriz",
+    studentEmail: "ana.costa@email.com",
+    studentName: "Ana Clara Costa",
     studentInitials: "AB",
     moduleLabel: "Módulo I",
     moduleValue: "module-i",
@@ -24,8 +26,9 @@ const INITIAL_COMPLEMENTARY_ACTIVITIES: ComplementaryActivityRecord[] = [
   },
   {
     id: "activity-002",
-    studentName: "Lucas Mendes",
-    studentInitials: "LM",
+    studentEmail: "bruno.silva@email.com",
+    studentName: "Bruno Henrique Silva",
+    studentInitials: "BH",
     moduleLabel: "Módulo II",
     moduleValue: "module-ii",
     eventName: "Recital de Corda",
@@ -38,8 +41,9 @@ const INITIAL_COMPLEMENTARY_ACTIVITIES: ComplementaryActivityRecord[] = [
   },
   {
     id: "activity-003",
-    studentName: "João Pedro",
-    studentInitials: "JP",
+    studentEmail: "camila.rocha@email.com",
+    studentName: "Camila Rocha",
+    studentInitials: "CR",
     moduleLabel: "Módulo III",
     moduleValue: "module-iii",
     eventName: "Mostra de Teoria Musical",
@@ -54,7 +58,12 @@ const INITIAL_COMPLEMENTARY_ACTIVITIES: ComplementaryActivityRecord[] = [
 
 export type ComplementaryActivitiesRepository = {
   create: (input: CreateComplementaryActivityInput) => Promise<ComplementaryActivityRecord>;
+  getById: (id: string) => Promise<ComplementaryActivityRecord | null>;
   list: () => Promise<ComplementaryActivityRecord[]>;
+  update: (
+    id: string,
+    input: UpdateComplementaryActivityInput,
+  ) => Promise<ComplementaryActivityRecord | null>;
 };
 
 function readRegistry(): ComplementaryActivityRecord[] {
@@ -82,6 +91,10 @@ const localStorageRepository: ComplementaryActivitiesRepository = {
   async list() {
     return readRegistry();
   },
+  async getById(id) {
+    const records = readRegistry();
+    return records.find((record) => record.id === id) ?? null;
+  },
   async create(input) {
     const record: ComplementaryActivityRecord = {
       id: `activity-${Date.now()}`,
@@ -93,9 +106,21 @@ const localStorageRepository: ComplementaryActivitiesRepository = {
     saveRegistry(records);
     return record;
   },
+  async update(id, input) {
+    const records = readRegistry();
+    const index = records.findIndex((record) => record.id === id);
+    if (index < 0) return null;
+
+    const updatedRecord: ComplementaryActivityRecord = {
+      ...records[index],
+      ...input,
+    };
+    records[index] = updatedRecord;
+    saveRegistry(records);
+    return updatedRecord;
+  },
 };
 
 export function getComplementaryActivitiesRepository(): ComplementaryActivitiesRepository {
   return localStorageRepository;
 }
-
