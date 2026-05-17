@@ -46,8 +46,8 @@ export default function StudentCreateEntryPage() {
             onClick={() => router.push("/students/new/ocr")}
             type="button"
           >
-            <span className="absolute right-4 top-4 rounded-full bg-[var(--brand-primary-main)] px-3 py-1 text-[var(--content-inverse)] [font-size:var(--typography-body-small-semibold-font-size)] [line-height:var(--typography-body-small-semibold-line-height)] [font-weight:var(--typography-body-small-semibold-font-weight)] [letter-spacing:var(--typography-body-small-semibold-letter-spacing)]">
-              Recomendado
+            <span className="absolute right-4 top-4">
+              <Badge variant="orange">Recomendado</Badge>
             </span>
             <span className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-[var(--brand-primary-main)] text-[var(--content-inverse)]">
               <Upload className="h-6 w-6" />
