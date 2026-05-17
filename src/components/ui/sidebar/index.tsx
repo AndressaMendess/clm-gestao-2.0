@@ -64,6 +64,8 @@ const defaultUser = {
 
 export function Sidebar({
   instanceId = "sidebar",
+  collapsedWidthPx = 92,
+  expandedWidthPx = 280,
   activeItem,
   activeModuleId = null,
   collapsible = true,
@@ -116,7 +118,7 @@ export function Sidebar({
         aria-hidden={!isOpen}
         className={cx(sidebarShellStyles, getSidebarStateStyles(isDesktopCollapsed, isOpen))}
         inert={!isOpen}
-        style={{ width: isDesktopCollapsed ? "92px" : "280px" }}
+        style={{ width: isDesktopCollapsed ? `${collapsedWidthPx}px` : `${expandedWidthPx}px` }}
       >
         <header className={sidebarHeaderStyles}>
           <div className={sidebarBrandStyles}>

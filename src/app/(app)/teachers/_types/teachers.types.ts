@@ -1,5 +1,7 @@
-﻿export type TeacherStatusFilter = "active" | "inactive" | "locked";
-export type TeacherSpecialtyFilter = "teoria-musical" | "violino" | "trompete" | "canto-coral";
+import type { StudentClassroomFilter } from "@/app/(app)/students/_types/students.types";
+
+export type TeacherStatusFilter = "active" | "inactive" | "locked";
+export type TeacherSpecialtyFilter = StudentClassroomFilter;
 
 export type TeacherFilters = {
   specialty: TeacherSpecialtyFilter | "";

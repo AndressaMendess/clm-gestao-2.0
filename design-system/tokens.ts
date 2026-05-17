@@ -60,23 +60,28 @@ export const tokens = {
       accent: {
         pink: {
           content: { light: primitives.pink[600], dark: primitives.pink[100] },
-          background: { light: primitives.pink[100], dark: primitives.pink[900] },
+          backgroundPrimary: { light: primitives.pink[100], dark: primitives.pink[900] },
+          backgroundSecondary: { light: primitives.pink[200], dark: primitives.pink[800] },
         },
         purple: {
           content: { light: primitives.purple[600], dark: primitives.purple[100] },
-          background: { light: primitives.purple[100], dark: primitives.purple[900] },
+          backgroundPrimary: { light: primitives.purple[100], dark: primitives.purple[900] },
+          backgroundSecondary: { light: primitives.purple[200], dark: primitives.purple[800] },
         },
         blue: {
           content: { light: primitives.iblue[700], dark: primitives.iblue[200] },
-          background: { light: primitives.iblue[100], dark: primitives.iblue[900] },
+          backgroundPrimary: { light: primitives.iblue[100], dark: primitives.iblue[900] },
+          backgroundSecondary: { light: primitives.iblue[200], dark: primitives.iblue[800] },
         },
         green: {
           content: { light: primitives.green[600], dark: primitives.green[200] },
-          background: { light: primitives.green[100], dark: primitives.green[900] },
+          backgroundPrimary: { light: primitives.green[100], dark: primitives.green[900] },
+          backgroundSecondary: { light: primitives.green[200], dark: primitives.green[800] },
         },
         yellow: {
           content: { light: primitives.yellow[800], dark: primitives.yellow[200] },
-          background: { light: primitives.yellow[100], dark: primitives.yellow[900] },
+          backgroundPrimary: { light: primitives.yellow[100], dark: primitives.yellow[900] },
+          backgroundSecondary: { light: primitives.yellow[200], dark: primitives.yellow[800] },
         },
       },
       button: {

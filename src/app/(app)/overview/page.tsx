@@ -19,17 +19,17 @@ export default function OverviewPage() {
 
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
         <FeatureCard
-          arrowColorClassName="text-[var(--content-inverse)]"
+          arrowColorClassName="text-[var(--content-always-light)]"
           backgroundColorClassName="bg-[linear-gradient(148deg,var(--brand-primary-main)_34%,#f12c2c_100%)]"
           className="shadow-[0_10px_24px_rgb(241_108_44_/_0.24)]"
           href="/attendance/new"
           icon={ClipboardCheck}
           iconBackgroundColorClassName="bg-[rgb(255_255_255_/_0.2)]"
-          iconColorClassName="text-[var(--content-inverse)]"
+          iconColorClassName="text-[var(--content-always-light)]"
           subtitle="Registra a presença dos alunos de forma rápida e organizada."
-          subtitleColorClassName="!text-[var(--content-inverse)]"
+          subtitleColorClassName="!text-[var(--content-always-light)]"
           title="Iniciar chamada"
-          titleColorClassName="!text-[var(--content-inverse)]"
+          titleColorClassName="!text-[var(--content-always-light)]"
         />
 
         <FeatureCard
@@ -40,10 +40,10 @@ export default function OverviewPage() {
         />
 
         <FeatureCard
-          backgroundColorClassName="bg-[var(--accent-green-background)]"
+          backgroundColorClassName="bg-[var(--accent-green-background-primary)]"
           href="/attendance"
           icon={ClipboardList}
-          iconBackgroundColorClassName="bg-[var(--color-green-200)]"
+          iconBackgroundColorClassName="bg-[var(--accent-green-background-secondary)]"
           iconColorClassName="text-[var(--accent-green-content)]"
           subtitle="Consulte o histórico e registro de presenças."
           title="Presenças"

@@ -1,7 +1,7 @@
 ﻿import type { AvatarProps } from "./avatar.types";
 
 const avatarBaseStyles =
-  "inline-flex shrink-0 items-center justify-center overflow-hidden rounded-full bg-[var(--accent-purple-background)] text-[var(--accent-purple-content)]";
+  "inline-flex shrink-0 items-center justify-center overflow-hidden rounded-full bg-[var(--accent-purple-background-primary)] text-[var(--accent-purple-content)]";
 
 const avatarSizeStyles: Record<NonNullable<AvatarProps["size"]>, string> = {
   sm: "h-8 w-8",

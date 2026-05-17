@@ -99,6 +99,8 @@ function AppLayoutContent({ children }: AppShellProps) {
           <div className="hidden lg:relative lg:z-50 lg:block">
             <Sidebar
               instanceId="desktop-sidebar"
+              collapsedWidthPx={88}
+              expandedWidthPx={264}
               activeItem={activeItem}
               activeModuleId={activeModule}
               isCollapsed={isSidebarCollapsed}

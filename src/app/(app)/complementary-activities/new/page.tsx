@@ -78,6 +78,7 @@ export default function ComplementaryActivityCreatePage() {
     try {
       const repository = getComplementaryActivitiesRepository();
       await repository.create({
+        studentEmail: selectedStudent.email,
         studentName: selectedStudent.name,
         studentInitials: selectedStudent.initials,
         moduleLabel: selectedModule.label,

@@ -71,7 +71,7 @@ const meta = {
         sortable: true,
         render: (row) => (
           <div className="flex items-center gap-3">
-            <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[var(--accent-purple-background)] text-[var(--content-primary)] [font-size:var(--typography-body-large-medium-font-size)] [font-weight:var(--typography-body-large-medium-font-weight)]">
+            <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[var(--accent-purple-background-primary)] text-[var(--content-primary)] [font-size:var(--typography-body-large-medium-font-size)] [font-weight:var(--typography-body-large-medium-font-weight)]">
               {row.initials}
             </span>
             <span className="[font-size:var(--typography-body-large-semibold-font-size)] [line-height:var(--typography-body-large-semibold-line-height)] [font-weight:var(--typography-body-large-semibold-font-weight)] [letter-spacing:var(--typography-body-large-semibold-letter-spacing)] text-[var(--content-primary)]">

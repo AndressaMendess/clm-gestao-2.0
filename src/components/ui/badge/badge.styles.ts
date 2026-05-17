@@ -13,13 +13,13 @@ const variantStyles: Record<BadgeVariant, string> = {
   warning:
     "border-transparent bg-[var(--feedback-warning-background)] text-[var(--feedback-warning-content)]",
   violet:
-    "border-transparent bg-[var(--accent-purple-background)] text-[var(--accent-purple-content)]",
+    "border-transparent bg-[var(--accent-purple-background-primary)] text-[var(--accent-purple-content)]",
   orange:
     "border-transparent bg-[var(--brand-primary-subtle)] text-[var(--brand-primary-strong)]",
   blue:
-    "border-transparent bg-[var(--accent-blue-background)] text-[var(--accent-blue-content)]",
+    "border-transparent bg-[var(--accent-blue-background-primary)] text-[var(--accent-blue-content)]",
   pink:
-    "border-transparent bg-[var(--accent-pink-background)] text-[var(--accent-pink-content)]",
+    "border-transparent bg-[var(--accent-pink-background-primary)] text-[var(--accent-pink-content)]",
   subtle:
     "border-[var(--border-secondary)] bg-[var(--background-tertiary)] text-[var(--content-secondary)]",
 };

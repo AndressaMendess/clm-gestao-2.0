@@ -28,6 +28,8 @@ export type SidebarUser = {
 
 export type SidebarProps = {
   instanceId?: string;
+  collapsedWidthPx?: number;
+  expandedWidthPx?: number;
   activeItem: SidebarItemId;
   activeModuleId?: string | null;
   collapsible?: boolean;

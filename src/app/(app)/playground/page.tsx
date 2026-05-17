@@ -454,7 +454,9 @@ export default function HomePage() {
           <h2 className="text-lg font-medium">FeatureCard</h2>
           <div className="w-full max-w-[520px]">
             <FeatureCard
+              backgroundColorClassName="bg-[var(--accent-purple-background-primary)]"
               icon={Users}
+              iconBackgroundColorClassName="bg-[var(--accent-purple-background-secondary)]"
               onClick={() => undefined}
               subtitle="Gerencie o cadastro completo de alunos."
               title="Alunos"
