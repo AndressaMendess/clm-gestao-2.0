@@ -48,6 +48,8 @@ export const documentUploadSelectedContentStyles =
   "flex min-h-20 items-center px-3 py-2 pr-12";
 
 export const documentUploadSelectedFileRowStyles = "flex min-w-0 items-center gap-2";
+export const documentUploadSelectedImagePreviewStyles =
+  "h-20 w-30 shrink-0 rounded-[8px] border border-[var(--feedback-success-border)] object-cover";
 
 export const documentUploadSelectedFileNameStyles =
   "truncate text-[var(--feedback-success-content)] [font-size:var(--typography-body-medium-font-size)] [line-height:var(--typography-body-medium-line-height)] [font-weight:500] [letter-spacing:var(--typography-body-medium-letter-spacing)]";

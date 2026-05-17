@@ -1,7 +1,7 @@
 ﻿"use client";
 
 import { FileText, Trash2, Upload } from "lucide-react";
-import { useId, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import type { ChangeEvent, DragEvent, KeyboardEvent } from "react";
 import { cx } from "@/lib/cx";
 import {
@@ -12,6 +12,7 @@ import {
   documentUploadFieldLabelStyles,
   documentUploadRemoveButtonStyles,
   documentUploadSelectedContentStyles,
+  documentUploadSelectedImagePreviewStyles,
   documentUploadSelectedFileNameStyles,
   documentUploadSelectedFileRowStyles,
   documentUploadSelectedFileSizeStyles,
@@ -37,6 +38,11 @@ function isAllowedFileType(file: File): boolean {
   return /\.(pdf|png|jpe?g|gif|webp|bmp|svg)$/i.test(file.name);
 }
 
+function isImageFile(file: File): boolean {
+  if (file.type.startsWith("image/")) return true;
+  return /\.(png|jpe?g|gif|webp|bmp|svg)$/i.test(file.name);
+}
+
 export function DocumentUploadField({
   accept = DEFAULT_ACCEPT,
   disabled,
@@ -57,10 +63,25 @@ export function DocumentUploadField({
   const inputId = id ?? generatedId;
   const [internalFile, setInternalFile] = useState<File | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
   const resolvedFile = value === undefined ? internalFile : value;
   const errorId = `${inputId}-error`;
   const describedBy = errorMessage ? errorId : undefined;
   const resolvedTone = errorMessage ? "error" : resolvedFile ? "success" : tone;
+
+  useEffect(() => {
+    if (!resolvedFile || !isImageFile(resolvedFile)) {
+      setImagePreviewUrl(null);
+      return;
+    }
+
+    const previewUrl = URL.createObjectURL(resolvedFile);
+    setImagePreviewUrl(previewUrl);
+
+    return () => {
+      URL.revokeObjectURL(previewUrl);
+    };
+  }, [resolvedFile]);
 
   const setError = (message: string | null) => {
     setErrorMessage(message);
@@ -185,7 +206,15 @@ export function DocumentUploadField({
           {resolvedFile ? (
             <div className={documentUploadSelectedContentStyles}>
               <div className={documentUploadSelectedFileRowStyles}>
-                <FileText className="h-4 w-4 shrink-0 text-[var(--feedback-success-content)]" />
+                {imagePreviewUrl ? (
+                  <img
+                    alt={`Preview de ${resolvedFile.name}`}
+                    className={documentUploadSelectedImagePreviewStyles}
+                    src={imagePreviewUrl}
+                  />
+                ) : (
+                  <FileText className="h-4 w-4 shrink-0 text-[var(--feedback-success-content)]" />
+                )}
                 <div className="min-w-0 text-left">
                   <p className={documentUploadSelectedFileNameStyles}>
                     {resolvedFile.name}
