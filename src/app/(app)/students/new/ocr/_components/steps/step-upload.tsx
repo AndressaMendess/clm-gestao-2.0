@@ -47,13 +47,19 @@ export function StepUpload() {
 
   const syncFilesWithFlow = useCallback(
     async (nextState: UploadFilesState) => {
-      const selectedFiles = Object.values(nextState).filter((file): file is File => Boolean(file));
-      const files = selectedFiles.map((file) => ({
-        id: `${file.name}-${file.size}-${file.lastModified}`,
-        name: file.name,
-        size: file.size,
-        type: file.type,
-      }));
+      const files = UPLOAD_ITEMS.map((item) => {
+        const file = nextState[item.key];
+        if (!file) return null;
+        return {
+          documentSubtitle: item.subtitle,
+          documentTitle: item.title,
+          id: `${item.key}-${file.name}-${file.size}-${file.lastModified}`,
+          name: file.name,
+          previewUrl: file.type.startsWith("image/") ? URL.createObjectURL(file) : undefined,
+          size: file.size,
+          type: file.type,
+        };
+      }).filter((file): file is NonNullable<typeof file> => Boolean(file));
 
       setFiles(files);
       if (files.length === 0) {

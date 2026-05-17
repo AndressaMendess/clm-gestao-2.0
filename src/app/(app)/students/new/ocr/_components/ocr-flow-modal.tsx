@@ -59,7 +59,7 @@ export function OcrFlowModal() {
 
   return (
     <ModalContainer
-      className="max-w-[920px]"
+      className="max-w-[1120px]"
       closeLabel="Fechar cadastro por OCR"
       isOpen
       onClose={handleClose}

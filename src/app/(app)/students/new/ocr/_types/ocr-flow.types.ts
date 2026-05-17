@@ -9,8 +9,11 @@ export const OCR_FLOW_STEPS = [
 export type OcrFlowStepId = (typeof OCR_FLOW_STEPS)[number]["id"];
 
 export type OcrDocumentFile = {
+  documentSubtitle: string;
+  documentTitle: string;
   id: string;
   name: string;
+  previewUrl?: string;
   size: number;
   type: string;
 };
