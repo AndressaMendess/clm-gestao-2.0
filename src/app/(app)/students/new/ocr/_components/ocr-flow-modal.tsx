@@ -49,9 +49,14 @@ export function OcrFlowModal() {
     router.push("/students/new");
   };
 
+  const handleFinish = () => {
+    resetFlow();
+    router.push("/students");
+  };
+
   const handleNext = () => {
     if (isLastStep) {
-      handleClose();
+      handleFinish();
       return;
     }
     if (canGoNext) goNext();

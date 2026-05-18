@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useMemo, useReducer } from "react";
-import type { OcrDocumentFile, OcrExtractedData } from "../_types/ocr-flow.types";
+import type { OcrDocumentFile, OcrExtractedData, OcrReviewFormData } from "../_types/ocr-flow.types";
 import { canGoNext, canGoPrevious, getCurrentStepId } from "./ocr-flow.selectors";
 import { OCR_FLOW_INITIAL_STATE, ocrFlowReducer } from "./ocr-flow.reducer";
 
@@ -26,6 +26,9 @@ export function useOcrFlowState() {
   const setManualClassroom = useCallback((manualClassroom: string) => {
     dispatch({ payload: manualClassroom, type: "SET_MANUAL_CLASSROOM" });
   }, []);
+  const updateReviewFormData = useCallback((patch: Partial<OcrReviewFormData>) => {
+    dispatch({ payload: patch, type: "UPDATE_REVIEW_FORM_DATA" });
+  }, []);
 
   return useMemo(
     () => ({
@@ -39,8 +42,9 @@ export function useOcrFlowState() {
       setFiles,
       setManualClassroom,
       setManualModule,
+      updateReviewFormData,
       state,
     }),
-    [goNext, goPrevious, resetFlow, setExtractedData, setFiles, setManualClassroom, setManualModule, state],
+    [goNext, goPrevious, resetFlow, setExtractedData, setFiles, setManualClassroom, setManualModule, updateReviewFormData, state],
   );
 }

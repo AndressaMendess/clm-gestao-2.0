@@ -25,10 +25,31 @@ export type OcrExtractedData = {
   rg: string;
 };
 
+export type OcrReviewFormData = {
+  birthDate: string;
+  city: string;
+  cpf: string;
+  district: string;
+  email: string;
+  fatherName: string;
+  fullName: string;
+  maritalStatus: string;
+  motherName: string;
+  nationality: string;
+  number: string;
+  phone: string;
+  rg: string;
+  sex: string;
+  stateCode: string;
+  street: string;
+  zipCode: string;
+};
+
 export type OcrFlowState = {
   currentStep: number;
   extractedData: OcrExtractedData | null;
   files: OcrDocumentFile[];
   manualClassroom: string;
   manualModule: string;
+  reviewFormData: OcrReviewFormData;
 };

@@ -85,29 +85,10 @@ function ConfidenceHelper({ level }: { level: ConfidenceLevel }) {
 }
 
 export function StepReviewOcr() {
-  const { state } = useOcrFlow();
-  const extracted = state.extractedData;
+  const { state, updateReviewFormData } = useOcrFlow();
 
   const [selectedDocumentId, setSelectedDocumentId] = useState<string | null>(state.files[0]?.id ?? null);
-  const [reviewData, setReviewData] = useState<ReviewFormData>({
-    birthDate: extracted?.birthDate ?? "",
-    city: "",
-    cpf: extracted?.cpf ?? "",
-    district: "",
-    email: "",
-    fatherName: "",
-    fullName: extracted?.fullName ?? "",
-    maritalStatus: "",
-    motherName: "",
-    nationality: "",
-    number: "",
-    phone: "",
-    rg: extracted?.rg ?? "",
-    sex: "",
-    stateCode: "",
-    street: "",
-    zipCode: "",
-  });
+  const reviewData: ReviewFormData = state.reviewFormData;
 
   const selectedDocument = useMemo(
     () => state.files.find((file) => file.id === selectedDocumentId) ?? state.files[0] ?? null,
@@ -167,7 +148,7 @@ export function StepReviewOcr() {
             </h4>
             <Input
               label="Nome completo"
-              onChange={(event) => setReviewData((previous) => ({ ...previous, fullName: event.currentTarget.value }))}
+              onChange={(event) => updateReviewFormData({ fullName: event.currentTarget.value })}
               value={reviewData.fullName}
             />
             <ConfidenceHelper level={confidenceByField.fullName} />
@@ -176,7 +157,7 @@ export function StepReviewOcr() {
               <div>
                 <DatePicker
                   label="Data de nascimento"
-                  onDateChange={({ maskedValue }) => setReviewData((previous) => ({ ...previous, birthDate: maskedValue }))}
+                  onDateChange={({ maskedValue }) => updateReviewFormData({ birthDate: maskedValue })}
                   value={reviewData.birthDate}
                 />
                 <ConfidenceHelper level={confidenceByField.birthDate} />
@@ -184,7 +165,7 @@ export function StepReviewOcr() {
               <div>
                 <SelectField
                   label="Sexo"
-                  onValueChange={(value) => setReviewData((previous) => ({ ...previous, sex: value }))}
+                  onValueChange={(value) => updateReviewFormData({ sex: value })}
                   options={SEX_OPTIONS.map((item) => ({ label: item.label, value: item.value }))}
                   placeholder="Selecione"
                   value={reviewData.sex}
@@ -194,7 +175,7 @@ export function StepReviewOcr() {
               <div>
                 <SelectField
                   label="Estado civil"
-                  onValueChange={(value) => setReviewData((previous) => ({ ...previous, maritalStatus: value }))}
+                  onValueChange={(value) => updateReviewFormData({ maritalStatus: value })}
                   options={MARITAL_STATUS_OPTIONS.map((item) => ({ label: item.label, value: item.value }))}
                   placeholder="Selecione"
                   value={reviewData.maritalStatus}
@@ -204,7 +185,7 @@ export function StepReviewOcr() {
               <div>
                 <Input
                   label="Nacionalidade"
-                  onChange={(event) => setReviewData((previous) => ({ ...previous, nationality: event.currentTarget.value }))}
+                  onChange={(event) => updateReviewFormData({ nationality: event.currentTarget.value })}
                   value={reviewData.nationality}
                 />
                 <ConfidenceHelper level={confidenceByField.nationality} />
@@ -213,14 +194,14 @@ export function StepReviewOcr() {
 
             <Input
               label="Email"
-              onChange={(event) => setReviewData((previous) => ({ ...previous, email: event.currentTarget.value }))}
+              onChange={(event) => updateReviewFormData({ email: event.currentTarget.value })}
               value={reviewData.email}
             />
             <ConfidenceHelper level={confidenceByField.email} />
 
             <PhoneInput
               label="Telefone"
-              onValueChange={(_, maskedValue) => setReviewData((previous) => ({ ...previous, phone: maskedValue }))}
+              onValueChange={(_, maskedValue) => updateReviewFormData({ phone: maskedValue })}
               value={reviewData.phone}
             />
             <ConfidenceHelper level={confidenceByField.phone} />
@@ -234,7 +215,7 @@ export function StepReviewOcr() {
               <div>
                 <RgInput
                   label="RG"
-                  onValueChange={(_, maskedValue) => setReviewData((previous) => ({ ...previous, rg: maskedValue }))}
+                  onValueChange={(_, maskedValue) => updateReviewFormData({ rg: maskedValue })}
                   value={reviewData.rg}
                 />
                 <ConfidenceHelper level={confidenceByField.rg} />
@@ -242,7 +223,7 @@ export function StepReviewOcr() {
               <div>
                 <CpfInput
                   label="CPF"
-                  onValueChange={(_, maskedValue) => setReviewData((previous) => ({ ...previous, cpf: maskedValue }))}
+                  onValueChange={(_, maskedValue) => updateReviewFormData({ cpf: maskedValue })}
                   value={reviewData.cpf}
                 />
                 <ConfidenceHelper level={confidenceByField.cpf} />
@@ -258,7 +239,7 @@ export function StepReviewOcr() {
               <div className="md:col-span-9">
                 <Input
                   label="Rua"
-                  onChange={(event) => setReviewData((previous) => ({ ...previous, street: event.currentTarget.value }))}
+                  onChange={(event) => updateReviewFormData({ street: event.currentTarget.value })}
                   value={reviewData.street}
                 />
                 <ConfidenceHelper level={confidenceByField.street} />
@@ -266,7 +247,7 @@ export function StepReviewOcr() {
               <div className="md:col-span-3">
                 <Input
                   label="Número"
-                  onChange={(event) => setReviewData((previous) => ({ ...previous, number: event.currentTarget.value }))}
+                  onChange={(event) => updateReviewFormData({ number: event.currentTarget.value })}
                   value={reviewData.number}
                 />
                 <ConfidenceHelper level={confidenceByField.number} />
@@ -274,7 +255,7 @@ export function StepReviewOcr() {
               <div className="md:col-span-12">
                 <Input
                   label="Bairro"
-                  onChange={(event) => setReviewData((previous) => ({ ...previous, district: event.currentTarget.value }))}
+                  onChange={(event) => updateReviewFormData({ district: event.currentTarget.value })}
                   value={reviewData.district}
                 />
                 <ConfidenceHelper level={confidenceByField.district} />
@@ -282,7 +263,7 @@ export function StepReviewOcr() {
               <div className="md:col-span-8">
                 <Input
                   label="Cidade"
-                  onChange={(event) => setReviewData((previous) => ({ ...previous, city: event.currentTarget.value }))}
+                  onChange={(event) => updateReviewFormData({ city: event.currentTarget.value })}
                   value={reviewData.city}
                 />
                 <ConfidenceHelper level={confidenceByField.city} />
@@ -290,7 +271,7 @@ export function StepReviewOcr() {
               <div className="md:col-span-4">
                 <SelectField
                   label="UF"
-                  onValueChange={(value) => setReviewData((previous) => ({ ...previous, stateCode: value }))}
+                  onValueChange={(value) => updateReviewFormData({ stateCode: value })}
                   options={UF_OPTIONS.map((item) => ({ label: item, value: item }))}
                   placeholder="Selecione"
                   value={reviewData.stateCode}
@@ -300,7 +281,7 @@ export function StepReviewOcr() {
               <div className="md:col-span-12">
                 <CepInput
                   label="CEP"
-                  onValueChange={(_, maskedValue) => setReviewData((previous) => ({ ...previous, zipCode: maskedValue }))}
+                  onValueChange={(_, maskedValue) => updateReviewFormData({ zipCode: maskedValue })}
                   value={reviewData.zipCode}
                 />
                 <ConfidenceHelper level={confidenceByField.zipCode} />
@@ -316,7 +297,7 @@ export function StepReviewOcr() {
               <div>
                 <Input
                   label="Nome do pai"
-                  onChange={(event) => setReviewData((previous) => ({ ...previous, fatherName: event.currentTarget.value }))}
+                  onChange={(event) => updateReviewFormData({ fatherName: event.currentTarget.value })}
                   value={reviewData.fatherName}
                 />
                 <ConfidenceHelper level={confidenceByField.fatherName} />
@@ -324,7 +305,7 @@ export function StepReviewOcr() {
               <div>
                 <Input
                   label="Nome da mãe"
-                  onChange={(event) => setReviewData((previous) => ({ ...previous, motherName: event.currentTarget.value }))}
+                  onChange={(event) => updateReviewFormData({ motherName: event.currentTarget.value })}
                   value={reviewData.motherName}
                 />
                 <ConfidenceHelper level={confidenceByField.motherName} />

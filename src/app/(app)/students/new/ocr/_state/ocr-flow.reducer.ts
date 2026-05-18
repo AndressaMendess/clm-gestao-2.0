@@ -1,5 +1,25 @@
-import { OCR_FLOW_STEPS, type OcrFlowState } from "../_types/ocr-flow.types";
+import { OCR_FLOW_STEPS, type OcrFlowState, type OcrReviewFormData } from "../_types/ocr-flow.types";
 import type { OcrFlowAction } from "./ocr-flow.actions";
+
+const INITIAL_REVIEW_FORM_DATA: OcrReviewFormData = {
+  birthDate: "",
+  city: "",
+  cpf: "",
+  district: "",
+  email: "",
+  fatherName: "",
+  fullName: "",
+  maritalStatus: "",
+  motherName: "",
+  nationality: "",
+  number: "",
+  phone: "",
+  rg: "",
+  sex: "",
+  stateCode: "",
+  street: "",
+  zipCode: "",
+};
 
 export const OCR_FLOW_INITIAL_STATE: OcrFlowState = {
   currentStep: 1,
@@ -7,6 +27,7 @@ export const OCR_FLOW_INITIAL_STATE: OcrFlowState = {
   files: [],
   manualClassroom: "",
   manualModule: "",
+  reviewFormData: INITIAL_REVIEW_FORM_DATA,
 };
 
 export function ocrFlowReducer(state: OcrFlowState, action: OcrFlowAction): OcrFlowState {
@@ -18,7 +39,27 @@ export function ocrFlowReducer(state: OcrFlowState, action: OcrFlowAction): OcrF
     case "SET_FILES":
       return { ...state, files: action.payload };
     case "SET_EXTRACTED_DATA":
-      return { ...state, extractedData: action.payload };
+      return {
+        ...state,
+        extractedData: action.payload,
+        reviewFormData: action.payload
+          ? {
+              ...state.reviewFormData,
+              birthDate: action.payload.birthDate,
+              cpf: action.payload.cpf,
+              fullName: action.payload.fullName,
+              rg: action.payload.rg,
+            }
+          : {
+              ...state.reviewFormData,
+              birthDate: "",
+              cpf: "",
+              fullName: "",
+              rg: "",
+            },
+      };
+    case "UPDATE_REVIEW_FORM_DATA":
+      return { ...state, reviewFormData: { ...state.reviewFormData, ...action.payload } };
     case "SET_MANUAL_CLASSROOM":
       return { ...state, manualClassroom: action.payload };
     case "SET_MANUAL_MODULE":
