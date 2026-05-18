@@ -7,10 +7,10 @@ export const listCollapsibleHeaderStyles =
 export const listCollapsibleTitleGroupStyles = "inline-flex min-w-0 items-start gap-3";
 
 export const listCollapsibleTitleStyles =
-  "text-[var(--content-primary)] [font-size:var(--typography-body-medium-semibold-font-size)] [line-height:var(--typography-body-medium-semibold-line-height)] [font-weight:var(--typography-body-medium-semibold-font-weight)] [letter-spacing:var(--typography-body-medium-semibold-letter-spacing)]";
+  "text-[var(--content-primary)] [font-size:var(--typography-body-large-semibold-font-size)] [line-height:var(--typography-body-large-semibold-line-height)] [font-weight:var(--typography-body-large-semibold-font-weight)] [letter-spacing:var(--typography-body-large-semibold-letter-spacing)]";
 
 export const listCollapsibleSubtitleStyles =
-  "text-[var(--content-tertiary)] [font-size:var(--typography-body-small-regular-font-size)] [line-height:var(--typography-body-small-regular-line-height)] [font-weight:var(--typography-body-small-regular-font-weight)] [letter-spacing:var(--typography-body-small-regular-letter-spacing)]";
+  "text-[var(--content-tertiary)] [font-size:var(--typography-body-medium-regular-font-size)] [line-height:var(--typography-body-medium-regular-line-height)] [font-weight:var(--typography-body-medium-regular-font-weight)] [letter-spacing:var(--typography-body-medium-regular-letter-spacing)]";
 
 export const listCollapsibleContentStyles =
   "border-t border-[var(--border-primary)] px-5 pb-5 pt-4";
@@ -26,7 +26,7 @@ export const listCollapsibleItemTextStyles =
 export const listCollapsibleItemTextGroupStyles = "grid min-w-0 gap-1";
 
 export const listCollapsibleItemSecondaryTextStyles =
-  "min-w-0 truncate text-[var(--content-secondary)] [font-size:var(--typography-body-small-regular-font-size)] [line-height:var(--typography-body-small-regular-line-height)] [font-weight:var(--typography-body-small-regular-font-weight)] [letter-spacing:var(--typography-body-small-regular-letter-spacing)]";
+  "min-w-0 truncate text-[var(--content-secondary)] [font-size:var(--typography-body-medium-regular-font-size)] [line-height:var(--typography-body-medium-regular-line-height)] [font-weight:var(--typography-body-medium-regular-font-weight)] [letter-spacing:var(--typography-body-medium-regular-letter-spacing)]";
 
 export const listCollapsibleEmptyStyles =
   "text-[var(--content-secondary)] [font-size:var(--typography-body-medium-regular-font-size)] [line-height:var(--typography-body-medium-regular-line-height)] [font-weight:var(--typography-body-medium-regular-font-weight)] [letter-spacing:var(--typography-body-medium-regular-letter-spacing)]";

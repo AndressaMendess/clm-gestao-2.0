@@ -21,10 +21,16 @@ const indicatorStatusStyles: Record<StepperStatus, string> = {
     "border-[var(--border-primary)] bg-[var(--background-primary)] text-[var(--content-tertiary)]",
 };
 
+const indicatorTypographyStatusStyles: Record<StepperStatus, string> = {
+  complete: "",
+  current: "[font-weight:var(--typography-body-small-medium-font-weight)]",
+  upcoming: "",
+};
+
 const labelStatusStyles: Record<StepperStatus, string> = {
-  complete: "text-[var(--content-secondary)]",
-  current: "text-[var(--content-brand)]",
-  upcoming: "text-[var(--content-tertiary)]",
+  complete: "!text-[var(--feedback-success-content)]",
+  current: "!text-[var(--brand-primary-main)]",
+  upcoming: "!text-[var(--content-tertiary)]",
 };
 
 const connectorStatusStyles: Record<Exclude<StepperStatus, "current">, string> = {
@@ -37,15 +43,21 @@ export const stepperCheckIconStyles = "h-4 w-4 text-[var(--feedback-success-cont
 export const stepperLabelBaseStyles =
   "mt-1 max-w-[140px] text-center font-[var(--font-family-sans)] text-[var(--typography-body-small-regular-font-size)] [line-height:var(--typography-body-small-regular-line-height)] [font-weight:var(--typography-body-small-regular-font-weight)] [letter-spacing:var(--typography-body-small-regular-letter-spacing)]";
 
+const labelTypographyStatusStyles: Record<StepperStatus, string> = {
+  complete: "",
+  current: "[font-weight:var(--typography-body-small-medium-font-weight)]",
+  upcoming: "",
+};
+
 export const stepperConnectorBaseStyles =
   "pointer-events-none absolute left-1/2 right-[-50%] top-1/2 h-[2px] -translate-y-1/2 rounded-full";
 
 export function getStepperIndicatorStyles(status: StepperStatus): string {
-  return `${indicatorBaseStyles} ${indicatorStatusStyles[status]}`;
+  return `${indicatorBaseStyles} ${indicatorStatusStyles[status]} ${indicatorTypographyStatusStyles[status]}`;
 }
 
 export function getStepperLabelStyles(status: StepperStatus): string {
-  return `${stepperLabelBaseStyles} ${labelStatusStyles[status]}`;
+  return `${stepperLabelBaseStyles} ${labelStatusStyles[status]} ${labelTypographyStatusStyles[status]}`;
 }
 
 export function getStepperConnectorStyles(status: Exclude<StepperStatus, "current">): string {
