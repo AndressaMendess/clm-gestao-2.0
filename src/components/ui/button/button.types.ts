@@ -7,6 +7,8 @@ export type ButtonSize = "sm" | "md" | "icon";
 export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   children?: ReactNode;
   icon?: LucideIcon;
+  loading?: boolean;
+  loadingLabel?: string;
   variant?: ButtonVariant;
   size?: ButtonSize;
 };

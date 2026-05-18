@@ -14,6 +14,7 @@ import { DocumentUploadField } from "@/components/ui/document-upload-field";
 import { FeatureCard } from "@/components/ui/feature-card";
 import { CpfInput, DatePicker, Input, PasswordInput, PhoneInput, RgInput, SearchInput, TextArea } from "@/components/ui/input";
 import { ListCollapsible } from "@/components/ui/list-collapsible";
+import { LinkText } from "@/components/ui/link-text";
 import { ModalContainer } from "@/components/ui/modal-container";
 import { NavItem } from "@/components/ui/nav-item";
 import { SelectField } from "@/components/ui/select-field";
@@ -209,6 +210,10 @@ export default function HomePage() {
             <Button disabled variant="secondary">
               Desabilitado
             </Button>
+            <Button loading loadingLabel="Salvando..." variant="primary">
+              Salvar
+            </Button>
+            <Button loading loadingLabel="Carregando ação" variant="icon" icon={Plus} />
           </div>
         </section>
 
@@ -624,6 +629,16 @@ export default function HomePage() {
             <Tooltip content="Visualizar dados do aluno">
               <Button variant="secondary">Passar mouse</Button>
             </Tooltip>
+          </div>
+        </section>
+
+        <section className="flex flex-col gap-4">
+          <h2 className="text-lg font-medium">LinkText</h2>
+          <div className="flex flex-wrap items-center gap-6">
+            <LinkText href="#">Ver detalhes</LinkText>
+            <LinkText href="#" aria-disabled>
+              Link desabilitado
+            </LinkText>
           </div>
         </section>
 
