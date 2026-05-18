@@ -75,13 +75,11 @@ export function StepUpload() {
 
   const handleFileChange = useCallback(
     (key: UploadDocumentKey, file: File | null) => {
-      setFilesByDocument((previous) => {
-        const nextState = { ...previous, [key]: file };
-        void syncFilesWithFlow(nextState);
-        return nextState;
-      });
+      const nextState = { ...filesByDocument, [key]: file };
+      setFilesByDocument(nextState);
+      void syncFilesWithFlow(nextState);
     },
-    [syncFilesWithFlow],
+    [filesByDocument, syncFilesWithFlow],
   );
 
   return (

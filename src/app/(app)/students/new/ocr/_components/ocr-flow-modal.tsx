@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { ModalContainer } from "@/components/ui/modal-container";
@@ -39,10 +39,10 @@ export function OcrFlowModal() {
 
   const nextDisabled = useMemo(() => {
     if (currentStepId === "upload") return state.files.length === 0;
-    if (currentStepId === "manual-entry") return state.manualModule.length === 0;
+    if (currentStepId === "manual-entry") return state.manualModule.length === 0 || state.manualClassroom.length === 0;
     if (currentStepId === "review-ocr") return !state.extractedData;
     return false;
-  }, [currentStepId, state.extractedData, state.files.length, state.manualModule.length]);
+  }, [currentStepId, state.extractedData, state.files.length, state.manualClassroom.length, state.manualModule.length]);
 
   const handleClose = () => {
     resetFlow();
@@ -57,8 +57,15 @@ export function OcrFlowModal() {
     if (canGoNext) goNext();
   };
 
+  useEffect(() => {
+    const body = document.querySelector<HTMLElement>(".ocr-flow-modal-body");
+    if (!body) return;
+    body.scrollTop = 0;
+  }, [currentStepId]);
+
   return (
     <ModalContainer
+      bodyClassName="ocr-flow-modal-body"
       className="max-w-[1120px]"
       closeLabel="Fechar cadastro por OCR"
       isOpen

@@ -23,6 +23,9 @@ export function useOcrFlowState() {
   const setManualModule = useCallback((manualModule: string) => {
     dispatch({ payload: manualModule, type: "SET_MANUAL_MODULE" });
   }, []);
+  const setManualClassroom = useCallback((manualClassroom: string) => {
+    dispatch({ payload: manualClassroom, type: "SET_MANUAL_CLASSROOM" });
+  }, []);
 
   return useMemo(
     () => ({
@@ -34,9 +37,10 @@ export function useOcrFlowState() {
       resetFlow,
       setExtractedData,
       setFiles,
+      setManualClassroom,
       setManualModule,
       state,
     }),
-    [goNext, goPrevious, resetFlow, setExtractedData, setFiles, setManualModule, state],
+    [goNext, goPrevious, resetFlow, setExtractedData, setFiles, setManualClassroom, setManualModule, state],
   );
 }

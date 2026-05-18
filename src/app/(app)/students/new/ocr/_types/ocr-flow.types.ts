@@ -2,7 +2,7 @@ export const OCR_FLOW_STEPS = [
   { id: "instructions", label: "Instruções" },
   { id: "upload", label: "Upload" },
   { id: "review-ocr", label: "Revisão OCR" },
-  { id: "manual-entry", label: "Módulo manual" },
+  { id: "manual-entry", label: "Módulo" },
   { id: "review-final", label: "Revisão final" },
 ] as const;
 
@@ -29,5 +29,6 @@ export type OcrFlowState = {
   currentStep: number;
   extractedData: OcrExtractedData | null;
   files: OcrDocumentFile[];
+  manualClassroom: string;
   manualModule: string;
 };
