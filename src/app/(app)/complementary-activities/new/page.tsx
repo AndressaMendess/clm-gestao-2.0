@@ -14,7 +14,7 @@ import {
   COMPLEMENTARY_ACTIVITY_STATUS_OPTIONS,
   COMPLEMENTARY_ACTIVITY_TERM_OPTIONS,
   toSelectFieldOptions,
-} from "../_config/complementary-activities-filter-options";
+} from "../../_config/filters";
 import { getComplementaryActivitiesRepository } from "../_data/complementary-activities-service";
 import type { ComplementaryActivityTerm } from "../_data/complementary-activities.types";
 
@@ -215,3 +215,4 @@ export default function ComplementaryActivityCreatePage() {
     </>
   );
 }
+

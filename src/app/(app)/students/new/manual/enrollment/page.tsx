@@ -5,51 +5,13 @@ import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { SelectField } from "@/components/ui/select-field";
 import {
-  STUDENT_CLASSROOM_OPTIONS,
+  getClassroomOptionsByModule,
   STUDENT_MODULE_OPTIONS,
   STUDENT_STATUS_OPTIONS,
   toSelectFieldOptions,
-} from "@/app/(app)/students/_config/students-filter-options";
+} from "@/app/(app)/_config/filters";
 import { useManualFlowForm } from "../_components/manual-flow-provider";
 import { ManualFlowShell } from "../_components/manual-flow-shell";
-
-const CLASSROOMS_BY_MODULE: Record<string, string[]> = {
-  "module-i": ["classe-1", "classe-2"],
-  "module-ii": [
-    "teoria-musical",
-    "solfejo",
-    "violino",
-    "trompete",
-    "clarinete",
-    "trompa",
-    "saxofone",
-    "teclado",
-    "violoncelo",
-    "flauta",
-    "trombone",
-    "guitarra",
-    "violao",
-    "contrabaixo",
-    "canto-coral",
-  ],
-  "module-iii": [
-    "teoria-musical",
-    "solfejo",
-    "violino",
-    "trompete",
-    "clarinete",
-    "trompa",
-    "saxofone",
-    "teclado",
-    "violoncelo",
-    "flauta",
-    "trombone",
-    "guitarra",
-    "violao",
-    "contrabaixo",
-    "canto-coral",
-  ],
-};
 
 export default function StudentCreateManualEnrollmentPage() {
   const router = useRouter();
@@ -65,10 +27,7 @@ export default function StudentCreateManualEnrollmentPage() {
   const moduleOptions = useMemo(() => toSelectFieldOptions(STUDENT_MODULE_OPTIONS), []);
   const classroomOptions = useMemo(() => {
     if (!enrollmentModule) return [];
-    const allowedClassrooms = CLASSROOMS_BY_MODULE[enrollmentModule] ?? [];
-    return toSelectFieldOptions(
-      STUDENT_CLASSROOM_OPTIONS.filter((option) => allowedClassrooms.includes(option.value)),
-    );
+    return toSelectFieldOptions(getClassroomOptionsByModule(enrollmentModule));
   }, [enrollmentModule]);
   const statusOptions = useMemo(() => toSelectFieldOptions(STUDENT_STATUS_OPTIONS), []);
   const isNextDisabled = !enrollmentModule || !enrollmentClassroom || !enrollmentStatus;
@@ -168,3 +127,4 @@ export default function StudentCreateManualEnrollmentPage() {
     </ManualFlowShell>
   );
 }
+

@@ -7,7 +7,7 @@ import {
   STUDENT_CLASSROOM_OPTIONS,
   STUDENT_MODULE_OPTIONS,
   STUDENT_STATUS_OPTIONS,
-} from "@/app/(app)/students/_config/students-filter-options";
+} from "@/app/(app)/_config/filters";
 import { upsertStudentRecord } from "@/app/(app)/students/_data/students-registry";
 import type {
   StudentClassroomFilter,
@@ -130,3 +130,4 @@ export default function StudentCreateManualAttachmentsPage() {
     </ManualFlowShell>
   );
 }
+

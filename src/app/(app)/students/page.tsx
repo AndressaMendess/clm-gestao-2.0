@@ -7,13 +7,15 @@ import { PageHeader } from "@/components/ui/page-header";
 import { SelectField } from "@/components/ui/select-field";
 import { TableCard } from "@/components/ui/table-card";
 import { getStudentRowsFromRegistry } from "./_data/students-registry";
+import { STUDENT_ROWS } from "./_data/students.mock";
 import {
+  getClassroomOptionsByModule,
   STUDENT_CLASSROOM_OPTIONS,
   STUDENT_FILTERS_DEFAULT_VALUE,
   STUDENT_MODULE_OPTIONS,
   STUDENT_STATUS_OPTIONS,
   toSelectFieldOptions,
-} from "./_config/students-filter-options";
+} from "../_config/filters";
 import { getStudentsTableColumns } from "./_config/students-table-columns";
 import type { StudentFilters } from "./_types/students.types";
 import { filterStudents } from "./_utils/students-filters";
@@ -22,7 +24,7 @@ export default function StudentsPage() {
   const router = useRouter();
   const [search, setSearch] = useState("");
   const [filters, setFilters] = useState<StudentFilters>(STUDENT_FILTERS_DEFAULT_VALUE);
-  const [studentRows, setStudentRows] = useState(() => getStudentRowsFromRegistry());
+  const [studentRows, setStudentRows] = useState(STUDENT_ROWS);
 
   useEffect(() => {
     setStudentRows(getStudentRowsFromRegistry());
@@ -31,6 +33,13 @@ export default function StudentsPage() {
   const filteredRows = useMemo(
     () => filterStudents(studentRows, filters, search),
     [filters, search, studentRows],
+  );
+  const classroomOptions = useMemo(
+    () =>
+      toSelectFieldOptions(
+        filters.module ? getClassroomOptionsByModule(filters.module) : STUDENT_CLASSROOM_OPTIONS,
+      ),
+    [filters.module],
   );
   const tableColumns = useMemo(
     () =>
@@ -74,7 +83,11 @@ export default function StudentsPage() {
           <SelectField
             aria-label="Filtrar por módulo"
             onValueChange={(module) =>
-              setFilters((current) => ({ ...current, module: module as StudentFilters["module"] }))
+              setFilters((current) => ({
+                ...current,
+                module: module as StudentFilters["module"],
+                classroom: "",
+              }))
             }
             options={toSelectFieldOptions(STUDENT_MODULE_OPTIONS)}
             placeholder="Selecione um módulo"
@@ -87,7 +100,7 @@ export default function StudentsPage() {
             onValueChange={(classroom) =>
               setFilters((current) => ({ ...current, classroom: classroom as StudentFilters["classroom"] }))
             }
-            options={toSelectFieldOptions(STUDENT_CLASSROOM_OPTIONS)}
+            options={classroomOptions}
             placeholder="Selecione uma turma"
             value={filters.classroom}
             variant="without-label"
@@ -110,3 +123,4 @@ export default function StudentsPage() {
     </section>
   );
 }
+

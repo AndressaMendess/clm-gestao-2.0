@@ -6,6 +6,7 @@ import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ClickableCard } from "@/components/ui/clickable-card";
 import { PageHeader } from "@/components/ui/page-header";
+import { getClassroomOptionsByModule, MODULE_OPTIONS } from "../../_config/filters";
 import { getStudentRowsFromRegistry } from "../../students/_data/students-registry";
 
 type ModuleSection = {
@@ -48,30 +49,27 @@ export default function AttendanceStartPage() {
 
   const sections = useMemo<ModuleSection[]>(() => {
     const rows = getStudentRowsFromRegistry();
-    const grouped = new Map<string, Map<string, { classroomLabel: string; studentCount: number }>>();
+    const studentCountByKey = new Map<string, number>();
 
     rows.forEach((row) => {
-      const moduleGroup = grouped.get(row.moduleFilter) ?? new Map<string, { classroomLabel: string; studentCount: number }>();
-      const classroom = moduleGroup.get(row.classroomFilter) ?? { classroomLabel: row.classroom, studentCount: 0 };
-      classroom.studentCount += 1;
-      moduleGroup.set(row.classroomFilter, classroom);
-      grouped.set(row.moduleFilter, moduleGroup);
+      const key = `${row.moduleFilter}::${row.classroomFilter}`;
+      const currentCount = studentCountByKey.get(key) ?? 0;
+      studentCountByKey.set(key, currentCount + 1);
     });
 
-    return Array.from(grouped.entries())
-      .map(([moduleFilter, classrooms]) => ({
-        moduleFilter,
-        moduleLabel: rows.find((row) => row.moduleFilter === moduleFilter)?.module ?? moduleFilter,
-        cards: Array.from(classrooms.entries())
-          .map(([classroomFilter, info]) => ({
-            classroomFilter,
-            classroomLabel: info.classroomLabel,
-            studentCount: info.studentCount,
-            teacherName: TEACHER_BY_CLASSROOM_FILTER[classroomFilter] ?? "Professor(a) não definido",
-          }))
-          .sort((a, b) => a.classroomLabel.localeCompare(b.classroomLabel, "pt-BR")),
-      }))
-      .sort((a, b) => a.moduleLabel.localeCompare(b.moduleLabel, "pt-BR"));
+    return MODULE_OPTIONS.map((moduleOption) => ({
+      moduleFilter: moduleOption.value,
+      moduleLabel: moduleOption.label,
+      cards: getClassroomOptionsByModule(moduleOption.value).map((classroomOption) => {
+        const key = `${moduleOption.value}::${classroomOption.value}`;
+        return {
+          classroomFilter: classroomOption.value,
+          classroomLabel: classroomOption.label,
+          studentCount: studentCountByKey.get(key) ?? 0,
+          teacherName: TEACHER_BY_CLASSROOM_FILTER[classroomOption.value] ?? "Professor(a) não definido",
+        };
+      }),
+    }));
   }, []);
 
   const handleOpenAttendanceCall = (moduleFilter: string, classroomFilter: string) => {
@@ -90,7 +88,7 @@ export default function AttendanceStartPage() {
       <div className="mt-6 grid gap-8">
         {sections.map((section) => (
           <section className="grid gap-2" key={section.moduleFilter}>
-            <h2 className="text-[var(--content-primary)] [font-size:var(--typography-body-large-semibold-font-size)] [line-height:var(--typography-body-large-semibold-line-height)] [font-weight:var(--typography-body-large-semibold-font-weight)] [letter-spacing:var(--typography-body-large-semibold-letter-spacing)]">
+            <h2 className="text-[var(--content-primary)] [font-size:var(--typography-body-x-large-semibold-font-size)] [line-height:var(--typography-body-x-large-semibold-line-height)] [font-weight:var(--typography-body-x-large-semibold-font-weight)] [letter-spacing:var(--typography-body-x-large-semibold-letter-spacing)]">
               {section.moduleLabel}
             </h2>
 

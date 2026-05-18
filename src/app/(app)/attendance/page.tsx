@@ -8,10 +8,11 @@ import { ListCollapsible } from "@/components/ui/list-collapsible";
 import { PageHeader } from "@/components/ui/page-header";
 import { SelectField } from "@/components/ui/select-field";
 import {
+  getClassroomOptionsByModule,
   STUDENT_CLASSROOM_OPTIONS,
   STUDENT_MODULE_OPTIONS,
   toSelectFieldOptions,
-} from "../students/_config/students-filter-options";
+} from "../_config/filters";
 import {
   getAttendanceCallsFromRegistry,
   type AttendanceRegistryCall,
@@ -66,6 +67,13 @@ export default function AttendancePage() {
         .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()),
     [attendanceCalls, classroomFilter, moduleFilter],
   );
+  const classroomOptions = useMemo(
+    () =>
+      toSelectFieldOptions(
+        moduleFilter ? getClassroomOptionsByModule(moduleFilter) : STUDENT_CLASSROOM_OPTIONS,
+      ),
+    [moduleFilter],
+  );
 
   return (
     <section>
@@ -79,7 +87,10 @@ export default function AttendancePage() {
       <div className="mt-6 mb-6 grid w-full min-w-0 grid-cols-1 gap-2 sm:grid-cols-2">
         <SelectField
           aria-label="Filtrar por módulo"
-          onValueChange={setModuleFilter}
+          onValueChange={(value) => {
+            setModuleFilter(value);
+            setClassroomFilter("");
+          }}
           options={toSelectFieldOptions(STUDENT_MODULE_OPTIONS)}
           placeholder="Selecione um módulo"
           value={moduleFilter}
@@ -89,7 +100,7 @@ export default function AttendancePage() {
         <SelectField
           aria-label="Filtrar por turma"
           onValueChange={setClassroomFilter}
-          options={toSelectFieldOptions(STUDENT_CLASSROOM_OPTIONS)}
+          options={classroomOptions}
           placeholder="Selecione uma turma"
           value={classroomFilter}
           variant="without-label"
@@ -122,3 +133,4 @@ export default function AttendancePage() {
     </section>
   );
 }
+

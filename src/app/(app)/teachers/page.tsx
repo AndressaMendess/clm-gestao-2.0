@@ -11,7 +11,7 @@ import {
   TEACHER_SPECIALTY_OPTIONS,
   TEACHER_STATUS_OPTIONS,
   toSelectFieldOptions,
-} from "./_config/teachers-filter-options";
+} from "../_config/filters";
 import { getTeachersTableColumns } from "./_config/teachers-table-columns";
 import { getTeacherRowsFromRegistry } from "./_data/teachers-registry";
 import type { TeacherFilters } from "./_types/teachers.types";
@@ -99,4 +99,5 @@ export default function TeachersPage() {
     </section>
   );
 }
+
 
