@@ -14,10 +14,11 @@ export function getStudentsTableColumns({
     {
       header: "Nome",
       id: "name",
+      isClickable: true,
       key: "name",
       render: (row) => (
         <button
-          className="group flex items-center gap-3 rounded-md text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--button-focus-ring)]"
+          className="group flex cursor-pointer items-center gap-3 rounded-md text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--button-focus-ring)]"
           onClick={() => onNameClick(row)}
           type="button"
         >
