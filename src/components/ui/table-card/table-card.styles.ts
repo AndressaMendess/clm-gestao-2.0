@@ -35,6 +35,8 @@ export const tableCardBodyRowStyles =
 export const tableCardBodyCellBaseStyles =
   "px-4 py-3 text-[var(--content-secondary)] [font-size:var(--typography-body-medium-regular-font-size)] [line-height:var(--typography-body-medium-regular-line-height)] [font-weight:var(--typography-body-medium-regular-font-weight)] [letter-spacing:var(--typography-body-medium-regular-letter-spacing)]";
 
+export const tableCardClickableCellStyles = "cursor-pointer";
+
 export const tableCardStatusRowStyles = "border-b-0";
 
 export const tableCardStatusCellStyles =

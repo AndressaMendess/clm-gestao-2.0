@@ -20,6 +20,8 @@ export type TableCardColumn<Row extends Record<string, unknown> = Record<string,
   /** When true, this column is omitted from the stacked mobile card body */
   hideOnMobile?: boolean;
   id: string;
+  /** Marks the cell content as interactive (shows pointer cursor). */
+  isClickable?: boolean;
   /** Field name on the row; ignored when `accessor` is provided */
   key?: keyof Row | string;
   render?: (row: Row, rowIndex: number) => ReactNode;

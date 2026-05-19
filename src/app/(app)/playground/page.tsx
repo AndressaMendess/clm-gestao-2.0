@@ -481,6 +481,7 @@ export default function HomePage() {
               {
                 id: "name",
                 header: "Nome",
+                isClickable: true,
                 key: "name",
                 sortable: true,
                 render: (row) => (
@@ -551,6 +552,7 @@ export default function HomePage() {
               {
                 id: "name",
                 header: "Nome",
+                isClickable: true,
                 key: "name",
                 sortable: true,
                 render: (row) => (

@@ -9,6 +9,7 @@ import {
   getTableCardAlignStyles,
   getTableCardFlexAlignStyles,
   tableCardBodyCellBaseStyles,
+  tableCardClickableCellStyles,
   tableCardBodyRowStyles,
   tableCardClickableRowStyles,
   tableCardContainerStyles,
@@ -340,7 +341,13 @@ export function TableCard<Row extends Record<string, unknown>>({
                           className={cx(tableCardBodyCellBaseStyles, getTableCardAlignStyles(column.align))}
                           key={column.id}
                         >
-                          <div className={cx("w-full", getTableCardAlignStyles(column.align))}>
+                          <div
+                            className={cx(
+                              "w-full",
+                              getTableCardAlignStyles(column.align),
+                              column.isClickable && tableCardClickableCellStyles,
+                            )}
+                          >
                             {renderCellValue(row, column, rowIndex)}
                           </div>
                         </td>
@@ -389,7 +396,10 @@ export function TableCard<Row extends Record<string, unknown>>({
                 ) : null}
 
                 {mobileColumns.map((column) => (
-                  <div className={tableCardMobileFieldStyles} key={column.id}>
+                  <div
+                    className={cx(tableCardMobileFieldStyles, column.isClickable && tableCardClickableCellStyles)}
+                    key={column.id}
+                  >
                     <span className={tableCardMobileFieldLabelStyles}>{column.header}</span>
                     <div>{renderCellValue(row, column, absoluteRowIndex)}</div>
                   </div>

@@ -1,7 +1,7 @@
 import type { ButtonSize, ButtonVariant } from "./button.types";
 
 const baseStyles =
-  "inline-flex items-center justify-center gap-2 rounded-2xl border text-sm font-medium leading-5 tracking-[-0.28px] transition-[background-color,color,border-color,box-shadow] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--button-focus-ring)] focus-visible:ring-offset-2 disabled:cursor-not-allowed";
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-2xl border text-sm font-medium leading-5 tracking-[-0.28px] transition-[background-color,color,border-color,box-shadow] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--button-focus-ring)] focus-visible:ring-offset-2 disabled:cursor-not-allowed";
 
 const variantStyles: Record<ButtonVariant, string> = {
   primary:
