@@ -83,7 +83,7 @@ function AppLayoutContent({ children }: AppShellProps) {
 
       <div className="flex min-h-screen overflow-visible">
         {!isPlaygroundPage ? (
-          <div className="hidden lg:relative lg:z-[70] lg:block">
+          <div className="hidden lg:relative lg:z-50 lg:block">
             <Sidebar
               instanceId="desktop-sidebar"
               collapsedWidthPx={88}
@@ -101,7 +101,7 @@ function AppLayoutContent({ children }: AppShellProps) {
           </div>
         ) : null}
 
-        <div className="relative z-10 flex-1 min-w-0">
+        <div className="relative z-0 flex-1 min-w-0">
           <ContentShell
             className="p-0"
             contentClassName="min-h-screen py-8"

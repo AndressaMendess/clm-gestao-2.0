@@ -188,7 +188,7 @@ export default function ComplementaryActivitiesPage() {
         id: "action",
         align: "right",
         render: (row) =>
-          row.statusValue === "completed" ? (
+          row.statusValue === "completed" || row.statusValue === "failed" ? (
             <Button
               icon={Eye}
               onClick={() =>
