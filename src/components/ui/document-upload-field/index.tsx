@@ -1,7 +1,7 @@
 ﻿"use client";
 
 import { FileText, Trash2, Upload } from "lucide-react";
-import { useEffect, useId, useRef, useState } from "react";
+import { useEffect, useId, useMemo, useRef, useState } from "react";
 import type { ChangeEvent, DragEvent, KeyboardEvent } from "react";
 import { cx } from "@/lib/cx";
 import {
@@ -63,25 +63,24 @@ export function DocumentUploadField({
   const inputId = id ?? generatedId;
   const [internalFile, setInternalFile] = useState<File | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
   const resolvedFile = value === undefined ? internalFile : value;
   const errorId = `${inputId}-error`;
   const describedBy = errorMessage ? errorId : undefined;
   const resolvedTone = errorMessage ? "error" : resolvedFile ? "success" : tone;
 
-  useEffect(() => {
-    if (!resolvedFile || !isImageFile(resolvedFile)) {
-      setImagePreviewUrl(null);
-      return;
+  const imagePreviewUrl = useMemo(() => {
+    if (!resolvedFile || resolvedFile.size === 0 || !isImageFile(resolvedFile)) {
+      return null;
     }
-
-    const previewUrl = URL.createObjectURL(resolvedFile);
-    setImagePreviewUrl(previewUrl);
-
-    return () => {
-      URL.revokeObjectURL(previewUrl);
-    };
+    return URL.createObjectURL(resolvedFile);
   }, [resolvedFile]);
+
+  useEffect(
+    () => () => {
+      if (imagePreviewUrl) URL.revokeObjectURL(imagePreviewUrl);
+    },
+    [imagePreviewUrl],
+  );
 
   const setError = (message: string | null) => {
     setErrorMessage(message);

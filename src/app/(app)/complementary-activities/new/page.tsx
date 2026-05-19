@@ -18,6 +18,15 @@ import {
 import { getComplementaryActivitiesRepository } from "../_data/complementary-activities-service";
 import type { ComplementaryActivityTerm } from "../_data/complementary-activities.types";
 
+function fileToDataUrl(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(String(reader.result ?? ""));
+    reader.onerror = () => reject(new Error("Falha ao ler arquivo."));
+    reader.readAsDataURL(file);
+  });
+}
+
 export default function ComplementaryActivityCreatePage() {
   const router = useRouter();
   const [moduleValue, setModuleValue] = useState("");
@@ -76,6 +85,9 @@ export default function ComplementaryActivityCreatePage() {
     setIsSaving(true);
 
     try {
+      const attachmentPreviewDataUrl = attachmentFile
+        ? await fileToDataUrl(attachmentFile)
+        : null;
       const repository = getComplementaryActivitiesRepository();
       await repository.create({
         studentEmail: selectedStudent.email,
@@ -92,6 +104,7 @@ export default function ComplementaryActivityCreatePage() {
           ? {
               fileName: attachmentFile.name,
               mimeType: attachmentFile.type,
+              previewDataUrl: attachmentPreviewDataUrl,
               sizeInBytes: attachmentFile.size,
             }
           : null,

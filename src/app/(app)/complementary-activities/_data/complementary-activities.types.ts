@@ -5,6 +5,7 @@ export type ComplementaryActivityTerm = "term-1" | "term-2" | "term-3";
 export type ComplementaryActivityAttachment = {
   fileName: string;
   mimeType: string;
+  previewDataUrl?: string | null;
   sizeInBytes: number;
 };
 

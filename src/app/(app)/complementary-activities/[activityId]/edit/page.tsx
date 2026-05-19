@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useMemo, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
@@ -16,7 +16,33 @@ import {
   toSelectFieldOptions,
 } from "../../../_config/filters";
 import { getComplementaryActivitiesRepository } from "../../_data/complementary-activities-service";
-import type { ComplementaryActivityTerm } from "../../_data/complementary-activities.types";
+import type {
+  ComplementaryActivityAttachment,
+  ComplementaryActivityTerm,
+} from "../../_data/complementary-activities.types";
+
+function fileToDataUrl(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(String(reader.result ?? ""));
+    reader.onerror = () => reject(new Error("Falha ao ler arquivo."));
+    reader.readAsDataURL(file);
+  });
+}
+
+async function toVirtualAttachmentFile(attachment: ComplementaryActivityAttachment | null): Promise<File | null> {
+  if (!attachment) return null;
+
+  if (attachment.previewDataUrl) {
+    const response = await fetch(attachment.previewDataUrl);
+    const blob = await response.blob();
+    return new File([blob], attachment.fileName, {
+      type: attachment.mimeType || blob.type || "application/octet-stream",
+    });
+  }
+
+  return new File([], attachment.fileName, { type: attachment.mimeType || "application/octet-stream" });
+}
 
 export default function ComplementaryActivityEditPage() {
   const router = useRouter();
@@ -31,6 +57,7 @@ export default function ComplementaryActivityEditPage() {
   const [eventDate, setEventDate] = useState<string | null>(null);
   const [attachmentFile, setAttachmentFile] = useState<File | null>(null);
   const [savedAttachmentName, setSavedAttachmentName] = useState<string | null>(null);
+  const [attachmentPreviewDataUrl, setAttachmentPreviewDataUrl] = useState<string | null>(null);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -44,7 +71,7 @@ export default function ComplementaryActivityEditPage() {
     Boolean(termValue) &&
     Boolean(statusValue) &&
     (isPending || Boolean(eventName.trim())) &&
-    Boolean(attachmentFile || savedAttachmentName);
+    Boolean(attachmentFile);
 
   const studentOptions = useMemo(
     () =>
@@ -57,6 +84,7 @@ export default function ComplementaryActivityEditPage() {
   useEffect(() => {
     let isActive = true;
     const repository = getComplementaryActivitiesRepository();
+
     void repository
       .getById(activityId)
       .then((record) => {
@@ -65,6 +93,7 @@ export default function ComplementaryActivityEditPage() {
           setLoadError("Atividade não encontrada.");
           return;
         }
+
         setModuleValue(record.moduleValue);
         setStudentValue(record.studentEmail);
         setTermValue(record.termValue);
@@ -72,6 +101,12 @@ export default function ComplementaryActivityEditPage() {
         setEventName(record.eventName ?? "");
         setEventDate(record.eventDate);
         setSavedAttachmentName(record.attachment?.fileName ?? null);
+        setAttachmentPreviewDataUrl(record.attachment?.previewDataUrl ?? null);
+
+        void toVirtualAttachmentFile(record.attachment).then((file) => {
+          if (!isActive) return;
+          setAttachmentFile(file);
+        });
       })
       .catch(() => {
         if (!isActive) return;
@@ -93,6 +128,7 @@ export default function ComplementaryActivityEditPage() {
 
   const handleSave = async () => {
     if (isSaving || isLoading) return;
+
     const selectedStudent = studentRows.find((row) => row.email === studentValue);
     const selectedModule = COMPLEMENTARY_ACTIVITY_MODULE_OPTIONS.find((option) => option.value === moduleValue);
     const selectedStatus = COMPLEMENTARY_ACTIVITY_STATUS_OPTIONS.find((option) => option.value === statusValue);
@@ -107,16 +143,7 @@ export default function ComplementaryActivityEditPage() {
       return;
     }
 
-    const attachment =
-      attachmentFile || savedAttachmentName
-        ? {
-            fileName: attachmentFile?.name ?? savedAttachmentName ?? "Anexo",
-            mimeType: attachmentFile?.type ?? "application/octet-stream",
-            sizeInBytes: attachmentFile?.size ?? 0,
-          }
-        : null;
-
-    if (!attachment) {
+    if (!attachmentFile) {
       setSubmitError("O anexo é obrigatório.");
       return;
     }
@@ -125,6 +152,7 @@ export default function ComplementaryActivityEditPage() {
     setIsSaving(true);
 
     try {
+      const nextPreviewDataUrl = await fileToDataUrl(attachmentFile);
       const repository = getComplementaryActivitiesRepository();
       const updatedRecord = await repository.update(activityId, {
         studentEmail: selectedStudent.email,
@@ -137,7 +165,12 @@ export default function ComplementaryActivityEditPage() {
         termValue: termValue as ComplementaryActivityTerm,
         statusLabel: selectedStatus.label as "Pendente" | "Concluído" | "Reprovado",
         statusValue: selectedStatus.value as "pending" | "completed" | "failed",
-        attachment,
+        attachment: {
+          fileName: attachmentFile.name,
+          mimeType: attachmentFile.type || "application/octet-stream",
+          previewDataUrl: nextPreviewDataUrl || attachmentPreviewDataUrl,
+          sizeInBytes: attachmentFile.size,
+        },
       });
 
       if (!updatedRecord) {
@@ -263,7 +296,14 @@ export default function ComplementaryActivityEditPage() {
             label="Anexo *"
             onFileChange={(file) => {
               setAttachmentFile(file);
-              if (file) setSavedAttachmentName(file.name);
+              setSavedAttachmentName(file?.name ?? null);
+              if (!file) {
+                setAttachmentPreviewDataUrl(null);
+                return;
+              }
+              void fileToDataUrl(file).then((dataUrl) => {
+                setAttachmentPreviewDataUrl(dataUrl);
+              });
             }}
             required
             value={attachmentFile}
