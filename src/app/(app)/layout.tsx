@@ -43,13 +43,6 @@ function resolveActiveItem(pathname: string): SidebarItemId {
   return activeDef?.itemId ?? "overview";
 }
 
-function resolveActiveModule(pathname: string): string | null {
-  if (pathname === "/modules/module-i" || pathname.startsWith("/modules/module-i/")) return "module-i";
-  if (pathname === "/modules/module-ii" || pathname.startsWith("/modules/module-ii/")) return "module-ii";
-  if (pathname === "/modules/module-iii" || pathname.startsWith("/modules/module-iii/")) return "module-iii";
-  return null;
-}
-
 type AppShellProps = {
   children: ReactNode;
 };
@@ -63,7 +56,6 @@ function AppLayoutContent({ children }: AppShellProps) {
   const isPlaygroundPage = pathname.startsWith("/playground");
 
   const activeItem = resolveActiveItem(pathname);
-  const activeModule = resolveActiveModule(pathname);
 
   return (
     <main className="min-h-screen bg-[var(--background-secondary)]">
@@ -75,17 +67,12 @@ function AppLayoutContent({ children }: AppShellProps) {
           <Sidebar
             instanceId="mobile-sidebar"
             activeItem={activeItem}
-            activeModuleId={activeModule}
             collapsible={false}
             isCollapsed={false}
             isOpen={isSidebarOpen}
             onClose={() => setIsSidebarOpen(false)}
             onNavigate={(itemId) => {
               if (isNavRouteItemId(itemId)) router.push(navRouteMap[itemId]);
-              setIsSidebarOpen(false);
-            }}
-            onNavigateModule={(moduleId) => {
-              router.push(`/modules/${moduleId}`);
               setIsSidebarOpen(false);
             }}
             showFloatingTrigger={false}
@@ -96,20 +83,16 @@ function AppLayoutContent({ children }: AppShellProps) {
 
       <div className="flex min-h-screen overflow-visible">
         {!isPlaygroundPage ? (
-          <div className="hidden lg:relative lg:z-50 lg:block">
+          <div className="hidden lg:relative lg:z-[70] lg:block">
             <Sidebar
               instanceId="desktop-sidebar"
               collapsedWidthPx={88}
               expandedWidthPx={264}
               activeItem={activeItem}
-              activeModuleId={activeModule}
               isCollapsed={isSidebarCollapsed}
               isOpen
               onNavigate={(itemId) => {
                 if (isNavRouteItemId(itemId)) router.push(navRouteMap[itemId]);
-              }}
-              onNavigateModule={(moduleId) => {
-                router.push(`/modules/${moduleId}`);
               }}
               onToggleCollapse={() => setIsSidebarCollapsed((current) => !current)}
               showFloatingTrigger={false}
@@ -118,7 +101,7 @@ function AppLayoutContent({ children }: AppShellProps) {
           </div>
         ) : null}
 
-        <div className="relative z-0 flex-1 min-w-0">
+        <div className="relative z-10 flex-1 min-w-0">
           <ContentShell
             className="p-0"
             contentClassName="min-h-screen py-8"

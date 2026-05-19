@@ -6,7 +6,6 @@ import {
   ListChecks,
   LogOut,
   Menu,
-  Music2,
   PanelLeftClose,
   PanelLeftOpen,
   Settings,
@@ -28,7 +27,6 @@ import {
   sidebarFooterStyles,
   sidebarHeaderStyles,
   sidebarIconButtonStyles,
-  sidebarModulesListStyles,
   sidebarNavBlocksStyles,
   sidebarNavStyles,
   sidebarOverlayStyles,
@@ -42,18 +40,12 @@ const defaultPrimaryItems: SidebarNavItem[] = [
   { id: "overview", icon: Home, label: "Visão geral" },
   { id: "students", icon: Users, label: "Alunos" },
   { id: "attendance", icon: ClipboardList, label: "Presenças" },
-  { id: "complementary-activities", icon: ListChecks, label: "Atividades complementares" },
 ];
 
 const defaultSecondaryItems: SidebarNavItem[] = [
+  { id: "complementary-activities", icon: ListChecks, label: "Atividades compl." },
   { id: "teachers", icon: UserRound, label: "Professores" },
   { id: "settings", icon: Settings, label: "Configurações" },
-];
-
-const defaultModules = [
-  { id: "module-i", label: "Módulo I" },
-  { id: "module-ii", label: "Módulo II" },
-  { id: "module-iii", label: "Módulo III" },
 ];
 
 const defaultUser = {
@@ -67,15 +59,12 @@ export function Sidebar({
   collapsedWidthPx = 92,
   expandedWidthPx = 280,
   activeItem,
-  activeModuleId = null,
   collapsible = true,
   isCollapsed = false,
   isOpen = false,
-  moduleItems = defaultModules,
   onClose,
   onLogout,
   onNavigate,
-  onNavigateModule,
   onToggleCollapse,
   primaryItems = defaultPrimaryItems,
   secondaryItems = defaultSecondaryItems,
@@ -83,11 +72,8 @@ export function Sidebar({
   showFloatingTrigger = true,
   user = defaultUser,
 }: SidebarProps) {
-  const [isModulesOpen, setIsModulesOpen] = useState(false);
   const [internalCollapsed, setInternalCollapsed] = useState(isCollapsed);
-  const [selectedModuleId, setSelectedModuleId] = useState<string | null>(activeModuleId);
   const isDesktopCollapsed = onToggleCollapse ? isCollapsed : internalCollapsed;
-  const currentModuleId = activeModuleId ?? selectedModuleId;
   const showLabels = !isDesktopCollapsed;
   const ToggleIcon = isDesktopCollapsed ? PanelLeftOpen : PanelLeftClose;
 
@@ -101,8 +87,7 @@ export function Sidebar({
   };
 
   const primaryBlockItems = useMemo(() => primaryItems, [primaryItems]);
-  const secondaryBlockItems = useMemo(() => secondaryItems.slice(0, 2), [secondaryItems]);
-  const moduleSubitemsId = `${instanceId}-modules-subitems`;
+  const secondaryBlockItems = useMemo(() => secondaryItems, [secondaryItems]);
 
   return (
     <>
@@ -183,39 +168,6 @@ export function Sidebar({
             <div className="flex flex-col gap-1.5">
               <div className={sidebarDividerStyles} />
               <nav aria-label="Navegação secundaria" className={sidebarNavStyles}>
-                <NavItem
-                  ariaControls={moduleSubitemsId}
-                  ariaExpanded={isModulesOpen}
-                  icon={Music2}
-                  label="Módulos"
-                  onClick={() => setIsModulesOpen((current) => !current)}
-                  showChevron={showLabels}
-                  showLabel={showLabels}
-                  state={isModulesOpen ? "active" : "inactive"}
-                  variant={showLabels ? "composite" : "composite-collapsed"}
-                >
-                  {isModulesOpen && showLabels ? (
-                    <div className={sidebarModulesListStyles} id={moduleSubitemsId}>
-                      {moduleItems.map((moduleItem) => {
-                        const isActive = moduleItem.id === currentModuleId;
-                        return (
-                          <NavItem
-                            key={moduleItem.id}
-                            label={moduleItem.label}
-                            onClick={() => {
-                              setSelectedModuleId(moduleItem.id);
-                              onNavigateModule?.(moduleItem.id);
-                            }}
-                            showLabel
-                            state={isActive ? "active" : "inactive"}
-                            variant="subitem"
-                          />
-                        );
-                      })}
-                    </div>
-                  ) : null}
-                </NavItem>
-
                 {secondaryBlockItems.map((item) => {
                   const isActive = item.id === activeItem;
                   return (

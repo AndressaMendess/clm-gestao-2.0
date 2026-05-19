@@ -28,7 +28,7 @@ export const sidebarBrandTextStyles =
 export const sidebarIconButtonStyles =
   "inline-flex h-10 w-10 items-center justify-center rounded-[10px] border border-[var(--border-primary)] text-[var(--content-secondary)] transition-colors hover:bg-[var(--background-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--button-focus-ring)] focus-visible:ring-offset-2";
 
-export const sidebarContentStyles = "flex flex-1 flex-col overflow-x-visible overflow-y-auto px-3 pb-3";
+export const sidebarContentStyles = "flex flex-1 flex-col overflow-visible px-3 pb-3";
 export const sidebarNavStyles = "flex flex-col gap-1";
 export const sidebarNavBlocksStyles = "flex flex-col gap-5";
 
