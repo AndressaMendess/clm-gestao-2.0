@@ -11,6 +11,7 @@ import { SelectField } from "@/components/ui/select-field";
 import { TableCard } from "@/components/ui/table-card";
 import type { TableCardColumn } from "@/components/ui/table-card";
 import { getAttendanceCallsFromRegistry, type AttendanceRegistryCall, type AttendanceStatus } from "@/app/(app)/attendance/_data/attendance-registry";
+import { STUDENT_ATTENDANCE_STATUS_OPTIONS, toSelectFieldOptions } from "@/app/(app)/students/_config/students-filter-options";
 import { getAllAttendanceJustifications } from "./_data/attendance-justifications-registry";
 import { STUDENT_ROWS } from "../../_data/students.mock";
 import type { AttendanceJustificationRecord } from "./_data/attendance-justifications-registry";
@@ -242,11 +243,7 @@ export default function StudentAttendanceHistoryPage() {
           <SelectField
             aria-label="Filtrar status de frequência"
             onValueChange={setSelectedStatus}
-            options={[
-              { label: "Presente", value: "present" },
-              { label: "Ausente", value: "absent" },
-              { label: "Justificado", value: "excused" },
-            ]}
+            options={toSelectFieldOptions(STUDENT_ATTENDANCE_STATUS_OPTIONS)}
             placeholder="Status de frequência"
             value={selectedStatus}
             variant="without-label"

@@ -1,7 +1,6 @@
 ﻿"use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { Eye } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { DocumentUploadField } from "@/components/ui/document-upload-field";
@@ -11,6 +10,7 @@ import { SelectField } from "@/components/ui/select-field";
 import StudentAttendanceHistoryPage from "../../page";
 import { STUDENT_ROWS } from "../../../../_data/students.mock";
 import {
+  type AttendanceJustificationRecord,
   getAttendanceJustification,
   upsertAttendanceJustification,
 } from "../../_data/attendance-justifications-registry";
@@ -25,16 +25,17 @@ export default function StudentAttendanceJustificationPage() {
   const [proofFile, setProofFile] = useState<File | null>(null);
   const [proofFileName, setProofFileName] = useState<string | null>(null);
   const [proofFileDataUrl, setProofFileDataUrl] = useState<string | null>(null);
+  const [existingJustification, setExistingJustification] = useState<AttendanceJustificationRecord | null>(null);
 
   const decodedStudentId = useMemo(() => decodeURIComponent(params.studentId), [params.studentId]);
   const decodedRecordId = useMemo(() => decodeURIComponent(params.recordId), [params.recordId]);
   const studentName = useMemo(() => {
     return STUDENT_ROWS.find((row) => row.email === decodedStudentId)?.name ?? "aluno";
   }, [decodedStudentId]);
-  const existingJustification = useMemo(
-    () => getAttendanceJustification(decodedStudentId, decodedRecordId),
-    [decodedRecordId, decodedStudentId],
-  );
+
+  useEffect(() => {
+    setExistingJustification(getAttendanceJustification(decodedStudentId, decodedRecordId));
+  }, [decodedRecordId, decodedStudentId]);
 
   useEffect(() => {
     if (!existingJustification) return;
@@ -44,6 +45,32 @@ export default function StudentAttendanceJustificationPage() {
     setProofFileName(existingJustification.proofFileName);
     setProofFileDataUrl(existingJustification.proofFileDataUrl);
   }, [existingJustification]);
+
+  useEffect(() => {
+    const restoreProofFile = async () => {
+      if (proofFile) return;
+      if (!proofFileName) return;
+
+      if (proofFileDataUrl) {
+        try {
+          const response = await fetch(proofFileDataUrl);
+          const blob = await response.blob();
+          const restoredFile = new File([blob], proofFileName, {
+            type: blob.type || "application/octet-stream",
+          });
+          setProofFile(restoredFile);
+          return;
+        } catch {
+          // fallback abaixo
+        }
+      }
+
+      const fallbackFile = new File([""], proofFileName, { type: "application/octet-stream" });
+      setProofFile(fallbackFile);
+    };
+
+    void restoreProofFile();
+  }, [proofFile, proofFileDataUrl, proofFileName]);
 
   const handleClose = () => {
     router.push(`/students/${encodeURIComponent(decodedStudentId)}/attendance-history`);
@@ -59,11 +86,6 @@ export default function StudentAttendanceJustificationPage() {
       proofFileDataUrl,
     });
     handleClose();
-  };
-
-  const handlePreviewProof = () => {
-    if (!proofFileDataUrl) return;
-    window.open(proofFileDataUrl, "_blank", "noopener,noreferrer");
   };
 
   const handleFileChange = async (file: File | null) => {
@@ -135,18 +157,6 @@ export default function StudentAttendanceJustificationPage() {
             }}
             value={proofFile}
           />
-          {proofFileName ? (
-            <div className="flex flex-wrap items-center gap-3">
-              <p className="text-[var(--content-secondary)] [font-size:var(--typography-body-small-regular-font-size)] [line-height:var(--typography-body-small-regular-line-height)] [letter-spacing:var(--typography-body-small-regular-letter-spacing)]">
-                Comprovante salvo: {proofFileName}
-              </p>
-              {proofFileDataUrl ? (
-                <Button className="text-[var(--content-tertiary)] hover:text-[var(--content-secondary)]" icon={Eye} onClick={handlePreviewProof} variant="ghost">
-                  Visualizar comprovante
-                </Button>
-              ) : null}
-            </div>
-          ) : null}
         </div>
       </ModalContainer>
     </>
