@@ -141,7 +141,7 @@ export default function StudentDetailsPage() {
         isOpen
         onClose={() => router.push("/students")}
         onDeleteStudent={handleOpenDeletePopup}
-        onEditStudent={() => undefined}
+        onEditStudent={() => router.push(`/students/${encodeURIComponent(student?.email ?? decodedStudentId)}/edit/personal-data`)}
         onTabChange={setActiveTab}
         statusLabel={student?.status ?? "Não encontrado"}
         statusVariant={statusVariant}
