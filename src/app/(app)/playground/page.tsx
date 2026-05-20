@@ -1,6 +1,6 @@
 ﻿"use client";
 
-import { CheckCircle2, ChevronLeft, Plus, Search, Users, X } from "lucide-react";
+import { AlertTriangle, CheckCircle2, ChevronLeft, Plus, Search, Users, X } from "lucide-react";
 import { useState } from "react";
 import { Avatar } from "@/components/ui/avatar";
 import { AttachmentCollapsible } from "@/components/ui/attachment-collapsible";
@@ -16,6 +16,7 @@ import { CpfInput, DatePicker, Input, PasswordInput, PhoneInput, RgInput, Search
 import { ListCollapsible } from "@/components/ui/list-collapsible";
 import { LinkText } from "@/components/ui/link-text";
 import { ModalContainer } from "@/components/ui/modal-container";
+import { PopUp } from "@/components/ui/pop-up";
 import { NavItem } from "@/components/ui/nav-item";
 import { SelectField } from "@/components/ui/select-field";
 import { Sidebar } from "@/components/ui/sidebar";
@@ -39,6 +40,7 @@ type StudentTableRow = {
 
 export default function HomePage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isPopUpOpen, setIsPopUpOpen] = useState(false);
   const [isNavItemCompositeOpen, setIsNavItemCompositeOpen] = useState(false);
   const [activeSidebarItem, setActiveSidebarItem] = useState("overview");
   const [activeSidebarModule, setActiveSidebarModule] = useState<string | null>("module-i");
@@ -401,6 +403,26 @@ export default function HomePage() {
               </p>
             </div>
           </ModalContainer>
+        </section>
+
+        <section className="flex flex-col gap-4">
+          <h2 className="text-lg font-medium">PopUp</h2>
+          <div className="flex flex-wrap items-center gap-4">
+            <Button onClick={() => setIsPopUpOpen(true)} variant="primary">
+              Abrir pop-up
+            </Button>
+          </div>
+
+          <PopUp
+            confirmLabel="Excluir"
+            confirmVariant="danger"
+            icon={AlertTriangle}
+            isOpen={isPopUpOpen}
+            onClose={() => setIsPopUpOpen(false)}
+            onConfirm={() => setIsPopUpOpen(false)}
+            subtitle="Essa ação não poderá ser desfeita. Deseja continuar?"
+            title="Excluir aluno"
+          />
         </section>
 
         <section className="flex flex-col gap-4">
