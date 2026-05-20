@@ -11,7 +11,7 @@ const variantStyles: Record<ButtonVariant, string> = {
   ghost:
     "border-transparent bg-[var(--button-ghost-background-enabled)] text-[var(--button-ghost-content-enabled)] hover:bg-[var(--button-ghost-background-hover)] hover:text-[var(--button-ghost-content-hover)] active:bg-[var(--button-ghost-background-pressed)] active:text-[var(--button-ghost-content-pressed)] disabled:bg-[var(--button-ghost-background-disabled)] disabled:text-[var(--button-ghost-content-disabled)]",
   danger:
-    "border-transparent bg-[var(--feedback-error-background)] text-[var(--feedback-error-content)] hover:bg-[var(--feedback-error-border)] active:bg-[var(--feedback-error-content)] active:text-[var(--content-inverse)] disabled:bg-[var(--background-secondary)] disabled:text-[var(--content-tertiary)]",
+    "border-transparent bg-[var(--feedback-error-content)] text-[var(--feedback-error-background)] hover:bg-[var(--color-red-700)] active:bg-[var(--color-red-800))] active:text-[var(--content-inverse)] disabled:bg-[var(--background-secondary)] disabled:text-[var(--content-tertiary)]",
   icon:
     "border-transparent bg-transparent text-[var(--content-tertiary)] hover:bg-[var(--button-ghost-background-hover)] active:bg-[var(--button-ghost-background-pressed)] disabled:text-[var(--button-ghost-content-disabled)]",
 };

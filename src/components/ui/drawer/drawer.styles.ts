@@ -22,4 +22,4 @@ export const drawerCloseButtonStyles =
 
 export const drawerTabsSectionStyles = "overflow-x-auto px-6 py-3";
 
-export const drawerContentStyles = "flex-1 overflow-y-auto px-6 py-5";
+export const drawerContentStyles = "min-w-0 flex-1 overflow-x-hidden overflow-y-auto px-6 py-5";

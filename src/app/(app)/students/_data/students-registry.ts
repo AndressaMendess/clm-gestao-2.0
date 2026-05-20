@@ -94,3 +94,10 @@ export function upsertStudentRecord(record: StudentRegistryRecord) {
   saveRegistry(records);
 }
 
+export function deleteStudentRecordByEmail(email: string): boolean {
+  const records = readRegistry();
+  const nextRecords = records.filter((item) => item.row.email !== email);
+  if (nextRecords.length === records.length) return false;
+  saveRegistry(nextRecords);
+  return true;
+}

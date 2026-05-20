@@ -1,15 +1,17 @@
 ﻿"use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { Copy } from "lucide-react";
+import { AlertTriangle, Copy } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { AttachmentCollapsible } from "@/components/ui/attachment-collapsible";
 import { Badge } from "@/components/ui/badge";
 import { Button, IconButton } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Drawer } from "@/components/ui/drawer";
+import { PopUp } from "@/components/ui/pop-up";
 import { STUDENT_DETAILS_BY_EMAIL_MOCK } from "../_data/students-details.mock";
 import { getStudentRecordByEmail, getStudentRowsFromRegistry } from "../_data/students-registry";
+import { getStudentsRepository } from "../_data/students-service";
 import type { StudentDetails } from "../_types/student-details.types";
 import StudentsPage from "../page";
 
@@ -44,7 +46,10 @@ export default function StudentDetailsPage() {
   const params = useParams<{ studentId: string }>();
   const [activeTab, setActiveTab] = useState("personal-data");
   const [attachmentItems, setAttachmentItems] = useState<Array<{ id: string; name: string }>>([]);
+  const [isDeletePopupOpen, setIsDeletePopupOpen] = useState(false);
+  const [isDeletingStudent, setIsDeletingStudent] = useState(false);
   const studentRows = useMemo(() => getStudentRowsFromRegistry(), []);
+  const studentsRepository = useMemo(() => getStudentsRepository(), []);
   const decodedStudentId = useMemo(() => decodeURIComponent(params.studentId), [params.studentId]);
 
   const student = useMemo(() => {
@@ -101,6 +106,31 @@ export default function StudentDetailsPage() {
     }
   };
 
+  const handleOpenDeletePopup = () => {
+    if (!student || isDeletingStudent) return;
+    setIsDeletePopupOpen(true);
+  };
+
+  const handleCloseDeletePopup = () => {
+    if (isDeletingStudent) return;
+    setIsDeletePopupOpen(false);
+  };
+
+  const handleConfirmDeleteStudent = async () => {
+    if (!student || isDeletingStudent) return;
+    try {
+      setIsDeletingStudent(true);
+      await studentsRepository.deleteByEmail({ email: student.email });
+      setIsDeletePopupOpen(false);
+      router.push("/students");
+    } catch (error) {
+      console.error("Falha ao excluir aluno.", error);
+      setIsDeletePopupOpen(false);
+    } finally {
+      setIsDeletingStudent(false);
+    }
+  };
+
   return (
     <>
       <StudentsPage />
@@ -110,7 +140,7 @@ export default function StudentDetailsPage() {
         avatarSrc={student?.avatarSrc}
         isOpen
         onClose={() => router.push("/students")}
-        onDeleteStudent={() => undefined}
+        onDeleteStudent={handleOpenDeletePopup}
         onEditStudent={() => undefined}
         onTabChange={setActiveTab}
         statusLabel={student?.status ?? "Não encontrado"}
@@ -307,6 +337,18 @@ export default function StudentDetailsPage() {
           </div>
         ) : null}
       </Drawer>
+
+      <PopUp
+        confirmLabel="Excluir"
+        confirmVariant="danger"
+        icon={AlertTriangle}
+        isLoading={isDeletingStudent}
+        isOpen={isDeletePopupOpen}
+        onClose={handleCloseDeletePopup}
+        onConfirm={handleConfirmDeleteStudent}
+        subtitle="Essa ação não poderá ser desfeita. Deseja continuar?"
+        title="Excluir aluno"
+      />
     </>
   );
 }

@@ -4,6 +4,7 @@ import { X } from "lucide-react";
 import { useCallback, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { Button } from "@/components/ui/button";
+import { lockBodyScroll } from "@/lib/body-scroll-lock";
 import { cx } from "@/lib/cx";
 import {
   popUpBodyStyles,
@@ -51,7 +52,7 @@ export function PopUp({
   useEffect(() => {
     if (!isOpen) return;
 
-    const previousOverflow = document.body.style.overflow;
+    const releaseBodyScrollLock = lockBodyScroll();
     const focusTarget =
       popUpRef.current?.querySelector<HTMLElement>(
         "button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex='-1'])",
@@ -62,11 +63,10 @@ export function PopUp({
       if (event.key === "Escape" && !isLoadingRef.current) requestClose();
     };
 
-    document.body.style.overflow = "hidden";
     window.addEventListener("keydown", handleEscape);
 
     return () => {
-      document.body.style.overflow = previousOverflow;
+      releaseBodyScrollLock();
       window.removeEventListener("keydown", handleEscape);
     };
   }, [isOpen, requestClose]);

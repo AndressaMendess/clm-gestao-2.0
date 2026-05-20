@@ -4,6 +4,7 @@ import { Trash2, X } from "lucide-react";
 import { useCallback, useEffect, useId, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import { cx } from "@/lib/cx";
+import { lockBodyScroll } from "@/lib/body-scroll-lock";
 import { Avatar } from "../avatar";
 import { Badge } from "../badge";
 import { Button } from "../button";
@@ -79,14 +80,13 @@ export function Drawer({
 
   useEffect(() => {
     if (!isOpen) return;
-    const previousOverflow = document.body.style.overflow;
+    const releaseBodyScrollLock = lockBodyScroll();
     const handleEscape = (event: KeyboardEvent) => {
       if (event.key === "Escape") requestClose();
     };
-    document.body.style.overflow = "hidden";
     window.addEventListener("keydown", handleEscape);
     return () => {
-      document.body.style.overflow = previousOverflow;
+      releaseBodyScrollLock();
       window.removeEventListener("keydown", handleEscape);
     };
   }, [isOpen, requestClose]);
