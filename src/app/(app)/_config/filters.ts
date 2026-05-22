@@ -6,6 +6,7 @@ export const STATUS_OPTIONS = [
   { label: "Ativo", value: "active" },
   { label: "Inativo", value: "inactive" },
   { label: "Trancamento", value: "locked" },
+  { label: "Concluído", value: "completed" },
 ] as const;
 
 export const MODULE_OPTIONS = [
@@ -54,7 +55,10 @@ export const COMPLEMENTARY_ACTIVITY_TERM_OPTIONS = [
   { label: "3º trimestre", value: "term-3" },
 ] as const;
 
-export const TEACHER_STATUS_OPTIONS = STATUS_OPTIONS;
+export const TEACHER_STATUS_OPTIONS = [
+  { label: "Ativo", value: "active" },
+  { label: "Inativo", value: "inactive" },
+] as const;
 export const TEACHER_SPECIALTY_OPTIONS = CLASSROOM_OPTIONS;
 
 export const STUDENT_STATUS_OPTIONS = STATUS_OPTIONS;

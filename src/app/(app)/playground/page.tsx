@@ -2,9 +2,25 @@
 
 import { AlertTriangle, CheckCircle2, ChevronLeft, Plus, Search, Users, X } from "lucide-react";
 import { useState } from "react";
+import {
+  ATTENDANCE_STATUS_OPTIONS,
+  CLASSROOM_OPTIONS,
+  COMPLEMENTARY_ACTIVITY_MODULE_OPTIONS,
+  COMPLEMENTARY_ACTIVITY_STATUS_OPTIONS,
+  COMPLEMENTARY_ACTIVITY_TERM_OPTIONS,
+  MODULE_OPTIONS,
+  STATUS_OPTIONS,
+  STUDENT_ATTENDANCE_STATUS_OPTIONS,
+  STUDENT_CLASSROOM_OPTIONS,
+  STUDENT_MODULE_OPTIONS,
+  STUDENT_STATUS_OPTIONS,
+  TEACHER_SPECIALTY_OPTIONS,
+  TEACHER_STATUS_OPTIONS,
+} from "@/app/(app)/_config/filters";
 import { Avatar } from "@/components/ui/avatar";
 import { AttachmentCollapsible } from "@/components/ui/attachment-collapsible";
 import { Badge } from "@/components/ui/badge";
+import type { BadgeVariant } from "@/components/ui/badge";
 import { Button, IconButton } from "@/components/ui/button";
 import { Checkbox, CheckboxField } from "@/components/ui/checkbox";
 import { ClickableCard } from "@/components/ui/clickable-card";
@@ -38,6 +54,42 @@ type StudentTableRow = {
   status: "Ativo" | "Trancamento";
 };
 
+type FilterOption = { label: string; value: string };
+
+type FilterGroup = {
+  options: readonly FilterOption[];
+  title: string;
+};
+
+function getFilterBadgeVariant(filterType: string, option: FilterOption): BadgeVariant {
+  const value = option.value.toLowerCase();
+  const label = option.label.toLowerCase();
+
+  if (filterType.includes("Status")) {
+    if (value.includes("active") || value.includes("present") || value.includes("excused")) return "success";
+    if (value.includes("inactive") || value.includes("failed") || value.includes("absent")) return "error";
+    if (value.includes("pending") || value.includes("locked")) return "warning";
+    if (value.includes("completed")) return "blue";
+    return "subtle";
+  }
+
+  if (filterType.includes("Módulo")) {
+    if (label.includes("iii")) return "blue";
+    if (label.includes("ii")) return "orange";
+    return "violet";
+  }
+
+  if (filterType.includes("Trimestre")) {
+    if (value.endsWith("1")) return "blue";
+    if (value.endsWith("2")) return "pink";
+    return "violet";
+  }
+
+  if (filterType.includes("Turma") || filterType.includes("Especialidade")) return "subtle";
+
+  return "default";
+}
+
 export default function HomePage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isPopUpOpen, setIsPopUpOpen] = useState(false);
@@ -49,6 +101,21 @@ export default function HomePage() {
   const [activeTab, setActiveTab] = useState("students");
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [activeDrawerTab, setActiveDrawerTab] = useState("overview");
+  const filterGroups: FilterGroup[] = [
+    { title: "Status (Geral)", options: STATUS_OPTIONS },
+    { title: "Módulos (Geral)", options: MODULE_OPTIONS },
+    { title: "Turmas (Geral)", options: CLASSROOM_OPTIONS },
+    { title: "Status de Presença", options: ATTENDANCE_STATUS_OPTIONS },
+    { title: "Status de Atividade Complementar", options: COMPLEMENTARY_ACTIVITY_STATUS_OPTIONS },
+    { title: "Módulos de Atividade Complementar", options: COMPLEMENTARY_ACTIVITY_MODULE_OPTIONS },
+    { title: "Trimestres de Atividade Complementar", options: COMPLEMENTARY_ACTIVITY_TERM_OPTIONS },
+    { title: "Status de Professor", options: TEACHER_STATUS_OPTIONS },
+    { title: "Especialidades de Professor", options: TEACHER_SPECIALTY_OPTIONS },
+    { title: "Status de Aluno", options: STUDENT_STATUS_OPTIONS },
+    { title: "Módulos de Aluno", options: STUDENT_MODULE_OPTIONS },
+    { title: "Turmas de Aluno", options: STUDENT_CLASSROOM_OPTIONS },
+    { title: "Status de Presença (Aluno)", options: STUDENT_ATTENDANCE_STATUS_OPTIONS },
+  ];
   const studentRows: StudentTableRow[] = [
     {
       avatarSrc:
@@ -789,6 +856,33 @@ export default function HomePage() {
                 variant="composite-collapsed"
               />
             </div>
+          </div>
+        </section>
+
+        <section className="flex flex-col gap-4">
+          <h2 className="text-lg font-medium">Filtros do Sistema</h2>
+          <div className="grid gap-5">
+            {filterGroups.map((group) => (
+              <article
+                className="rounded-2xl border border-[var(--border-primary)] bg-[var(--background-primary)] p-4"
+                key={group.title}
+              >
+                <h3 className="mb-3 text-[var(--content-primary)] [font-size:var(--typography-body-large-semibold-font-size)] [line-height:var(--typography-body-large-semibold-line-height)] [font-weight:var(--typography-body-large-semibold-font-weight)] [letter-spacing:var(--typography-body-large-semibold-letter-spacing)]">
+                  {group.title}
+                </h3>
+                <div className="flex flex-wrap gap-2">
+                  {group.options.map((option) => (
+                    <Badge
+                      appearance={group.title.toLowerCase().includes("status") ? "dot" : "default"}
+                      key={`${group.title}-${option.value}`}
+                      variant={getFilterBadgeVariant(group.title, option)}
+                    >
+                      {option.label}
+                    </Badge>
+                  ))}
+                </div>
+              </article>
+            ))}
           </div>
         </section>
       </div>

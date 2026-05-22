@@ -1,4 +1,4 @@
-﻿export type StudentStatusFilter = "active" | "inactive" | "locked";
+export type StudentStatusFilter = "active" | "inactive" | "locked" | "completed";
 export type StudentModuleFilter = "module-i" | "module-ii" | "module-iii";
 export type StudentClassroomFilter =
   | "classe-1"

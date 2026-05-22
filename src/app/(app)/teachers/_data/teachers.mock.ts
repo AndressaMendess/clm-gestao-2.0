@@ -31,8 +31,8 @@ export const TEACHER_ROWS: TeacherRow[] = [
     specialty: "Trompete",
     specialtyFilter: "trompete",
     specialtyVariant: "orange",
-    status: "Trancamento",
-    statusFilter: "locked",
+    status: "Inativo",
+    statusFilter: "inactive",
   },
   {
     email: "joao.mendes@email.com",

@@ -1,6 +1,6 @@
 import type { StudentClassroomFilter } from "@/app/(app)/students/_types/students.types";
 
-export type TeacherStatusFilter = "active" | "inactive" | "locked";
+export type TeacherStatusFilter = "active" | "inactive";
 export type TeacherSpecialtyFilter = StudentClassroomFilter;
 
 export type TeacherFilters = {
