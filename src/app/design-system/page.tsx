@@ -11,7 +11,16 @@ import { SelectField } from "@/components/ui/select-field";
 import { Stepper } from "@/components/ui/stepper";
 import { Tooltip } from "@/components/ui/tooltip";
 
-const sections = [
+type DocumentationSection = {
+  id: string;
+  label: string;
+  subSections?: Array<{
+    id: string;
+    label: string;
+  }>;
+};
+
+const sections: DocumentationSection[] = [
   { id: "introducao", label: "Introdução" },
   { id: "tokens-primitivos", label: "Tokens Primitivos" },
   { id: "tokens-semanticos", label: "Tokens Semânticos" },
@@ -32,7 +41,7 @@ const sections = [
       { id: "componentes-tooltip", label: "Tooltip" },
     ],
   },
-] as const;
+];
 
 const selectFieldOptions = [
   { label: "Módulo I", value: "module-i" },
