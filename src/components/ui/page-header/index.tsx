@@ -8,13 +8,14 @@ type PageHeaderProps = {
   ctaVariant?: Exclude<ButtonVariant, "icon">;
   subtitle: string;
   title: string;
+  titleClassName?: string;
 };
 
-export function PageHeader({ ctaLabel, ctaOnClick, ctaVariant = "primary", subtitle, title }: PageHeaderProps) {
+export function PageHeader({ ctaLabel, ctaOnClick, ctaVariant = "primary", subtitle, title, titleClassName }: PageHeaderProps) {
   return (
     <header className="flex flex-col items-start gap-4 pb-6 sm:flex-row sm:items-center sm:justify-between">
       <div className="flex flex-col items-start gap-1 sm:flex-row sm:flex-wrap sm:items-baseline sm:gap-2">
-        <h1 className="[font-size:var(--typography-body-x-large-semibold-font-size)] [font-weight:var(--typography-body-x-large-semibold-font-weight)] [line-height:var(--typography-body-x-large-semibold-line-height)] [letter-spacing:var(--typography-body-x-large-semibold-letter-spacing)] text-[var(--content-primary)]">
+        <h1 className={`[font-size:var(--typography-body-x-large-semibold-font-size)] [font-weight:var(--typography-body-x-large-semibold-font-weight)] [line-height:var(--typography-body-x-large-semibold-line-height)] [letter-spacing:var(--typography-body-x-large-semibold-letter-spacing)] text-[var(--content-primary)] ${titleClassName ?? ""}`}>
           {title}
         </h1>
         <p className="[font-size:var(--typography-body-x-large-regular-font-size)] [font-weight:var(--typography-body-x-large-regular-font-weight)] [line-height:var(--typography-body-x-large-regular-line-height)] [letter-spacing:var(--typography-body-x-large-regular-letter-spacing)] text-[var(--content-secondary)]">

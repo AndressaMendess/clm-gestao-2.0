@@ -1,5 +1,8 @@
+ "use client";
+
 import { PageHeader } from "@/components/ui/page-header";
-import { CheckCircle2, Plus, Search, Trash2 } from "lucide-react";
+import { CheckCircle2, Menu, Plus, Search, Trash2, X } from "lucide-react";
+import { useEffect, useState } from "react";
 import { tokens } from "../../../design-system/tokens";
 import { Button, IconButton } from "@/components/ui/button";
 import { Avatar } from "@/components/ui/avatar";
@@ -128,18 +131,65 @@ function getTypographyPreview(tokenName: string) {
 }
 
 export default function DesignSystemPage() {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [activeSectionId, setActiveSectionId] = useState("introducao");
+
+  useEffect(() => {
+    const syncWithHash = () => {
+      const currentHash = window.location.hash.replace("#", "");
+      if (currentHash) setActiveSectionId(currentHash);
+    };
+
+    syncWithHash();
+    window.addEventListener("hashchange", syncWithHash);
+    return () => window.removeEventListener("hashchange", syncWithHash);
+  }, []);
+
   return (
     <main className="min-h-screen bg-[var(--background-secondary)] px-6 py-8">
+      {isSidebarOpen ? (
+        <button
+          aria-label="Fechar menu de seções"
+          className="fixed inset-0 z-40 bg-[rgb(0_0_0_/_0.3)] lg:hidden"
+          onClick={() => setIsSidebarOpen(false)}
+          type="button"
+        />
+      ) : null}
+
       <div className="mx-auto grid w-full max-w-[1200px] grid-cols-1 gap-6 lg:grid-cols-[264px_minmax(0,1fr)]">
-        <aside className="h-fit rounded-2xl border border-[var(--border-primary)] bg-[var(--background-primary)] p-4 lg:sticky lg:top-8">
+        <aside
+          className={`fixed left-4 top-4 z-50 h-[calc(100vh-2rem)] w-[min(82vw,320px)] overflow-y-auto rounded-2xl border border-[var(--border-primary)] bg-[var(--background-primary)] p-4 shadow-lg transition-transform duration-200 lg:sticky lg:top-8 lg:z-auto lg:h-fit lg:w-auto lg:translate-x-0 lg:overflow-visible lg:shadow-none ${
+            isSidebarOpen ? "translate-x-0" : "-translate-x-[120%]"
+          }`}
+        >
+          <div className="mb-2 flex items-center justify-between lg:hidden">
+            <span className="text-sm font-medium text-[var(--content-secondary)]">Navegação</span>
+            <button
+              aria-label="Fechar menu"
+              className="rounded-md p-1 text-[var(--content-secondary)]"
+              onClick={() => setIsSidebarOpen(false)}
+              type="button"
+            >
+              <X size={18} />
+            </button>
+          </div>
+
           <h2 className="mb-4 text-sm text-[var(--content-secondary)]">Seções</h2>
           <nav aria-label="Seções da documentação">
             <ul className="space-y-1">
               {sections.map((section) => (
                 <li key={section.id}>
                   <a
-                    className="block w-full rounded-lg px-3 py-2 text-left text-sm text-[var(--content-primary)] transition-colors hover:bg-[var(--background-secondary)]"
+                    className={`block w-full rounded-lg px-3 py-2 text-left text-sm transition-colors ${
+                      activeSectionId === section.id
+                        ? "bg-[var(--background-secondary)] text-[var(--content-primary)]"
+                        : "text-[var(--content-primary)] hover:bg-[var(--background-secondary)]"
+                    }`}
                     href={`#${section.id}`}
+                    onClick={() => {
+                      setActiveSectionId(section.id);
+                      setIsSidebarOpen(false);
+                    }}
                   >
                     {section.label}
                   </a>
@@ -148,8 +198,16 @@ export default function DesignSystemPage() {
                       {section.subSections.map((subSection) => (
                         <li key={subSection.id}>
                           <a
-                            className="block w-full rounded-lg px-3 py-2 text-left text-xs text-[var(--content-secondary)] transition-colors hover:bg-[var(--background-secondary)] hover:text-[var(--content-primary)]"
+                            className={`block w-full rounded-lg px-3 py-2 text-left text-xs transition-colors ${
+                              activeSectionId === subSection.id
+                                ? "bg-[var(--background-secondary)] text-[var(--content-primary)]"
+                                : "text-[var(--content-secondary)] hover:bg-[var(--background-secondary)] hover:text-[var(--content-primary)]"
+                            }`}
                             href={`#${subSection.id}`}
+                            onClick={() => {
+                              setActiveSectionId(subSection.id);
+                              setIsSidebarOpen(false);
+                            }}
                           >
                             {subSection.label}
                           </a>
@@ -165,44 +223,51 @@ export default function DesignSystemPage() {
 
         <section className="flex justify-center">
           <section className="w-full max-w-[760px] space-y-6">
+            <div className="lg:hidden">
+              <IconButton icon={Menu} label="Abrir seções" onClick={() => setIsSidebarOpen(true)} />
+            </div>
+
             <PageHeader
               subtitle="Fonte única da verdade visual do produto. Tokens, tipografia, cores e todos os componentes em uso real, com variantes e estados."
               title="Design System — Escola CLM"
+              titleClassName="[font-size:var(--typography-heading-h6-font-size)] [font-weight:var(--typography-heading-h6-font-weight)] [line-height:var(--typography-heading-h6-line-height)] [letter-spacing:var(--typography-heading-h6-letter-spacing)]"
             />
 
-            <section className="flex flex-col gap-28" id="introducao">
-              <header className="flex flex-col gap-2" id="tokens-primitivos">
-                <h2 className="text-2xl font-semibold text-[var(--content-primary)]">Tokens Primitivos</h2>
-                <p className="max-w-3xl [font-size:var(--typography-body-medium-regular-font-size)] [line-height:var(--typography-body-medium-regular-line-height)] [font-weight:var(--typography-body-medium-regular-font-weight)] [letter-spacing:var(--typography-body-medium-regular-letter-spacing)] text-[var(--content-secondary)]">
-                  Tokens primitivos definem os valores base do sistema visual, como cores e medidas puras, e servem
-                  como fundação para todos os tokens semânticos e componentes da interface.
-                </p>
-              </header>
+            <section className="flex flex-col gap-16" id="introducao">
+              <section className="flex flex-col gap-8" id="tokens-primitivos">
+                <header className="flex flex-col gap-2">
+                  <h2 className="text-2xl font-semibold text-[var(--content-primary)]">Tokens Primitivos</h2>
+                  <p className="max-w-3xl [font-size:var(--typography-body-medium-regular-font-size)] [line-height:var(--typography-body-medium-regular-line-height)] [font-weight:var(--typography-body-medium-regular-font-weight)] [letter-spacing:var(--typography-body-medium-regular-letter-spacing)] text-[var(--content-secondary)]">
+                    Tokens primitivos definem os valores base do sistema visual, como cores e medidas puras, e servem
+                    como fundação para todos os tokens semânticos e componentes da interface.
+                  </p>
+                </header>
 
-              {primitiveColorFamilies.map((family) => (
-                <section className="flex flex-col gap-2" key={family.familyName}>
-                  <h3 className="[font-size:var(--typography-body-x-large-semibold-font-size)] [line-height:var(--typography-body-x-large-semibold-line-height)] [font-weight:var(--typography-body-x-large-semibold-font-weight)] [letter-spacing:var(--typography-body-x-large-semibold-letter-spacing)] text-[var(--content-primary)] capitalize">
-                    {family.familyName}
-                  </h3>
+                {primitiveColorFamilies.map((family) => (
+                  <article className="flex flex-col gap-2" key={family.familyName}>
+                    <h3 className="[font-size:var(--typography-body-x-large-semibold-font-size)] [line-height:var(--typography-body-x-large-semibold-line-height)] [font-weight:var(--typography-body-x-large-semibold-font-weight)] [letter-spacing:var(--typography-body-x-large-semibold-letter-spacing)] text-[var(--content-primary)] capitalize">
+                      {family.familyName}
+                    </h3>
 
-                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
-                    {family.values.map((token) => (
-                      <article
-                        className="rounded-xl border border-[var(--border-primary)] bg-[var(--background-primary)] p-4"
-                        key={token.name}
-                      >
-                        <div
-                          aria-label={`Cor do token ${token.name}`}
-                          className="mb-4 h-14 w-full rounded-lg border border-[var(--border-primary)]"
-                          style={{ backgroundColor: token.hex }}
-                        />
-                        <p className="text-sm font-medium text-[var(--content-primary)]">{token.name}</p>
-                        <p className="mt-1 text-xs uppercase tracking-wide text-[var(--content-secondary)]">{token.hex}</p>
-                      </article>
-                    ))}
-                  </div>
-                </section>
-              ))}
+                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+                      {family.values.map((token) => (
+                        <article
+                          className="rounded-xl border border-[var(--border-primary)] bg-[var(--background-primary)] p-4"
+                          key={token.name}
+                        >
+                          <div
+                            aria-label={`Cor do token ${token.name}`}
+                            className="mb-4 h-14 w-full rounded-lg border border-[var(--border-primary)]"
+                            style={{ backgroundColor: token.hex }}
+                          />
+                          <p className="text-sm font-medium text-[var(--content-primary)]">{token.name}</p>
+                          <p className="mt-1 text-xs uppercase tracking-wide text-[var(--content-secondary)]">{token.hex}</p>
+                        </article>
+                      ))}
+                    </div>
+                  </article>
+                ))}
+              </section>
 
               <section className="flex flex-col gap-4" id="tokens-semanticos">
                 <header className="flex flex-col gap-2">
