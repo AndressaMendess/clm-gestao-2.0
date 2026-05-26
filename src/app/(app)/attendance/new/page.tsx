@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { ClickableCard } from "@/components/ui/clickable-card";
 import { PageHeader } from "@/components/ui/page-header";
 import { getClassroomOptionsByModule, MODULE_OPTIONS } from "../../_config/filters";
-import { getStudentRowsFromRegistry } from "../../students/_data/students-registry";
+import { STUDENT_ROWS } from "../../students/_data/students.mock";
 
 type ModuleSection = {
   cards: Array<{
@@ -48,7 +48,7 @@ export default function AttendanceStartPage() {
   const router = useRouter();
 
   const sections = useMemo<ModuleSection[]>(() => {
-    const rows = getStudentRowsFromRegistry();
+    const rows = STUDENT_ROWS;
     const studentCountByKey = new Map<string, number>();
 
     rows.forEach((row) => {

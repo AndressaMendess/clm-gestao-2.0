@@ -14,7 +14,8 @@ export function filterStudents(rows: StudentRow[], filters: StudentFilters, sear
 
     const matchesStatus = !filters.status || row.statusFilter === filters.status;
     const matchesModule = !filters.module || row.moduleFilter === filters.module;
-    const matchesClassroom = !filters.classroom || row.classroomFilter === filters.classroom;
+    const classroomFilters = row.classroomFilters ?? [row.classroomFilter];
+    const matchesClassroom = !filters.classroom || classroomFilters.includes(filters.classroom);
 
     return matchesSearch && matchesStatus && matchesModule && matchesClassroom;
   });

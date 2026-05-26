@@ -10,43 +10,64 @@ export type StudentRegistryRecord = {
   row: StudentRow;
 };
 
-const STORAGE_KEY = "clm.students.registry.v1";
+const STORAGE_KEY = "clm.students.registry.v2";
+
+function createFallbackDetails(row: StudentRow): StudentDetails {
+  return {
+    address: {
+      city: "-",
+      complement: "-",
+      neighborhood: "-",
+      number: "-",
+      state: "-",
+      street: "-",
+      zipCode: "-",
+    },
+    attendance: {
+      history: [],
+      justifiedAbsences: 0,
+      presentRate: "-",
+      totalAbsences: 0,
+      totalClasses: 0,
+    },
+    attachments: [],
+    personalData: {
+      birthDate: "-",
+      cpf: "-",
+      fatherName: "-",
+      fullName: row.name,
+      maritalStatus: "-",
+      motherName: "-",
+      nationality: "-",
+      rg: "-",
+      sex: "-",
+    },
+    schoolEmail: "-",
+  };
+}
 
 function buildInitialRegistry(): StudentRegistryRecord[] {
   return STUDENT_ROWS.map((row) => ({
-    details: STUDENT_DETAILS_BY_EMAIL_MOCK[row.email] ?? {
-      address: {
-        city: "-",
-        complement: "-",
-        neighborhood: "-",
-        number: "-",
-        state: "-",
-        street: "-",
-        zipCode: "-",
-      },
-      attendance: {
-        history: [],
-        justifiedAbsences: 0,
-        presentRate: "-",
-        totalAbsences: 0,
-        totalClasses: 0,
-      },
-      attachments: [],
-      personalData: {
-        birthDate: "-",
-        cpf: "-",
-        fatherName: "-",
-        fullName: row.name,
-        maritalStatus: "-",
-        motherName: "-",
-        nationality: "-",
-        rg: "-",
-        sex: "-",
-      },
-      schoolEmail: "-",
-    },
+    details: STUDENT_DETAILS_BY_EMAIL_MOCK[row.email] ?? createFallbackDetails(row),
     row,
   }));
+}
+
+function mergeRegistryWithMockRows(
+  records: StudentRegistryRecord[],
+): StudentRegistryRecord[] {
+  const byEmail = new Map(records.map((record) => [record.row.email, record]));
+
+  STUDENT_ROWS.forEach((row) => {
+    if (!byEmail.has(row.email)) {
+      byEmail.set(row.email, {
+        details: STUDENT_DETAILS_BY_EMAIL_MOCK[row.email] ?? createFallbackDetails(row),
+        row,
+      });
+    }
+  });
+
+  return Array.from(byEmail.values());
 }
 
 function readRegistry(): StudentRegistryRecord[] {
@@ -58,7 +79,12 @@ function readRegistry(): StudentRegistryRecord[] {
     return initial;
   }
   try {
-    return JSON.parse(serialized) as StudentRegistryRecord[];
+    const parsed = JSON.parse(serialized) as StudentRegistryRecord[];
+    const merged = mergeRegistryWithMockRows(parsed);
+    if (merged.length !== parsed.length) {
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(merged));
+    }
+    return merged;
   } catch {
     const initial = buildInitialRegistry();
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(initial));

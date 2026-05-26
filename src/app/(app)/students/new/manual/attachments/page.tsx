@@ -24,6 +24,16 @@ function getInitials(name: string): string {
   return `${parts[0][0] ?? ""}${parts[1][0] ?? ""}`.toUpperCase();
 }
 
+function getClassroomFiltersByModule(
+  moduleFilter: StudentModuleFilter,
+  classroomFilter: StudentClassroomFilter,
+): StudentClassroomFilter[] {
+  if (moduleFilter === "module-ii" || moduleFilter === "module-iii") {
+    return Array.from(new Set(["teoria-musical", "solfejo", classroomFilter]));
+  }
+  return [classroomFilter];
+}
+
 export default function StudentCreateManualAttachmentsPage() {
   const router = useRouter();
   const { formData, resetFormData } = useManualFlowForm();
@@ -47,6 +57,9 @@ export default function StudentCreateManualAttachmentsPage() {
       cnhFile ? `CNH (${cnhFile.name})` : null,
       proofOfAddressFile ? `Comprovante de residência (${proofOfAddressFile.name})` : null,
     ].filter((item): item is string => Boolean(item));
+    const resolvedClassroomFilter =
+      (formData.enrollmentClassroom as StudentClassroomFilter) || "teoria-musical";
+    const resolvedModuleFilter = (formData.enrollmentModule as StudentModuleFilter) || "module-i";
 
     upsertStudentRecord({
       details: {
@@ -82,12 +95,13 @@ export default function StudentCreateManualAttachmentsPage() {
       },
       row: {
         classroom: classroomOption?.label ?? "-",
-        classroomFilter: (formData.enrollmentClassroom as StudentClassroomFilter) || "teoria-musical",
+        classroomFilter: resolvedClassroomFilter,
+        classroomFilters: getClassroomFiltersByModule(resolvedModuleFilter, resolvedClassroomFilter),
         classroomVariant: "blue",
         email: normalizedEmail,
         initials: getInitials(formData.fullName),
         module: moduleOption?.label ?? "-",
-        moduleFilter: (formData.enrollmentModule as StudentModuleFilter) || "module-i",
+        moduleFilter: resolvedModuleFilter,
         moduleVariant: formData.enrollmentModule === "module-i" ? "violet" : "orange",
         name: formData.fullName || normalizedEmail,
         phone: formData.phone || "-",

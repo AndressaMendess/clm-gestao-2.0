@@ -8,6 +8,8 @@ import { ListCollapsible } from "@/components/ui/list-collapsible";
 import { PageHeader } from "@/components/ui/page-header";
 import { SelectField } from "@/components/ui/select-field";
 import {
+  CLASSROOM_OPTIONS,
+  MODULE_OPTIONS,
   getClassroomOptionsByModule,
   STUDENT_CLASSROOM_OPTIONS,
   STUDENT_MODULE_OPTIONS,
@@ -44,6 +46,14 @@ function formatAttendanceCallSubtitle(createdAt: string, userName: string) {
   }).format(date);
 
   return `${dateLabel} ${timeLabel} - por ${userName}`;
+}
+
+function resolveModuleLabel(moduleFilter: string, fallback: string) {
+  return MODULE_OPTIONS.find((option) => option.value === moduleFilter)?.label ?? fallback;
+}
+
+function resolveClassroomLabel(classroomFilter: string, fallback: string) {
+  return CLASSROOM_OPTIONS.find((option) => option.value === classroomFilter)?.label ?? fallback;
 }
 
 export default function AttendancePage() {
@@ -121,7 +131,7 @@ export default function AttendancePage() {
                 badgeVariant: ATTENDANCE_STATUS_VARIANT[student.attendance],
               }))}
               subtitle={formatAttendanceCallSubtitle(call.createdAt, call.userName)}
-              title={`${call.module} - ${call.classroom}`}
+              title={`${resolveModuleLabel(call.moduleFilter, call.module)} - ${resolveClassroomLabel(call.classroomFilter, call.classroom)}`}
             />
           ))}
         </div>

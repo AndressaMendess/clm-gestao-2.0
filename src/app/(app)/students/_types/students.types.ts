@@ -31,6 +31,7 @@ export type StudentRow = {
   avatarSrc?: string;
   classroom: string;
   classroomFilter: StudentClassroomFilter;
+  classroomFilters?: StudentClassroomFilter[];
   classroomVariant: "blue" | "pink";
   email: string;
   initials: string;
