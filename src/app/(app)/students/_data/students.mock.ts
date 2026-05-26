@@ -3,8 +3,8 @@
 export const STUDENT_ROWS: StudentRow[] = [
   {
     initials: "AC",
-    classroom: "Teoria musical",
-    classroomFilter: "teoria-musical",
+    classroom: "Classe 1",
+    classroomFilter: "classe-1",
     classroomVariant: "blue",
     email: "ana.costa@email.com",
     module: "Módulo I",
@@ -62,8 +62,8 @@ export const STUDENT_ROWS: StudentRow[] = [
   },
   {
     initials: "ES",
-    classroom: "Contrabaixo",
-    classroomFilter: "contrabaixo",
+    classroom: "Classe 2",
+    classroomFilter: "classe-2",
     classroomVariant: "blue",
     email: "ester.sousa@email.com",
     module: "Módulo I",
